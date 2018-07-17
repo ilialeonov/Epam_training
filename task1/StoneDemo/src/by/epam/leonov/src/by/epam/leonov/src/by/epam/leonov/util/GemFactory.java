@@ -5,8 +5,8 @@
  */
 package by.epam.leonov.util;
 
-import by.epam.leonov.entity.PreciousStone;
-import by.epam.leonov.entity.SemiPreciousStone;
+import by.epam.leonov.entity.GemStone;
+import by.epam.leonov.entity.Value;
 import by.epam.leonov.exception.NegativeCostException;
 import by.epam.leonov.exception.NegativeWeightException;
 import by.epam.leonov.exception.OutOfPercentIntervalException;
@@ -20,34 +20,25 @@ public class GemFactory {
     public GemFactory() {
     }
     
-    public PreciousStone createPreciousStone(String name, int cost, 
+    public GemStone createPreciousStone(String name, int cost, 
             double weight, int transparency) throws NegativeCostException, 
             NegativeWeightException, OutOfPercentIntervalException {
         
         checkStone(cost, weight, transparency);
-        
-        PreciousStone preciousStone  = new PreciousStone();
-        
-        preciousStone.setName(name);
-        preciousStone.setCost(cost);
-        preciousStone.setWeight(weight);        
-        preciousStone.setTransparency(transparency);
+        GemStone preciousStone = createTypicalStone(name, cost, 
+            weight, transparency);
+        preciousStone.setValue(Value.PRECIOUS);
         
         return preciousStone;
     }
     
-    public SemiPreciousStone createSemiPreciousStone(String name, int cost, 
+    public GemStone createSemiPreciousStone(String name, int cost, 
             double weight, int transparency) throws NegativeCostException, 
             NegativeWeightException, OutOfPercentIntervalException {
         
-        checkStone(cost, weight, transparency);
-        
-        SemiPreciousStone semiPreciousStone  = new SemiPreciousStone();
-        
-        semiPreciousStone.setName(name);
-        semiPreciousStone.setCost(cost);
-        semiPreciousStone.setWeight(weight);        
-        semiPreciousStone.setTransparency(transparency);
+        GemStone semiPreciousStone = createTypicalStone(name, cost, 
+            weight, transparency);
+        semiPreciousStone.setValue(Value.SEMIPRECIOUS);
         
         return semiPreciousStone;
     }    
@@ -63,5 +54,20 @@ public class GemFactory {
             throw new OutOfPercentIntervalException();
         }
         
+    }
+    private GemStone createTypicalStone(String name, int cost, 
+            double weight, int transparency) throws NegativeCostException, 
+            NegativeWeightException, OutOfPercentIntervalException{
+                
+        checkStone(cost, weight, transparency);
+        
+        GemStone stone  = new GemStone();
+        
+        stone.setName(name);
+        stone.setCost(cost);
+        stone.setWeight(weight);        
+        stone.setTransparency(transparency);
+        
+        return stone;
     }
 }

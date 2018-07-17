@@ -16,6 +16,7 @@ public class GemStone {
     private double weight;
     private int transparency;
     private int cost;
+    private Value value;
     
     public GemStone() {
     }
@@ -58,19 +59,25 @@ public class GemStone {
     public void setCost(int cost) {
         this.cost = cost;
     }
+    
+    public void setValue(Value value) {
+       this.value = value;
+    }
+    
+    public Value getValue(){
+        return value;
+    }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 59 * hash + Objects.hashCode(this.name);
-        hash = 59 * hash + (int) (Double.doubleToLongBits(this.weight) 
-                ^ (Double.doubleToLongBits(this.weight) >>> 32));
-        hash = 59 * hash + this.transparency;
-        hash = 59 * hash + this.cost;
+        int hash = 5;
+        hash = 47 * hash + Objects.hashCode(this.name);
+        hash = 47 * hash + (int) (Double.doubleToLongBits(this.weight) ^ (Double.doubleToLongBits(this.weight) >>> 32));
+        hash = 47 * hash + this.transparency;
+        hash = 47 * hash + this.cost;
+        hash = 47 * hash + Objects.hashCode(this.value);
         return hash;
     }
-
-    
 
     @Override
     public boolean equals(Object obj) {
@@ -93,6 +100,9 @@ public class GemStone {
         if (this.cost != other.cost) {
             return false;
         }
+        if (this.value != other.value) {
+            return false;
+        }
         return true;
     }
     
@@ -100,8 +110,9 @@ public class GemStone {
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + " " + name + ", weight = " + weight 
-                + ", transparency = " + transparency + ", cost = " + cost;
+        return this.getClass().getSimpleName() + " " + name + ", value " + value 
+                +", weight = " + weight + ", transparency = " + transparency 
+                + ", cost = " + cost;
     }
     
     

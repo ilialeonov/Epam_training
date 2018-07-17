@@ -7,28 +7,24 @@ package by.epam.leonov.util;
 
 import by.epam.leonov.entity.GemStone;
 import by.epam.leonov.entity.Jewelry;
-import by.epam.leonov.entity.Necklace;
 
-public class NecklaceBuilderImp implements JewelryBuilder{
+public class JewelryBuilder{
     
-    private Necklace jewelry = new Necklace();
+    private Jewelry jewelry = new Jewelry();
 
-    public NecklaceBuilderImp() {
+    public JewelryBuilder() {
     }
 
-    @Override
-    public Necklace getJewelry() {
+    public Jewelry getJewelry() {
         return jewelry;
     }
 
-    @Override
     public void buildStones(GemStone...stones) {
         for (GemStone stone : stones) {
             jewelry.addStone(stone);
         }
     }
 
-    @Override
     public void buildStone(GemStone stone) {
         jewelry.addStone(stone);
     }

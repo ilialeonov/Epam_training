@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package by.epam.leonov.util;
+package by.epam.leonov.util.parser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,11 +12,11 @@ import java.util.Scanner;
  *
  * @author Администратор
  */
-public class JewelryTxtParserImp implements JewelryParser{
+public class JewelryTxtParserImpl implements JewelryParser{
     
     Scanner scan;
     
-    public JewelryTxtParserImp(String path) {
+    public JewelryTxtParserImpl(String path) {
         try {
             scan = new Scanner(new File(path));
         } catch (FileNotFoundException ex) {

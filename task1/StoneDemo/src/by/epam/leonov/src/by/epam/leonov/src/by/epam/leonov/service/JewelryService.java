@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package by.epam.leonov.controller;
+package by.epam.leonov.service;
 
-import by.epam.leonov.entity.GemList;
+import by.epam.leonov.entity.Gem;
 import by.epam.leonov.entity.GemStone;
-import by.epam.leonov.entity.Necklace;
+import by.epam.leonov.entity.Jewelry;
 import by.epam.leonov.exception.BadIntervalException;
 import by.epam.leonov.exception.NegativeCostException;
 import by.epam.leonov.exception.NegativeWeightException;
@@ -15,9 +15,9 @@ import by.epam.leonov.exception.NoSuchGemException;
 import by.epam.leonov.exception.NoSuchPositionStoneException;
 import by.epam.leonov.exception.OutOfPercentIntervalException;
 import by.epam.leonov.util.GemFactory;
-import by.epam.leonov.util.JewelryParser;
-import by.epam.leonov.util.NecklaceBuilderImp;
-import by.epam.leonov.view.View;
+import by.epam.leonov.util.JewelryBuilder;
+import by.epam.leonov.util.parser.JewelryParser;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -26,8 +26,8 @@ import java.util.logging.Logger;
  *
  * @author Администратор
  */
-public class JewelryController {
-    private Necklace necklace;
+public class JewelryService {
+    private Jewelry necklace;
     private JewelryParser jewelryParser;
     private int sizeOfElements;
     private double weight = 0;
@@ -35,10 +35,9 @@ public class JewelryController {
     private boolean characteristicsAssigned = false;
     
     private final GemFactory gemFactory = new GemFactory();
-    private final NecklaceBuilderImp necklaceBuilder = new NecklaceBuilderImp();
-    private final View view = new View();
+    private final JewelryBuilder necklaceBuilder = new JewelryBuilder();
 
-    public JewelryController() {
+    public JewelryService() {
         
     }
     
@@ -46,59 +45,69 @@ public class JewelryController {
         this.jewelryParser = jewelryParser;
     }
     
-    public Necklace createNecklace(){
-    
-        while (jewelryParser.hasNextStone()) {
-            GemStone nextStone = null;
-            try {
-                nextStone = getStone();
-            } catch (NoSuchGemException ex) {
-                ex.printStackTrace();
+    public Jewelry createNecklace(){
+        GemStone nextStone = null;
+        try {
+            while (jewelryParser.hasNextStone()) {
+                try {
+                    nextStone = getStone();
+                } catch (NoSuchGemException ex) {
+                    ex.printStackTrace();
+                }
+                necklaceBuilder.buildStone(nextStone);
             }
-            necklaceBuilder.buildStone(nextStone);
+            necklace = necklaceBuilder.getJewelry();
+            sizeOfElements = necklace.getStoneAmount();
+            return necklace;
+        } catch (IOException ex) {
+            Logger.getLogger(JewelryService.class.getName()).log(Level.SEVERE, null, ex);
         }
-        necklace = necklaceBuilder.getJewelry();
-        sizeOfElements = necklace.getStoneAmount();
         return necklace;
     }
     
-    public void showNecklace(){
-        view.showNecklace(necklace);
-    }
-    
     private GemStone getStone() throws NoSuchGemException {
-        String name = jewelryParser.getStoneName();
-        int cost = jewelryParser.getStoneCost();
-        double weight = jewelryParser.getStoneWeight();
-        int transparency = jewelryParser.getStoneTransparency();
-        
-        GemList gemList = GemList.valueOf(name.toUpperCase());
-        
-        switch(gemList){
-                case DIAMOND: 
-                case ESMERALD:
-                case RUBY: {
-            try {
-                return gemFactory.createPreciousStone(name,
-                        cost, weight, transparency);
-            } catch (NegativeCostException | NegativeWeightException 
-                    | OutOfPercentIntervalException ex) {
-                ex.printStackTrace();
-            }
+        String name = "";
+        int cost = 0;
+        double weight = 0;
+        int transparency = 0;
+            
+        try {
+            name = jewelryParser.getStoneName();
+            cost = jewelryParser.getStoneCost();
+            weight = jewelryParser.getStoneWeight();
+            transparency = jewelryParser.getStoneTransparency();
+        } catch (IOException ex) {
+            Logger.getLogger(JewelryService.class.getName()).log(Level.SEVERE, null, ex);
+        }    
+        Gem gemList = Gem.valueOf(name.toUpperCase());
+            
+        switch(gemList){ 
+            case DIAMOND:
+            case ESMERALD:
+            case RUBY: {
+                try {
+                    return gemFactory.createPreciousStone(name,
+                            cost, weight, transparency);
+                } catch (NegativeCostException | NegativeWeightException
+                        | OutOfPercentIntervalException ex) {
+                    System.out.println("some error");
+                    ex.printStackTrace();
                 }
-                case AQUAMARINE:
-                case GARNET:
-                case TOPAZ: 
-                    {
-            try {
-                return gemFactory.createSemiPreciousStone(name,
-                        cost, weight, transparency);
-            } catch (NegativeCostException | NegativeWeightException 
-                    | OutOfPercentIntervalException ex) {
-                ex.printStackTrace();
             }
+            case AQUAMARINE:
+            case GARNET:
+            case TOPAZ:
+            {
+                try {
+                    return gemFactory.createSemiPreciousStone(name,
+                            cost, weight, transparency);
+                } catch (NegativeCostException | NegativeWeightException
+                        | OutOfPercentIntervalException ex) {
+                    System.out.println("some error");
+                    ex.printStackTrace();
                 }
-                default: throw new NoSuchGemException();
+            }
+            default: throw new NoSuchGemException();
         }
     }
     
@@ -111,6 +120,7 @@ public class JewelryController {
                 cost += necklace.getStone(i).getCost();
             }  
         } catch (NoSuchPositionStoneException ex) {
+            System.out.println("There is no such position stone");
             ex.printStackTrace();
         }
         characteristicsAssigned = true;
@@ -122,22 +132,14 @@ public class JewelryController {
         }
     }
     
-    private double getGemsWeight(){
+    public double getGemsWeight(){
         checkIfAssigned();
         return weight;        
     }
     
-    public void showGemsWeight(){
-        view.showGemsWeight(getGemsWeight());
-    }
-    
-    private int getGemsCost(){
+    public int getGemsCost(){
         checkIfAssigned();
         return cost;        
-    }
-    
-    public void showGemsCost(){
-        view.showGemsCost(getGemsCost());
     }
     
     public void sortByCost(){
@@ -163,12 +165,14 @@ public class JewelryController {
                 }
             }
         } catch (NoSuchPositionStoneException ex) {
+            System.out.println("There is no such position stone");
             ex.printStackTrace();
         }
     }
     
-    private List<GemStone> getInTransparencyInterval(int down, int up) throws BadIntervalException{
+    public List<GemStone> getInTransparencyInterval(int down, int up) throws BadIntervalException{
         if (down < 0 || up > 100 || down > up) {
+            System.out.println("You have entered bad interval");            
             throw new BadIntervalException();
         }
         List<GemStone> inInterval = new ArrayList<>();
@@ -181,6 +185,7 @@ public class JewelryController {
                 }
             }    
         } catch (NoSuchPositionStoneException ex) {
+            System.out.println("There is no such position stone");
                 ex.printStackTrace();
         }
         return inInterval;
@@ -191,8 +196,8 @@ public class JewelryController {
         try {
             inInterval = getInTransparencyInterval(down, up);
         } catch (BadIntervalException ex) {
+            System.out.println("You have entered bad interval");
             ex.printStackTrace();
         }
-        view.showInTransparencyInterval(inInterval);
     }
 }

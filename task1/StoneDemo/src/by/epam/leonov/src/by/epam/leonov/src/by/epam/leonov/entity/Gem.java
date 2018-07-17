@@ -9,15 +9,6 @@ package by.epam.leonov.entity;
  *
  * @author Администратор
  */
-public class PreciousStone extends GemStone {
-    
-    public PreciousStone() {
-    }
-    
-    protected PreciousStone(String name, double weight, 
-            int transparency, int cost) {
-        super(name, weight, transparency, cost);
-    }
-
-
+public enum Gem {
+    DIAMOND, ESMERALD, RUBY, AQUAMARINE, GARNET, TOPAZ
 }
