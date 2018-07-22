@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package by.epam.leonov.util.parser;
+package by.epam.util.parser;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,12 +13,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Scanner;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Администратор
  */
 public class JewelryTxtStreamParserImpl implements JewelryParser{
+    private final static Logger logger = Logger.getLogger("by.epam.util");
     private BufferedReader in;
     private String line;
 
@@ -27,6 +29,7 @@ public class JewelryTxtStreamParserImpl implements JewelryParser{
     } 
     
     public boolean hasNextStone() throws IOException{
+        logger.debug("checks if there is next stone");
         line = in.readLine();
         return line != null;
     }
@@ -36,8 +39,7 @@ public class JewelryTxtStreamParserImpl implements JewelryParser{
             return in.readLine();
         } else {
             return line;
-        }
-        
+        }   
     }
     
     public int getStoneCost() throws IOException{
@@ -50,6 +52,5 @@ public class JewelryTxtStreamParserImpl implements JewelryParser{
     
     public int getStoneTransparency() throws IOException{
         return Integer.parseInt(in.readLine());
-    }
-    
+    }    
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package by.epam.leonov.util.parser;
+package by.epam.util.parser;
 
 import java.io.IOException;
 

@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package by.epam.leonov.util;
+package by.epam.util;
 
-import by.epam.leonov.entity.GemStone;
-import by.epam.leonov.entity.Jewelry;
+import by.epam.entity.GemStone;
+import by.epam.entity.Jewelry;
 
 public class JewelryBuilder{
     

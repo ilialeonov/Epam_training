@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package by.epam.leonov.entity;
+package by.epam.entity;
 
 import java.util.Objects;
 
@@ -113,7 +113,5 @@ public class GemStone {
         return this.getClass().getSimpleName() + " " + name + ", value " + value 
                 +", weight = " + weight + ", transparency = " + transparency 
                 + ", cost = " + cost;
-    }
-    
-    
+    }    
 }

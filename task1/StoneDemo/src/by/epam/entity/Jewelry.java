@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package by.epam.leonov.entity;
+package by.epam.entity;
 
-import by.epam.leonov.exception.NoSuchPositionStoneException;
+import by.epam.exception.NoSuchPositionStoneException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +54,4 @@ public class Jewelry {
         }        
         return this.getClass().getSimpleName() + " with stones:\n" + out;
     }
-    
-
 }

@@ -1,0 +1,228 @@
+2018-07-22 17:04:51 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:04:51 DEBUG service:54 - create necklace
+2018-07-22 17:04:51 DEBUG service:77 - gets stone
+2018-07-22 17:04:51 DEBUG service:92 - creating precious in factory
+2018-07-22 17:04:51 DEBUG util:52 - checks stone
+2018-07-22 17:04:51 DEBUG util:67 - creates stone
+2018-07-22 17:04:51 DEBUG util:52 - checks stone
+2018-07-22 17:04:51 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:04:51 DEBUG service:54 - create necklace
+2018-07-22 17:04:51 DEBUG service:77 - gets stone
+2018-07-22 17:04:51 DEBUG service:105 - creating semiprecious
+2018-07-22 17:04:51 DEBUG util:67 - creates stone
+2018-07-22 17:04:51 DEBUG util:52 - checks stone
+2018-07-22 17:04:51 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:04:51 DEBUG service:54 - create necklace
+2018-07-22 17:04:51 DEBUG service:77 - gets stone
+2018-07-22 17:04:51 DEBUG service:92 - creating precious in factory
+2018-07-22 17:04:51 DEBUG util:52 - checks stone
+2018-07-22 17:04:51 DEBUG util:67 - creates stone
+2018-07-22 17:04:51 DEBUG util:52 - checks stone
+2018-07-22 17:04:51 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:04:51 DEBUG service:54 - create necklace
+2018-07-22 17:04:51 DEBUG service:77 - gets stone
+2018-07-22 17:04:51 DEBUG service:92 - creating precious in factory
+2018-07-22 17:04:51 DEBUG util:52 - checks stone
+2018-07-22 17:04:51 DEBUG util:67 - creates stone
+2018-07-22 17:04:51 DEBUG util:52 - checks stone
+2018-07-22 17:04:51 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:04:51 DEBUG service:54 - create necklace
+2018-07-22 17:04:51 DEBUG service:77 - gets stone
+2018-07-22 17:04:51 DEBUG service:92 - creating precious in factory
+2018-07-22 17:04:51 DEBUG util:52 - checks stone
+2018-07-22 17:04:51 DEBUG util:67 - creates stone
+2018-07-22 17:04:51 DEBUG util:52 - checks stone
+2018-07-22 17:04:51 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:04:51 DEBUG service:54 - create necklace
+2018-07-22 17:04:51 DEBUG service:77 - gets stone
+2018-07-22 17:04:51 DEBUG service:92 - creating precious in factory
+2018-07-22 17:04:51 DEBUG util:52 - checks stone
+2018-07-22 17:04:51 DEBUG util:67 - creates stone
+2018-07-22 17:04:51 DEBUG util:52 - checks stone
+2018-07-22 17:04:51 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:04:51 DEBUG service:54 - create necklace
+2018-07-22 17:04:51 DEBUG service:77 - gets stone
+2018-07-22 17:04:51 DEBUG service:105 - creating semiprecious
+2018-07-22 17:04:51 DEBUG util:67 - creates stone
+2018-07-22 17:04:51 DEBUG util:52 - checks stone
+2018-07-22 17:04:51 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:04:51 DEBUG service:54 - create necklace
+2018-07-22 17:04:51 DEBUG service:77 - gets stone
+2018-07-22 17:04:51 DEBUG service:105 - creating semiprecious
+2018-07-22 17:04:51 DEBUG util:67 - creates stone
+2018-07-22 17:04:51 DEBUG util:52 - checks stone
+2018-07-22 17:04:51 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:04:51 DEBUG service:121 - assigning characteristics
+2018-07-22 17:04:51 DEBUG service:154 - sorting
+2018-07-22 17:04:51 DEBUG service:184 - getting in transparency
+2018-07-22 17:04:54 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:04:54 DEBUG service:54 - create necklace
+2018-07-22 17:04:54 DEBUG service:77 - gets stone
+2018-07-22 17:04:54 DEBUG service:92 - creating precious in factory
+2018-07-22 17:04:54 DEBUG util:52 - checks stone
+2018-07-22 17:04:54 DEBUG util:67 - creates stone
+2018-07-22 17:04:54 DEBUG util:52 - checks stone
+2018-07-22 17:04:54 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:04:54 DEBUG service:54 - create necklace
+2018-07-22 17:04:54 DEBUG service:77 - gets stone
+2018-07-22 17:04:54 DEBUG service:105 - creating semiprecious
+2018-07-22 17:04:54 DEBUG util:67 - creates stone
+2018-07-22 17:04:54 DEBUG util:52 - checks stone
+2018-07-22 17:04:54 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:04:54 DEBUG service:54 - create necklace
+2018-07-22 17:04:54 DEBUG service:77 - gets stone
+2018-07-22 17:04:54 DEBUG service:92 - creating precious in factory
+2018-07-22 17:04:54 DEBUG util:52 - checks stone
+2018-07-22 17:04:54 DEBUG util:67 - creates stone
+2018-07-22 17:04:54 DEBUG util:52 - checks stone
+2018-07-22 17:04:54 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:04:54 DEBUG service:54 - create necklace
+2018-07-22 17:04:54 DEBUG service:77 - gets stone
+2018-07-22 17:04:54 DEBUG service:92 - creating precious in factory
+2018-07-22 17:04:54 DEBUG util:52 - checks stone
+2018-07-22 17:04:54 DEBUG util:67 - creates stone
+2018-07-22 17:04:54 DEBUG util:52 - checks stone
+2018-07-22 17:04:54 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:04:54 DEBUG service:54 - create necklace
+2018-07-22 17:04:54 DEBUG service:77 - gets stone
+2018-07-22 17:04:54 DEBUG service:92 - creating precious in factory
+2018-07-22 17:04:54 DEBUG util:52 - checks stone
+2018-07-22 17:04:54 DEBUG util:67 - creates stone
+2018-07-22 17:04:54 DEBUG util:52 - checks stone
+2018-07-22 17:04:54 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:04:54 DEBUG service:54 - create necklace
+2018-07-22 17:04:54 DEBUG service:77 - gets stone
+2018-07-22 17:04:54 DEBUG service:92 - creating precious in factory
+2018-07-22 17:04:54 DEBUG util:52 - checks stone
+2018-07-22 17:04:54 DEBUG util:67 - creates stone
+2018-07-22 17:04:54 DEBUG util:52 - checks stone
+2018-07-22 17:04:54 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:04:54 DEBUG service:54 - create necklace
+2018-07-22 17:04:54 DEBUG service:77 - gets stone
+2018-07-22 17:04:54 DEBUG service:105 - creating semiprecious
+2018-07-22 17:04:54 DEBUG util:67 - creates stone
+2018-07-22 17:04:54 DEBUG util:52 - checks stone
+2018-07-22 17:04:54 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:04:54 DEBUG service:54 - create necklace
+2018-07-22 17:04:54 DEBUG service:77 - gets stone
+2018-07-22 17:04:54 DEBUG service:105 - creating semiprecious
+2018-07-22 17:04:54 DEBUG util:67 - creates stone
+2018-07-22 17:04:54 DEBUG util:52 - checks stone
+2018-07-22 17:04:54 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:04:54 DEBUG service:121 - assigning characteristics
+2018-07-22 17:04:54 DEBUG service:154 - sorting
+2018-07-22 17:04:54 DEBUG service:184 - getting in transparency
+2018-07-22 17:04:55 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:04:55 DEBUG service:54 - create necklace
+2018-07-22 17:04:55 DEBUG service:77 - gets stone
+2018-07-22 17:04:55 DEBUG service:92 - creating precious in factory
+2018-07-22 17:04:55 DEBUG util:52 - checks stone
+2018-07-22 17:04:55 DEBUG util:67 - creates stone
+2018-07-22 17:04:55 DEBUG util:52 - checks stone
+2018-07-22 17:04:55 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:04:55 DEBUG service:54 - create necklace
+2018-07-22 17:04:55 DEBUG service:77 - gets stone
+2018-07-22 17:04:55 DEBUG service:105 - creating semiprecious
+2018-07-22 17:04:55 DEBUG util:67 - creates stone
+2018-07-22 17:04:55 DEBUG util:52 - checks stone
+2018-07-22 17:04:55 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:04:55 DEBUG service:54 - create necklace
+2018-07-22 17:04:55 DEBUG service:77 - gets stone
+2018-07-22 17:04:55 DEBUG service:92 - creating precious in factory
+2018-07-22 17:04:55 DEBUG util:52 - checks stone
+2018-07-22 17:04:55 DEBUG util:67 - creates stone
+2018-07-22 17:04:55 DEBUG util:52 - checks stone
+2018-07-22 17:04:55 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:04:55 DEBUG service:54 - create necklace
+2018-07-22 17:04:55 DEBUG service:77 - gets stone
+2018-07-22 17:04:55 DEBUG service:92 - creating precious in factory
+2018-07-22 17:04:55 DEBUG util:52 - checks stone
+2018-07-22 17:04:55 DEBUG util:67 - creates stone
+2018-07-22 17:04:55 DEBUG util:52 - checks stone
+2018-07-22 17:04:55 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:04:55 DEBUG service:54 - create necklace
+2018-07-22 17:04:55 DEBUG service:77 - gets stone
+2018-07-22 17:04:55 DEBUG service:92 - creating precious in factory
+2018-07-22 17:04:55 DEBUG util:52 - checks stone
+2018-07-22 17:04:55 DEBUG util:67 - creates stone
+2018-07-22 17:04:55 DEBUG util:52 - checks stone
+2018-07-22 17:04:55 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:04:55 DEBUG service:54 - create necklace
+2018-07-22 17:04:55 DEBUG service:77 - gets stone
+2018-07-22 17:04:55 DEBUG service:92 - creating precious in factory
+2018-07-22 17:04:55 DEBUG util:52 - checks stone
+2018-07-22 17:04:55 DEBUG util:67 - creates stone
+2018-07-22 17:04:55 DEBUG util:52 - checks stone
+2018-07-22 17:04:55 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:04:55 DEBUG service:54 - create necklace
+2018-07-22 17:04:55 DEBUG service:77 - gets stone
+2018-07-22 17:04:55 DEBUG service:105 - creating semiprecious
+2018-07-22 17:04:55 DEBUG util:67 - creates stone
+2018-07-22 17:04:55 DEBUG util:52 - checks stone
+2018-07-22 17:04:55 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:04:55 DEBUG service:54 - create necklace
+2018-07-22 17:04:55 DEBUG service:77 - gets stone
+2018-07-22 17:04:55 DEBUG service:105 - creating semiprecious
+2018-07-22 17:04:55 DEBUG util:67 - creates stone
+2018-07-22 17:04:55 DEBUG util:52 - checks stone
+2018-07-22 17:04:55 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:04:55 DEBUG service:121 - assigning characteristics
+2018-07-22 17:04:55 DEBUG service:154 - sorting
+2018-07-22 17:04:55 DEBUG service:184 - getting in transparency
+2018-07-22 17:05:32 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:05:32 DEBUG service:54 - create necklace
+2018-07-22 17:05:32 DEBUG service:77 - gets stone
+2018-07-22 17:05:32 DEBUG service:92 - creating precious in factory
+2018-07-22 17:05:32 DEBUG util:52 - checks stone
+2018-07-22 17:05:32 DEBUG util:67 - creates stone
+2018-07-22 17:05:32 DEBUG util:52 - checks stone
+2018-07-22 17:05:32 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:05:32 DEBUG service:54 - create necklace
+2018-07-22 17:05:32 DEBUG service:77 - gets stone
+2018-07-22 17:05:32 DEBUG service:105 - creating semiprecious
+2018-07-22 17:05:32 DEBUG util:67 - creates stone
+2018-07-22 17:05:32 DEBUG util:52 - checks stone
+2018-07-22 17:05:32 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:05:32 DEBUG service:54 - create necklace
+2018-07-22 17:05:32 DEBUG service:77 - gets stone
+2018-07-22 17:05:32 DEBUG service:92 - creating precious in factory
+2018-07-22 17:05:32 DEBUG util:52 - checks stone
+2018-07-22 17:05:32 DEBUG util:67 - creates stone
+2018-07-22 17:05:32 DEBUG util:52 - checks stone
+2018-07-22 17:05:32 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:05:32 DEBUG service:54 - create necklace
+2018-07-22 17:05:32 DEBUG service:77 - gets stone
+2018-07-22 17:05:32 DEBUG service:92 - creating precious in factory
+2018-07-22 17:05:32 DEBUG util:52 - checks stone
+2018-07-22 17:05:32 DEBUG util:67 - creates stone
+2018-07-22 17:05:32 DEBUG util:52 - checks stone
+2018-07-22 17:05:32 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:05:32 DEBUG service:54 - create necklace
+2018-07-22 17:05:32 DEBUG service:77 - gets stone
+2018-07-22 17:05:32 DEBUG service:92 - creating precious in factory
+2018-07-22 17:05:32 DEBUG util:52 - checks stone
+2018-07-22 17:05:32 DEBUG util:67 - creates stone
+2018-07-22 17:05:32 DEBUG util:52 - checks stone
+2018-07-22 17:05:32 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:05:32 DEBUG service:54 - create necklace
+2018-07-22 17:05:32 DEBUG service:77 - gets stone
+2018-07-22 17:05:32 DEBUG service:92 - creating precious in factory
+2018-07-22 17:05:32 DEBUG util:52 - checks stone
+2018-07-22 17:05:32 DEBUG util:67 - creates stone
+2018-07-22 17:05:32 DEBUG util:52 - checks stone
+2018-07-22 17:05:32 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:05:32 DEBUG service:54 - create necklace
+2018-07-22 17:05:32 DEBUG service:77 - gets stone
+2018-07-22 17:05:32 DEBUG service:105 - creating semiprecious
+2018-07-22 17:05:32 DEBUG util:67 - creates stone
+2018-07-22 17:05:32 DEBUG util:52 - checks stone
+2018-07-22 17:05:32 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:05:32 DEBUG service:54 - create necklace
+2018-07-22 17:05:32 DEBUG service:77 - gets stone
+2018-07-22 17:05:32 DEBUG service:105 - creating semiprecious
+2018-07-22 17:05:32 DEBUG util:67 - creates stone
+2018-07-22 17:05:32 DEBUG util:52 - checks stone
+2018-07-22 17:05:32 DEBUG util:32 - checks if there is next stone
+2018-07-22 17:05:32 DEBUG service:121 - assigning characteristics
+2018-07-22 17:05:32 DEBUG service:154 - sorting
+2018-07-22 17:05:32 DEBUG service:184 - getting in transparency
