@@ -5,6 +5,7 @@
  */
 package by.epam.util.parser;
 
+import by.epam.util.GemFactory;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,7 +21,7 @@ import org.apache.log4j.Logger;
  * @author Администратор
  */
 public class JewelryTxtStreamParserImpl implements JewelryParser{
-    private final static Logger logger = Logger.getLogger("by.epam.util");
+    private final static Logger LOGGER = Logger.getLogger(GemFactory.class);
     private BufferedReader in;
     private String line;
 
@@ -29,7 +30,7 @@ public class JewelryTxtStreamParserImpl implements JewelryParser{
     } 
     
     public boolean hasNextStone() throws IOException{
-        logger.debug("checks if there is next stone");
+        LOGGER.debug("checks if there is next stone");
         line = in.readLine();
         return line != null;
     }

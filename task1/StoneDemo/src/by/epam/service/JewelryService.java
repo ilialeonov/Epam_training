@@ -34,12 +34,11 @@ public class JewelryService {
     private int cost = 0;
     private boolean characteristicsAssigned = false;
     
-    private static final Logger logger = Logger.getLogger("by.epam.service");    
+    private static final Logger LOGGER = Logger.getLogger(JewelryService.class);    
     private final GemFactory gemFactory = new GemFactory();
     private final JewelryBuilder necklaceBuilder = new JewelryBuilder();
 
-    public JewelryService() {
-        
+    public JewelryService() {    
     }
     
     public void setJewelryParser(JewelryParser jewelryParser){
@@ -51,10 +50,11 @@ public class JewelryService {
         try {
             while (jewelryParser.hasNextStone()) {
                 try {
-                    logger.debug("create necklace");
+                    LOGGER.debug("create necklace");
                     nextStone = getStone();
                 } catch (NoSuchGemException ex) {
-                    logger.error("An error has occured, no such gem", ex);
+                    LOGGER.info("An error has occured, no such gem");
+                    LOGGER.error("An error has occured, no such gem", ex);
                 }
                 necklaceBuilder.buildStone(nextStone);
             }
@@ -62,7 +62,8 @@ public class JewelryService {
             sizeOfElements = necklace.getStoneAmount();
             return necklace;
         } catch (IOException ex) {
-            logger.error("An error has occured", ex);
+            LOGGER.info("An error has occured");
+            LOGGER.error("An error has occured", ex);
         }
         return necklace;
     }
@@ -74,13 +75,14 @@ public class JewelryService {
         int transparency = 0;
             
         try {
-            logger.debug("gets stone");
+            LOGGER.debug("gets stone");
             name = jewelryParser.getStoneName();
             cost = jewelryParser.getStoneCost();
             weight = jewelryParser.getStoneWeight();
             transparency = jewelryParser.getStoneTransparency();
         } catch (IOException ex) {
-            logger.error("An IOE error has occured", ex);
+            LOGGER.info("An error has occured");
+            LOGGER.error("An IOE error has occured", ex);
         }    
         Gem gemList = Gem.valueOf(name.toUpperCase());
             
@@ -89,12 +91,13 @@ public class JewelryService {
             case ESMERALD:
             case RUBY: {
                 try {
-                    logger.debug("creating precious in factory");
+                    LOGGER.debug("creating precious in factory");
                     return gemFactory.createPreciousStone(name,
                             cost, weight, transparency);
                 } catch (NegativeCostException | NegativeWeightException
                         | OutOfPercentIntervalException ex) {
-                    logger.error("An error has occured", ex);
+                    LOGGER.info("Your datas are invalid");
+                    LOGGER.error("An error has occured", ex);
                 }
             }
             case AQUAMARINE:
@@ -102,12 +105,13 @@ public class JewelryService {
             case TOPAZ:
             {
                 try {
-                    logger.debug("creating semiprecious");
+                    LOGGER.debug("creating semiprecious");
                     return gemFactory.createSemiPreciousStone(name,
                             cost, weight, transparency);
                 } catch (NegativeCostException | NegativeWeightException
                         | OutOfPercentIntervalException ex) {
-                    logger.error("An error has occured", ex);
+                    LOGGER.info("Your datas are invalid");
+                    LOGGER.error("An error has occured", ex);
                 }
             }
             default: throw new NoSuchGemException();
@@ -118,13 +122,14 @@ public class JewelryService {
         final int FIRST_POSITION = 0;
         
         try {
-            logger.debug("assigning characteristics");
+            LOGGER.debug("assigning characteristics");
             for (int i = FIRST_POSITION; i < necklace.getStoneAmount(); i++) {
                 weight += necklace.getStone(i).getWeight();
                 cost += necklace.getStone(i).getCost();
             }  
         } catch (NoSuchPositionStoneException ex) {
-            logger.error("An error has occured", ex);
+            LOGGER.info("There is no stone at the position");
+            LOGGER.error("NoSuchPositionStoneException has occured", ex);
         }
         characteristicsAssigned = true;
     }
@@ -151,7 +156,7 @@ public class JewelryService {
         boolean isSorted = true;
 
         try {
-            logger.debug("sorting");
+            LOGGER.debug("sorting");
             for (int i = 0; i < sizeOfSteps; i++) {
                 for (int j = sizeOfElements - 1; j > i; j--) { 
                     if (necklace.getStone(j).getCost() 
@@ -169,19 +174,20 @@ public class JewelryService {
                 }
             }
         } catch (NoSuchPositionStoneException ex) {
-            logger.info("NSPSException", ex);
+            LOGGER.info("There is no stone at the position");
+            LOGGER.error("NoSuchPositionStoneException has occured", ex);
         }
     }
     
     public List<GemStone> getInTransparencyInterval(int down, int up) throws BadIntervalException{
         if (down < 0 || up > 100 || down > up) {
-            logger.debug("checking transparency");            
+            LOGGER.debug("checking transparency");            
             throw new BadIntervalException();
         }
         List<GemStone> inInterval = new ArrayList<>();
         
         try {
-            logger.debug("getting in transparency");
+            LOGGER.debug("getting in transparency");
             for (int i = 0; i < sizeOfElements; i++) {
                 int transparency = necklace.getStone(i).getTransparency();
                 if(down <= transparency && transparency <= up) {
@@ -189,7 +195,8 @@ public class JewelryService {
                 }
             }    
         } catch (NoSuchPositionStoneException ex) {
-            logger.info("There is no such position stone", ex);
+            LOGGER.info("There is no such position stone");
+            LOGGER.error("NoSuchPositionStoneException has occured", ex);
         }
         return inInterval;
     }

@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
  * @author Администратор
  */
 public class GemFactory {
-    private final static Logger logger = Logger.getLogger("by.epam.util");
+    private final static Logger LOGGER = Logger.getLogger(GemFactory.class);
 
     public GemFactory() {
     }
@@ -49,7 +49,7 @@ public class GemFactory {
             NegativeCostException, NegativeWeightException, 
             OutOfPercentIntervalException {
         
-        logger.debug("checks stone");
+        LOGGER.debug("checks stone");
         
         if (cost < 0) {
             throw new NegativeCostException();
@@ -64,7 +64,7 @@ public class GemFactory {
             double weight, int transparency) throws NegativeCostException, 
             NegativeWeightException, OutOfPercentIntervalException{
         
-        logger.debug("creates stone");
+        LOGGER.debug("creates stone");
         
         checkStone(cost, weight, transparency);
         

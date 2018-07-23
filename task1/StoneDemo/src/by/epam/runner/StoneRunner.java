@@ -13,6 +13,7 @@ import by.epam.util.parser.JewelryParser;
 import by.epam.util.parser.JewelryTxtStreamParserImpl;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Scanner;
 import org.apache.log4j.Logger;
@@ -23,34 +24,41 @@ import org.apache.log4j.Logger;
  */
 public class StoneRunner {
     
-    private static final Logger logger = Logger.getLogger("by.epam.runner");
+    private static final Logger LOGGER = Logger.getLogger(StoneRunner.class);
 
     public static void main(String[] args) throws FileNotFoundException {
         JewelryService service = new JewelryService();
         JewelryParser parser = new JewelryTxtStreamParserImpl("stonelist.txt");
         service.setJewelryParser(parser);
         Jewelry necklace = service.createNecklace();
-        logger.info(necklace);
+        LOGGER.info(necklace);
     
         int commonCost = service.getGemsCost();
-        logger.info("Common cost of all gems is " + commonCost + " $.\n");        
+        if(LOGGER.isInfoEnabled()) {
+            LOGGER.info(MessageFormat.format(
+                    "Common cost of all gems is {0} $.\n ", commonCost));     
+        }
         
         double commonWeight = service.getGemsWeight();
-        logger.info("Common weight of all gems is " + commonWeight
-                + "carats.\n\n");        
+        if(LOGGER.isInfoEnabled()) {
+            LOGGER.info(MessageFormat.format(
+                    "Common weight of all gems is {0} carats.\n "
+                    , commonWeight));    
+        }
         
         service.sortByCost();
-        logger.info(necklace);
+        LOGGER.info(necklace);
         
         List<GemStone> inInterval = null;
         try {
             inInterval = service.getInTransparencyInterval(90, 99);
         } catch (BadIntervalException ex) {
-            logger.error("You have entered bad interval", ex);
+            LOGGER.info("You have entered bad interval");
+            LOGGER.error("User have entered bad interval", ex);
         }
-        logger.info("GemStones in interval of the chosen tranparency: ");
+        LOGGER.info("GemStones in interval of the chosen tranparency: ");
         for (GemStone stone : inInterval) {
-            logger.info(stone);
+            LOGGER.info(stone);
         }
     }
     
