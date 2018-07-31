@@ -24,6 +24,7 @@
         </logger>
 		
         <logger name="by.epam.service">
+
             <level value="debug" />
 			<appender-ref ref="TxtAppender" />
         </logger>

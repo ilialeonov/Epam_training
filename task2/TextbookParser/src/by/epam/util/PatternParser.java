@@ -6,9 +6,8 @@
 package by.epam.util;
 
 import by.epam.entity.Component;
-import by.epam.entity.ComponentSkeleton;
-import by.epam.entity.Listing;
-import by.epam.entity.Text;
+import by.epam.entity.Composite;
+import by.epam.entity.Leaf;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -34,87 +33,64 @@ public class PatternParser {
         this.data = data;
     }
     
-    public static List<Component> parseByTwoSaveDelimeter(String data, String regex, 
-            Class<? extends Component> firstCl, 
-            Class<? extends Component> secondCl) 
-            throws InstantiationException, IllegalAccessException{
-        
-            List<Component> componentList = new ArrayList();
-            Pattern pattern = Pattern.compile(regex);
-            Matcher matcher = pattern.matcher(data);
-            Component component;
+    public static List<Component> parseSaveAll(String data, String regex){
             
-            String[] textArray = pattern.split(data);
-            StringBuilder textLine = new StringBuilder("");
+        List<Component> componentList = new ArrayList();
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(data);
             
-            int counter = 0;
-            String matcherText = "";
+        String[] textArray = pattern.split(data);
+        StringBuilder textLine = new StringBuilder("");
+            
+        int counter = 0;
+        String matcherText = "";
                     
-            // summing elements from split and from match
-            while(matcher.find()) {
-                int start = matcher.start();
-                matcherText = matcher.group();
-                
-
-                if(textLine.length() == start) {
-                    component = secondCl.newInstance();
-                    component.setData(matcherText);
-                    componentList.add(component);
-                    textLine.append(matcherText);
-                } else {
-                    component = firstCl.newInstance();
-                    component.setData(textArray[counter]);
-                    componentList.add(component);
-                    textLine.append(textArray[counter]);
-                    counter++;
-                    component = secondCl.newInstance();
-                    component.setData(matcherText);
-                    componentList.add(component);
-                    textLine.append(matcherText);
-                } 
-            }
-            if(textArray.length - 1 == counter) {
-                component = firstCl.newInstance();
-                component.setData(textArray[counter]);
-                componentList.add(component);
+        // summing elements from split and from match
+        while(matcher.find()) {
+            int start = matcher.start();
+            matcherText = matcher.group();
+            if(textLine.length() == start) {
+                componentList.add(new Leaf(matcherText));
+                textLine.append(matcherText);
+            } else {
+                componentList.add(new Composite(textArray[counter]));
                 textLine.append(textArray[counter]);
-            }            
+                counter++;
+                componentList.add(new Leaf(matcherText));
+                textLine.append(matcherText);
+            } 
+        }
+        if(textArray.length - 1 == counter) {
+            componentList.add(new Composite(textArray[counter]));
+            textLine.append(textArray[counter]);
+        }            
         return componentList;    
     }
     
-    public static List<Component> parseByOneNoDelimeter(String data, String regex, 
-            Class<? extends Component> cl) 
-            throws InstantiationException, IllegalAccessException{
+    public static List<Component> parseSplitByDelimeter(String data,
+            String regex){
+        
         List<Component> componentList = new ArrayList();
         String[] textArray;
-        Component component;
                 
         Pattern pattern = Pattern.compile(regex);
         textArray = pattern.split(data);
         for (String x : textArray) {
-            if(x.length()>0){
-                component = cl.newInstance();
-                component.setData(x);
-                componentList.add(component);
+            if(!x.isEmpty()){
+                componentList.add(new Composite(x));
             }
         }
         return componentList;
     }
     
-    public static List<Component> parseByOneWithDelimeter(String data, 
-            String regex, Class<? extends Component> cl) 
-            throws InstantiationException, IllegalAccessException{
+    public static List<Component> parseGetMatched(String data,String regex){
         List<Component> componentList = new ArrayList();
         String[] textArray;
-        Component component;
                 
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(data);
         while (matcher.find()) {
-            component = cl.newInstance();
-            component.setData(matcher.group());
-            componentList.add(component);
-            
+            componentList.add(new Composite(matcher.group()));  
         }
         return componentList;
     }    

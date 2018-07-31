@@ -9,13 +9,6 @@ package by.epam.entity;
  *
  * @author uks50
  */
-public class PunctuationAndOther extends ComponentSkeleton{
-
-    public PunctuationAndOther() {
-    }
-
-    public PunctuationAndOther(String data) {
-        super(data);
-    }
-    
+public enum LevelDepth {
+    TEXT, LISTING, PARAGRAPH, SENTENCE, WORD, SYMBOL
 }
