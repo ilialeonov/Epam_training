@@ -26,12 +26,15 @@ public class WorkService {
     }
     
     public void sortWords(){
+        LOGGER.debug("sorting words");
         Arrays.parallelSort(words, (a, b) -> {
             return Character.toLowerCase(a.charAt(0)) 
                     - Character.toLowerCase(b.charAt(0));
         });
+        LOGGER.debug("sorting is finished");
     }
     public void sendInSource(String path) throws IOException{
+        LOGGER.debug("sending results to file, new first letter from new line");
         try (PrintWriter out = 
                 new PrintWriter(new BufferedWriter(new FileWriter(path)))){    
             out.printf("\t%s ", words[0]);
@@ -44,5 +47,6 @@ public class WorkService {
                 }
             }      
         }
+        LOGGER.debug("sending is finished");
     }
 }
