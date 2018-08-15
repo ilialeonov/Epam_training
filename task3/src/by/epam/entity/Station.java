@@ -8,6 +8,8 @@ package by.epam.entity;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  *
@@ -57,8 +59,9 @@ public class Station {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 17 * hash + Objects.hashCode(this.name);
+        int hash = 7;
+        hash = 11 * hash + Objects.hashCode(this.name);
+        hash = 11 * hash + Objects.hashCode(this.buses);
         return hash;
     }
 
@@ -74,12 +77,17 @@ public class Station {
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
+        if (!Objects.equals(this.buses, other.buses)) {
+            return false;
+        }
+        if (!Objects.equals(this.semaphore, other.semaphore)) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
         return name;
-    }
-    
+    }   
 }

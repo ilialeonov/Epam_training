@@ -52,11 +52,12 @@ public class Route {
     public Station getNextStation(){
         return route.poll();
     }
-    
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 29 * hash + Objects.hashCode(this.route);
+        int hash = 7;
+        hash = 71 * hash + Objects.hashCode(this.name);
+        hash = 71 * hash + Objects.hashCode(this.route);
         return hash;
     }
 
@@ -69,16 +70,17 @@ public class Route {
             return false;
         }
         final Route other = (Route) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
         if (!Objects.equals(this.route, other.route)) {
             return false;
         }
         return true;
     }
-
+    
     @Override
     public String toString() {
         return name;
-    }
-    
-    
+    } 
 }

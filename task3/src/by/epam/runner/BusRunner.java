@@ -9,11 +9,15 @@ import by.epam.entity.Bus;
 import by.epam.entity.Route;
 import by.epam.entity.Station;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
+
+
 
 public class BusRunner {
+    private static final Logger LOG = Logger.getLogger(BusRunner.class);
     public static void main(String[] args){
+        LOG.info("Bus moving imitation");
+        
         Station a = new Station("A");
         a.setMaxBusAmount(4);
         Station b = new Station("B");
@@ -74,7 +78,6 @@ public class BusRunner {
         
         
         try {
-            TimeUnit.SECONDS.sleep(1);
             busAD.start();
             TimeUnit.MILLISECONDS.sleep(400);
             busGC.start();
@@ -84,7 +87,7 @@ public class BusRunner {
             busAB.start();
             TimeUnit.MILLISECONDS.sleep(400);
         } catch (InterruptedException ex) {
-            
+            LOG.info("An IException has occured while imitating", ex);
         }
         
     }
