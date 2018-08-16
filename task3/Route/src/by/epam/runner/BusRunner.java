@@ -6,8 +6,8 @@
 package by.epam.runner;
 
 import by.epam.entity.Bus;
-import by.epam.entity.Route;
 import by.epam.entity.Station;
+import by.epam.entity.RouteSingletone;
 import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
 
@@ -33,27 +33,31 @@ public class BusRunner {
         Station g = new Station("G");
         g.setMaxBusAmount(2);
     
-        Route RouteAD = new Route("A - D");
+        RouteSingletone RouteAD = RouteSingletone.getRouteSingletone();
+        RouteAD.setName("A - D");
         RouteAD.setNextStation(a);
         RouteAD.setNextStation(b);
         RouteAD.setNextStation(c);
         RouteAD.setNextStation(d);
         
-        Route RouteGC = new Route("G - C");
+        RouteSingletone RouteGC = RouteSingletone.getRouteSingletone();
+        RouteGC.setName("G - C");
         RouteGC.setNextStation(g);
         RouteGC.setNextStation(f);
         RouteGC.setNextStation(e);
         RouteGC.setNextStation(d);
         RouteGC.setNextStation(c);
         
-        Route RouteAE = new Route("A - E");
+        RouteSingletone RouteAE = RouteSingletone.getRouteSingletone();
+        RouteAE.setName("A - E");
         RouteAE.setNextStation(a);
         RouteAE.setNextStation(g);
         RouteAE.setNextStation(d);
         RouteAE.setNextStation(f);
         RouteAE.setNextStation(e);
         
-        Route RouteAB = new Route("A - B");
+        RouteSingletone RouteAB = RouteSingletone.getRouteSingletone();
+        RouteAB.setName("A - B");
         RouteAB.setNextStation(a);
         RouteAB.setNextStation(c);
         RouteAB.setNextStation(f);

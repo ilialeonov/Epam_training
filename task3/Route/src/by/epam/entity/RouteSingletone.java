@@ -5,29 +5,33 @@
  */
 package by.epam.entity;
 
+import by.epam.entity.Station;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Queue;
 
 /**
  *
  * @author uks50
  */
-public class Route {
+public class RouteSingletone {
+    final static int MAX_COUNTER = 4;
+    private static int counter = 0;
+    
     private String name;
-    private ArrayDeque<Station> route = new ArrayDeque();
-
-    public Route() {
+    private Queue<Station> route = new ArrayDeque();      
+    
+    private RouteSingletone(){   
     }
     
-    public Route(String name) {
-        this.name = name;
+    public static RouteSingletone getRouteSingletone(){
+        while (counter < MAX_COUNTER) {
+            counter++;
+            return new RouteSingletone();
+        }
+        return null;
     }
     
-    public Route(ArrayDeque<Station> route){
-        this.route = route;
-    }
-
     public String getName() {
         return name;
     }
@@ -36,7 +40,7 @@ public class Route {
         this.name = name;
     }
 
-    public ArrayDeque<Station> getRoute() {
+    public Queue<Station> getRoute() {
         return route;
     }
 
@@ -56,8 +60,8 @@ public class Route {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 71 * hash + Objects.hashCode(this.name);
-        hash = 71 * hash + Objects.hashCode(this.route);
+        hash = 13 * hash + Objects.hashCode(this.name);
+        hash = 13 * hash + Objects.hashCode(this.route);
         return hash;
     }
 
@@ -69,7 +73,7 @@ public class Route {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Route other = (Route) obj;
+        final RouteSingletone other = (RouteSingletone) obj;
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
@@ -78,9 +82,12 @@ public class Route {
         }
         return true;
     }
-    
+
     @Override
     public String toString() {
         return name;
-    } 
+    }
+    
+    
+    
 }

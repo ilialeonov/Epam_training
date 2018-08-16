@@ -16,9 +16,12 @@ import java.util.concurrent.locks.ReentrantLock;
  * @author uks50
  */
 public class Station {
+    final static int DEFAULT_COUNT = 3;
+    
     private String name;
     private ArrayList<Bus> buses;
-    private Semaphore semaphore;
+    private Semaphore semaphore = new Semaphore(DEFAULT_COUNT);
+    private Lock lock = new ReentrantLock();
     
     public Station() {
         buses = new ArrayList();   
@@ -51,6 +54,10 @@ public class Station {
     
     public void deleteBus(Bus bus) {
         buses.remove(bus);
+    }
+    
+    public Lock getLock(){
+        return lock;
     }
     
     public ArrayList<Bus> getBuses(){
