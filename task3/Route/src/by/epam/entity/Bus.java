@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
 public class Bus extends Thread {
     
     private static final Logger LOG = Logger.getLogger(Bus.class);
-    private final static String path = "data.txt";
+    private static final String PATH = "data.txt";
     private static int MAX_FIRST_ENTRENCE = 20;
     private static int MAX_EXIT = 10;
     private static int MAX_CHANGE = 5;
@@ -25,7 +25,7 @@ public class Bus extends Thread {
     private static int TIME_STAYING = 1;
     
     static {
-        try (FileReader fileReader = new FileReader(path);
+        try (FileReader fileReader = new FileReader(PATH);
                 BufferedReader reader = new BufferedReader(fileReader)) {
             MAX_FIRST_ENTRENCE = Integer.parseInt(reader.readLine());
             MAX_EXIT = Integer.parseInt(reader.readLine());
@@ -39,7 +39,7 @@ public class Bus extends Thread {
         }
     }
     
-    private Random random = new Random();
+    private static Random random = new Random();
     
     private int passengers;
     private int passengersIn;
@@ -72,12 +72,13 @@ public class Bus extends Thread {
         currentStation = route.getNextStation();
         firstStay();
         nextStation = route.getNextStation();
-        while(nextStation != null) {
+         do {
             move();
             currentStation = nextStation;
-            nextStation = route.getNextStation();
+            System.out.println("++++++++++++++++");
             stay();
-        }
+        } while((nextStation = route.getNextStation()) != null);
+         move();
         lastStay();
     }    
     

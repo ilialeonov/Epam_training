@@ -65,19 +65,15 @@ public class BusRunner {
         RouteAB.setNextStation(b);
         
         Bus busAD = new Bus();
-        busAD.setPassengers(80);
         busAD.setRoute(RouteAD);
         
         Bus busGC = new Bus();
-        busGC.setPassengers(64);
         busGC.setRoute(RouteGC);
         
         Bus busAE = new Bus();
-        busAE.setPassengers(24);
         busAE.setRoute(RouteAE);
         
         Bus busAB = new Bus();
-        busAB.setPassengers(42);
         busAB.setRoute(RouteAB);
         
         

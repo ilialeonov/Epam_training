@@ -9,6 +9,7 @@ import by.epam.entity.Station;
 import java.util.ArrayDeque;
 import java.util.Objects;
 import java.util.Queue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
@@ -16,7 +17,7 @@ import java.util.Queue;
  */
 public class RouteSingletone {
     final static int MAX_COUNTER = 4;
-    private static int counter = 0;
+    private static AtomicInteger counter = new AtomicInteger(0);
     
     private String name;
     private Queue<Station> route = new ArrayDeque();      
@@ -25,11 +26,10 @@ public class RouteSingletone {
     }
     
     public static RouteSingletone getRouteSingletone(){
-        while (counter < MAX_COUNTER) {
-            counter++;
+        while (counter.getAndIncrement() < MAX_COUNTER) {
             return new RouteSingletone();
         }
-        return null;
+        throw new RuntimeException();
     }
     
     public String getName() {
