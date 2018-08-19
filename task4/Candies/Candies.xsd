@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.epam.by/candies"
+        xmlns:tns="http://www.epam.by/candies"
+           elementFormDefault="qualified">
+    
+    <element name="candies">
+        <complexType>
+            <sequence>
+                <element name = "candy" 
+                         type = "tns:Candy"
+                         minOccurs = "16"
+                         maxOccurs = "21"/>
+            </sequence>
+        </complexType>
+    </element>
+    
+    <complexType name = "Candy">
+        <sequence>
+            <element name = "name">
+                <simpleType>
+                    <restriction base = "ID">
+                        <pattern value="[A-Z](\w+){3,21}"/>
+                    </restriction>
+                </simpleType>
+            </element>            
+            <element name = "energy" type = "tns:Energy"/>
+            <element name = "type" type = "tns:Type"/>
+            <element name = "ingridients" type = "tns:Ingridients"/>
+            <element name = "value" type = "tns:Value"/>
+            <element name = "production">
+                <simpleType>
+                    <restriction base = "string">
+                        <pattern value="[A-Z](\w+){3,21}"/>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name = "deliveryTime" type = "date"/>
+        </sequence>
+    </complexType>
+        
+    
+            <simpleType name = "restrictedEnergyType">
+                <restriction base = "positiveInteger">
+                    <minInclusive value = "300"/>
+                    <maxInclusive value = "500"/>
+                </restriction>
+            </simpleType>
+
+            <complexType name = "Energy">
+                <simpleContent>
+                    <extension base = "tns:restrictedEnergyType">
+                        <attribute name = "unit" type = "string" fixed = "kkal"/>
+                    </extension>
+                </simpleContent>
+            </complexType>   
+
+            <simpleType name="Type">
+                <restriction base = "string">
+                    <enumeration value = "caramel"/>
+                    <enumeration value = "chocolateNuts"/>
+                    <enumeration value = "chocolateSouffle"/>
+                </restriction>
+            </simpleType>
+
+    <complexType name="Ingridients">
+        <sequence>
+            <element name = "water" type = "tns:Water"/>
+            <element name = "sugar" type = "tns:Sugar"/> 
+            <element name = "fructose" type = "tns:Fructose"/>
+            <element name = "vanilin" type = "tns:Vanilin"/>          
+        </sequence>
+        <attribute name = "chocotype" type = "string" use = "optional"/>
+    </complexType>
+    
+            <simpleType name = "restrictedWaterType">
+                <restriction base = "positiveInteger">
+                    <maxInclusive value = "300"/>
+                </restriction>
+            </simpleType>
+
+            <complexType name = "Water">
+                <simpleContent>
+                    <extension base = "tns:restrictedWaterType">
+                        <attribute name = "unit" type = "string" fixed = "mll"/>
+                    </extension>
+                </simpleContent>
+            </complexType>      
+
+            <simpleType name = "restrictedSugarType">
+                <restriction base = "positiveInteger">
+                    <maxInclusive value = "500"/>
+                </restriction>
+            </simpleType>
+
+            <complexType name = "Sugar">
+                <simpleContent>
+                    <extension base = "tns:restrictedSugarType">
+                        <attribute name = "unit" type = "string" fixed = "mg"/>
+                    </extension>
+                </simpleContent>
+            </complexType>   
+
+            <simpleType name = "restrictedFructoseType">
+                <restriction base = "positiveInteger">
+                    <maxInclusive value = "300"/>
+                </restriction>
+            </simpleType>
+
+            <complexType name = "Fructose">
+                <simpleContent>
+                    <extension base = "tns:restrictedFructoseType">
+                        <attribute name = "unit" type = "string" fixed = "mg"/>
+                    </extension>
+                </simpleContent>
+            </complexType>        
+
+                <simpleType name = "restrictedVanilinType">
+                <restriction base = "positiveInteger">
+                    <maxInclusive value = "100"/>
+                </restriction>
+            </simpleType>
+
+            <complexType name = "Vanilin">
+                <simpleContent>
+                    <extension base = "tns:restrictedVanilinType">
+                        <attribute name = "unit" type = "string" fixed = "mg"/>
+                    </extension>
+                </simpleContent>
+            </complexType>    
+
+    <complexType name="Value">
+        <sequence>
+            <element name = "protein" type = "tns:Protein"/>            
+            <element name = "fat" type = "tns:Fat"/>           
+            <element name = "carbohydrate" type = "tns:Carbohydrate"/> 
+        </sequence>
+    </complexType> 
+    
+
+            <simpleType name = "restrictedProteinType">
+                <restriction base = "positiveInteger">
+                    <maxInclusive value = "100"/>
+                </restriction>
+            </simpleType>
+
+            <complexType name = "Protein">
+                <simpleContent>
+                    <extension base = "tns:restrictedProteinType">
+                        <attribute name = "unit" type = "string" fixed = "mg"/>
+                    </extension>
+                </simpleContent>
+            </complexType>    
+
+            <simpleType name = "restrictedFatType">
+                <restriction base = "positiveInteger">
+                    <maxInclusive value = "100"/>
+                </restriction>
+            </simpleType>
+
+            <complexType name = "Fat">
+                <simpleContent>
+                    <extension base = "tns:restrictedFatType">
+                        <attribute name = "unit" type = "string" fixed = "mg"/>
+                    </extension>
+                </simpleContent>
+            </complexType>    
+        
+            <simpleType name = "restrictedCarbohydrateType">
+                <restriction base = "positiveInteger">
+                    <maxInclusive value = "100"/>
+                </restriction>
+            </simpleType>
+
+            <complexType name = "Carbohydrate">
+                <simpleContent>
+                    <extension base = "tns:restrictedCarbohydrateType">
+                        <attribute name = "unit" type = "string" fixed = "mg"/>
+                    </extension>
+                </simpleContent>
+            </complexType>            
+        
+</schema>
