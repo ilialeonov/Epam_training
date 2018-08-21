@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<candies xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.epam.by/candies"
+        xsi:schemaLocation="http://www.epam.by/candies candies.xsd">
+    <candy>
+        <name> Raffaello </name>
+        <energy unit = "kkal">412</energy>
+        <type>chocolateSouffle</type>
+        <ingridients chocotype="white">
+            <water unit = "ml">206</water>
+            <sugar unit = "mg">416</sugar>
+            <fructose unit = "mg">210</fructose>
+            <vanilin unit = "mg">56</vanilin>
+        </ingridients>
+        <value>
+            <protein unit = "g">52</protein>
+            <fat unit = "g">12</fat>
+            <carbohydrate unit = "g">36</carbohydrate>
+        </value>
+        <production>Raffaello</production>
+        <deliveryTime>2017-09-24</deliveryTime>
+    </candy>
+
+    <candy>
+        <name>Alonka</name>
+        <energy unit = "kkal">484</energy>
+        <type>chocolateNuts</type>
+        <ingridients chocotype="milk">
+            <water unit = "ml">110</water>
+            <sugar unit = "mg">380</sugar>
+            <fructose unit = "mg">180</fructose>
+            <vanilin unit = "mg">70</vanilin>
+        </ingridients>
+        <value>
+            <protein unit = "g">50</protein>
+            <fat unit = "g">10</fat>
+            <carbohydrate unit = "g">40</carbohydrate>
+        </value>
+        <production>Communarka</production>
+        <deliveryTime>2017-06-04</deliveryTime>
+    </candy>
+    
+    <candy>
+        <name>Sorvanec</name>
+        <energy unit = "kkal">435</energy>
+        <type>chocolateNuts</type>
+        <ingridients chocotype="milk">
+            <water unit = "ml">88</water>
+            <sugar unit = "mg">366</sugar>
+            <fructose unit = "mg">142</fructose>
+            <vanilin unit = "mg">86</vanilin>
+        </ingridients>
+        <value>
+            <protein unit = "g">44</protein>
+            <fat unit = "g">16</fat>
+            <carbohydrate unit = "g">40</carbohydrate>
+        </value>
+        <production>Communarka</production>
+        <deliveryTime>2017-05-11</deliveryTime>
+    </candy>
+    
+    <candy>
+        <name>MonCheri</name>
+        <energy unit = "kkal">307</energy>
+        <type>chocolateSouffle</type>
+        <ingridients chocotype="milk">
+            <water unit = "ml">216</water>
+            <sugar unit = "mg">330</sugar>
+            <fructose unit = "mg">70</fructose>
+            <vanilin unit = "mg">99</vanilin>
+        </ingridients>
+        <value>
+            <protein unit = "g">40</protein>
+            <fat unit = "g">19</fat>
+            <carbohydrate unit = "g">41</carbohydrate>
+        </value>
+        <production>Ferrero</production>
+        <deliveryTime>2017-07-21</deliveryTime>
+    </candy>
+    
+    <candy>
+        <name>Belochka</name>
+        <energy unit = "kkal">354</energy>
+        <type>chocolateNuts</type>
+        <ingridients chocotype="milk">
+            <water unit = "ml">88</water>
+            <sugar unit = "mg">330</sugar>
+            <fructose unit = "mg">180</fructose>
+            <vanilin unit = "mg">96</vanilin>
+        </ingridients>
+        <value>
+            <protein unit = "g">54</protein>
+            <fat unit = "g">24</fat>
+            <carbohydrate unit = "g">22</carbohydrate>
+        </value>
+        <production>Communarka</production>
+        <deliveryTime>2017-01-09</deliveryTime>
+    </candy>
+    
+    <candy>
+        <name>Yummi</name>
+        <energy unit = "kkal">322</energy>
+        <type>caramel</type>
+        <ingridients>
+            <water unit = "ml">30</water>
+            <sugar unit = "mg">333</sugar>
+            <fructose unit = "mg">66</fructose>
+            <vanilin unit = "mg">6</vanilin>
+        </ingridients>
+        <value>
+            <protein unit = "g">41</protein>
+            <fat unit = "g">44</fat>
+            <carbohydrate unit = "g">12</carbohydrate>
+        </value>
+        <production>Roshen</production>
+        <deliveryTime>2017-03-14</deliveryTime>
+    </candy>
+    
+    <candy>
+        <name>Nuts</name>
+        <energy unit = "kkal">432</energy>
+        <type>chocolateNuts</type>
+        <ingridients chocotype="bitter">
+            <water unit = "ml">103</water>
+            <sugar unit = "mg">404</sugar>
+            <fructose unit = "mg">106</fructose>
+            <vanilin unit = "mg">44</vanilin>
+        </ingridients>
+        <value>
+            <protein unit = "g">51</protein>
+            <fat unit = "g">14</fat>
+            <carbohydrate unit = "g">35</carbohydrate>
+        </value>
+        <production>Nestle</production>
+        <deliveryTime>2017-05-06</deliveryTime>
+    </candy>
+    
+    <candy>
+        <name>Michelle</name>
+        <energy unit = "kkal">336</energy>
+        <type>caramel</type>
+        <ingridients>
+            <water unit = "mg">12</water>
+            <sugar unit = "mg">336</sugar>
+            <fructose unit = "mg">77</fructose>
+            <vanilin unit = "mg">18</vanilin>
+        </ingridients>
+        <value>
+            <protein unit = "g">12</protein>
+            <fat unit = "g">66</fat>
+            <carbohydrate unit = "g">22</carbohydrate>
+        </value>
+        <production>Rossia</production>
+        <deliveryTime>2017-03-01</deliveryTime>
+    </candy>
+    
+    <candy>
+        <name>Gnom</name>
+        <energy unit = "kkal">312</energy>
+        <type>chocolateSouffle</type>
+        <ingridients chocotype="ruby">
+            <water unit = "ml">200</water>
+            <sugar unit = "mg">400</sugar>
+            <fructose unit = "mg">15</fructose>
+            <vanilin unit = "mg">44</vanilin>
+        </ingridients>
+        <value>
+            <protein unit = "g">16</protein>
+            <fat unit = "g">72</fat>
+            <carbohydrate unit = "g">12</carbohydrate>
+        </value>
+        <production>Spartak</production>
+        <deliveryTime>2017-04-08</deliveryTime>
+    </candy>
+    
+    <candy>
+        <name>Champagne</name>
+        <energy unit = "kkal">305</energy>
+        <type>chocolateSouffle</type>
+        <ingridients chocotype="ruby">
+            <water unit = "ml">44</water>
+            <sugar unit = "mg">404</sugar>
+            <fructose unit = "mg">34</fructose>
+            <vanilin unit = "mg">12</vanilin>
+        </ingridients>
+        <value>
+            <protein unit = "g">33</protein>
+            <fat unit = "g">33</fat>
+            <carbohydrate unit = "g">34</carbohydrate>
+        </value>
+        <production>Chocmod</production>
+        <deliveryTime>2017-05-02</deliveryTime>
+    </candy>
+    
+    <candy>
+        <name>Marshmellow</name>
+        <energy unit = "kkal">301</energy>
+        <type>chocolateSouffle</type>
+        <ingridients chocotype="bitter">
+            <water unit = "ml">88</water>
+            <sugar unit = "mg">356</sugar>
+            <fructose unit = "mg">22</fructose>
+            <vanilin unit = "mg">34</vanilin>
+        </ingridients>
+        <value>
+            <protein unit = "g">12</protein>
+            <fat unit = "g">77</fat>
+            <carbohydrate unit = "g">11</carbohydrate>
+        </value>
+        <production>Chocmod</production>
+        <deliveryTime>2017-03-22</deliveryTime>
+    </candy>
+   
+    <candy>
+        <name>Snickers</name>
+        <energy unit = "kkal">466</energy>
+        <type>chocolateNuts</type>
+        <ingridients chocotype="milk">
+            <water unit = "ml">66</water>
+            <sugar unit = "mg">444</sugar>
+            <fructose unit = "mg">11</fructose>
+            <vanilin unit = "mg">23</vanilin>
+        </ingridients>
+        <value>
+            <protein unit = "g">56</protein>
+            <fat unit = "g">22</fat>
+            <carbohydrate unit = "g">22</carbohydrate>
+        </value>
+        <production>Nestle</production>
+        <deliveryTime>2017-04-17</deliveryTime>
+    </candy>
+
+   
+    <candy>
+        <name>Bounty</name>
+        <energy unit = "kkal">377</energy>
+        <type>chocolateSouffle</type>
+        <ingridients chocotype="milk">
+            <water unit = "ml">42</water>
+            <sugar unit = "mg">356</sugar>
+            <fructose unit = "mg">48</fructose>
+            <vanilin unit = "mg">52</vanilin>
+        </ingridients>
+        <value>
+            <protein unit = "g">30</protein>
+            <fat unit = "g">22</fat>
+            <carbohydrate unit = "g">48</carbohydrate>
+        </value>
+        <production>Nestle</production>
+        <deliveryTime>2017-11-02</deliveryTime>
+    </candy>
+    
+   
+    <candy>
+        <name>Twix</name>
+        <energy unit = "kkal">402</energy>
+        <type>chocolateNuts</type>
+        <ingridients chocotype="milk">
+            <water unit = "ml">41</water>
+            <sugar unit = "mg">356</sugar>
+            <fructose unit = "mg">18</fructose>
+            <vanilin unit = "mg">11</vanilin>
+        </ingridients>
+        <value>
+            <protein unit = "g">41</protein>
+            <fat unit = "g">27</fat>
+            <carbohydrate unit = "g">32</carbohydrate>
+        </value>
+        <production>Nestle</production>
+        <deliveryTime>2017-11-12</deliveryTime>
+    </candy>
+
+   
+    <candy>
+        <name>Nesquick</name>
+        <energy unit = "kkal">320</energy>
+        <type>chocolateSouffle</type>
+        <ingridients chocotype="milk">
+            <water unit = "ml">88</water>
+            <sugar unit = "mg">300</sugar>
+            <fructose unit = "mg">22</fructose>
+            <vanilin unit = "mg">45</vanilin>
+        </ingridients>
+        <value>
+            <protein unit = "g">46</protein>
+            <fat unit = "g">23</fat>
+            <carbohydrate unit = "g">31</carbohydrate>
+        </value>
+        <production>Nestle</production>
+        <deliveryTime>2017-08-12</deliveryTime>
+    </candy>      
+    
+    <candy>
+        <name>Bombom</name>
+        <energy unit = "kkal">308</energy>
+        <type>chocolateSouffle</type>
+        <ingridients>
+            <water unit = "ml">6</water>
+            <sugar unit = "mg">322</sugar>
+            <fructose unit = "mg">88</fructose>
+            <vanilin unit = "mg">16</vanilin>
+        </ingridients>
+        <value>
+            <protein unit = "g">12</protein>
+            <fat unit = "g">66</fat>
+            <carbohydrate unit = "g">22</carbohydrate>
+        </value>
+        <production>SweetCountry</production>
+        <deliveryTime>2017-04-11</deliveryTime>
+    </candy>                                                                                                                                                                                                                                                         
+</candies>
+

@@ -6,7 +6,11 @@
 package by.epam.runner;
 
 import by.epam.entity.Candy;
-import by.epam.sevice.CandiesSaxBuilder;
+import by.epam.util.AbstractCandiesBuilder;
+import by.epam.util.CandiesDOMBuilder;
+import by.epam.util.CandiesSaxBuilder;
+import by.epam.util.CandiesStaxBuilder;
+import by.epam.util.CandyBuilderFactory;
 import by.epam.util.SchemaValidator;
 import java.util.Set;
 import org.apache.log4j.Logger;
@@ -18,14 +22,19 @@ import org.apache.log4j.Logger;
 public class CandiesRunner {
     private static final Logger LOG = Logger.getLogger(CandiesRunner.class);
     
+    private static final String PARSERNAME = "stax";
     public static void main(String[] args) {
         LOG.info("Checking if xml file is valid to xsd scheme");
-        String filePath = "Candies.xml";
-        String schemaPath = "Candies.xsd";
+        String filePath = "dataXML\\Candies.xml";
+        String schemaPath = "dataXML\\Candies.xsd";
         SchemaValidator.validate(filePath, schemaPath);
-        CandiesSaxBuilder candiesSB = new CandiesSaxBuilder();
-        candiesSB.buildSetCandies(filePath);
-        Set<Candy> candies = candiesSB.getCandies();
+        LOG.info("Parsing xml file");
+        CandyBuilderFactory factory = new CandyBuilderFactory();
+        LOG.info("The chosen parser is " + PARSERNAME);
+        AbstractCandiesBuilder builder = factory.createStudentBuilder(PARSERNAME);
+        builder.buildSetCandies(filePath);
+        LOG.info("Parsed elements are:");
+        Set<Candy> candies = builder.getCandies();
         for (Candy x: candies) {
             LOG.info(x);
         }

@@ -56,7 +56,7 @@ and open the template in the editor.
             <complexType name = "Energy">
                 <simpleContent>
                     <extension base = "tns:restrictedEnergyType">
-                        <attribute name = "unit" type = "string" fixed = "kkal"/>
+                        <attribute name = "unit" type = "string" use = "optional"/>
                     </extension>
                 </simpleContent>
             </complexType>   
@@ -88,7 +88,7 @@ and open the template in the editor.
             <complexType name = "Water">
                 <simpleContent>
                     <extension base = "tns:restrictedWaterType">
-                        <attribute name = "unit" type = "string" fixed = "mll"/>
+                        <attribute name = "unit" type = "string" use = "optional"/>
                     </extension>
                 </simpleContent>
             </complexType>      
@@ -102,7 +102,7 @@ and open the template in the editor.
             <complexType name = "Sugar">
                 <simpleContent>
                     <extension base = "tns:restrictedSugarType">
-                        <attribute name = "unit" type = "string" fixed = "mg"/>
+                        <attribute name = "unit" type = "string" use = "required"/>
                     </extension>
                 </simpleContent>
             </complexType>   
@@ -116,7 +116,7 @@ and open the template in the editor.
             <complexType name = "Fructose">
                 <simpleContent>
                     <extension base = "tns:restrictedFructoseType">
-                        <attribute name = "unit" type = "string" fixed = "mg"/>
+                        <attribute name = "unit" type = "string" use = "required"/>
                     </extension>
                 </simpleContent>
             </complexType>        
@@ -130,7 +130,7 @@ and open the template in the editor.
             <complexType name = "Vanilin">
                 <simpleContent>
                     <extension base = "tns:restrictedVanilinType">
-                        <attribute name = "unit" type = "string" fixed = "mg"/>
+                        <attribute name = "unit" type = "string" use = "required"/>
                     </extension>
                 </simpleContent>
             </complexType>    
@@ -153,7 +153,7 @@ and open the template in the editor.
             <complexType name = "Protein">
                 <simpleContent>
                     <extension base = "tns:restrictedProteinType">
-                        <attribute name = "unit" type = "string" fixed = "mg"/>
+                        <attribute name = "unit" type = "string" use = "required"/>
                     </extension>
                 </simpleContent>
             </complexType>    
@@ -167,7 +167,7 @@ and open the template in the editor.
             <complexType name = "Fat">
                 <simpleContent>
                     <extension base = "tns:restrictedFatType">
-                        <attribute name = "unit" type = "string" fixed = "mg"/>
+                        <attribute name = "unit" type = "string" use = "required"/>
                     </extension>
                 </simpleContent>
             </complexType>    
@@ -181,7 +181,7 @@ and open the template in the editor.
             <complexType name = "Carbohydrate">
                 <simpleContent>
                     <extension base = "tns:restrictedCarbohydrateType">
-                        <attribute name = "unit" type = "string" fixed = "mg"/>
+                        <attribute name = "unit" type = "string" use = "required"/>
                     </extension>
                 </simpleContent>
             </complexType>            

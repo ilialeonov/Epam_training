@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package by.epam.sevice;
+package by.epam.util;
 
 import by.epam.entity.CandiesEnum;
 import by.epam.entity.Candy;
@@ -87,7 +87,9 @@ class CandiesHandler extends DefaultHandler{
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
         String s = new String(ch, start, length).trim();
-        if(s.length() == 0) return;
+        if(s.isEmpty()) {
+            return;
+        }
         if (currentEnum != null) {
             switch (currentEnum) {
                 case NAME: 

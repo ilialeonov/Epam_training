@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package by.epam.sevice;
+package by.epam.util;
 
 import by.epam.entity.Candy;
 import java.io.IOException;
