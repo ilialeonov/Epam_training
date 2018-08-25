@@ -61,10 +61,8 @@ public class CandiesDOMBuilder extends AbstractCandiesBuilder{
                 candies.add(candy);
             }
         } catch (SAXException ex) {
-            LOG.info("exception  parsing");
             LOG.error("exception building document ", ex);
         } catch (IOException ex) {
-            LOG.info("exception  with access to file");
             LOG.error("IOException  with access to file", ex);
         }  
     }

@@ -118,7 +118,4 @@ public class Value {
                 + ", fat=" + fat + " " + fatUnit + ", carbohydrate=" 
                 + carbohydrate + " " + carbohydrateUnit + ")";
     }
-    
-    
-    
 }

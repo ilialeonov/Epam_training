@@ -38,10 +38,8 @@ public class CandiesSaxBuilder extends AbstractCandiesBuilder{
             reader.setFeature("http://apache.org/xml/features/validation/schema", true);
             reader.parse(fileName);
         } catch (SAXException ex) {
-            LOG.info("exception parsing file has occured");
             LOG.error("SAXException at buildSetCandies(fileName)", ex);
         } catch (IOException ex) {
-            LOG.info("error with access to file");
             LOG.error("IOException with access to file", ex);
         } 
         

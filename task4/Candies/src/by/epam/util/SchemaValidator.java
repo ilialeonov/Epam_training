@@ -35,10 +35,8 @@ public class SchemaValidator {
             validator.validate(source);
             LOG.info("file is valid");
         } catch (SAXException ex) {
-            LOG.info("file is not valid because" + ex.getMessage());
             LOG.error("Not valid exception has occured", ex);
         } catch (IOException ex) {
-            LOG.info("couildn't get access to file");
             LOG.error("File access error", ex);
         }
         

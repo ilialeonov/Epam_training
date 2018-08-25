@@ -71,7 +71,6 @@ public class CandiesStaxBuilder extends AbstractCandiesBuilder{
             LOG.info("error in XML");
             LOG.error("error in buildSetCandies", ex);
         } catch (FileNotFoundException ex) {
-            LOG.info("file was not found");
             LOG.error("error with file access in buildSetCandies", ex);
         } finally {
             try {
