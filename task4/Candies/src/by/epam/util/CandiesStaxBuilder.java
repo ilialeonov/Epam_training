@@ -11,6 +11,7 @@ import by.epam.entity.ChocoType;
 import by.epam.entity.Ingridient;
 import by.epam.entity.SweetType;
 import by.epam.entity.Value;
+import by.epam.exception.NoSourceException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -45,12 +46,15 @@ public class CandiesStaxBuilder extends AbstractCandiesBuilder{
     }
 
     @Override
-    public void buildSetCandies(String fileName) {
+    public void buildSetCandies(String fileName) throws NoSourceException {
         FileInputStream inputStream = null;
         XMLStreamReader reader = null;
         String name;
         
         try {
+            if (fileName == null) {
+                throw new NoSourceException();
+            }
             inputStream = new FileInputStream(new File(fileName));
             reader = inputFactory.createXMLStreamReader(inputStream);
             

@@ -14,7 +14,7 @@ public class CandyBuilderFactory {
         SAX, STAX, DOM
     }
     
-    public AbstractCandiesBuilder createStudentBuilder (String typeParser) {
+    public AbstractCandiesBuilder createCandyBuilder (String typeParser) {
         TypeParser parser = TypeParser.valueOf(typeParser.toUpperCase());
         switch (parser) {
             case SAX:

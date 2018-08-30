@@ -10,6 +10,7 @@ import by.epam.entity.ChocoType;
 import by.epam.entity.Ingridient;
 import by.epam.entity.SweetType;
 import by.epam.entity.Value;
+import by.epam.exception.NoSourceException;
 import java.io.IOException;
 import java.util.Date;
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -50,8 +51,11 @@ public class CandiesDOMBuilder extends AbstractCandiesBuilder{
     public CandiesDOMBuilder() {
     }
 
-    public void buildSetCandies(String fileName) {
+    public void buildSetCandies(String fileName) throws NoSourceException {
         try {
+            if (fileName == null) {
+                throw new NoSourceException();
+            }
             doc = docBuilder.parse(fileName);
             Element root = doc.getDocumentElement();
             NodeList candyList = root.getElementsByTagName("candy");

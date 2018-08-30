@@ -6,6 +6,7 @@
 package by.epam.util;
 
 import by.epam.entity.Candy;
+import by.epam.exception.NoSourceException;
 import java.io.IOException;
 import java.util.Set;
 import org.apache.log4j.Logger;
@@ -30,8 +31,11 @@ public class CandiesSaxBuilder extends AbstractCandiesBuilder{
     }
 
     @Override
-    public void buildSetCandies(String fileName) {
+    public void buildSetCandies(String fileName) throws NoSourceException {
         try {
+            if (fileName == null) {
+                throw new NoSourceException();
+            }
             XMLReader reader = XMLReaderFactory.createXMLReader();
             CandiesHandler handler = new CandiesHandler(candies);
             reader.setContentHandler(handler);

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<candies xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.epam.by/candies"
+        xsi:schemaLocation="http://www.epam.by/candies candies.xsd">
+    <candy>
+        <name>Raffaello</name>
+        <energy unit = "kkal">412</energy>
+        <type>chocolateSouffle</type>
+        <ingridients chocotype="white">
+            <water unit = "ml">206</water>
+            <sugar unit = "mg">416</sugar>
+            <fructose unit = "mg">210</fructose>
+            <vanilin unit = "mg">56</vanilin>
+        </ingridients>
+        <value>
+            <protein unit = "g">52</protein>
+            <fat unit = "g">12</fat>
+            <carbohydrate unit = "g">36</carbohydrate>
+        </value>
+        <production>Raffaello</production>
+        <deliveryTime>2017-09-24</deliveryTime>
+    </candy>
+</candies>
+

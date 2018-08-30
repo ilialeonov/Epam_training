@@ -6,6 +6,7 @@
 package by.epam.util;
 
 import by.epam.entity.Candy;
+import by.epam.exception.NoSourceException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,6 +30,6 @@ public abstract class AbstractCandiesBuilder {
         return candies;
     }
     
-    abstract public void buildSetCandies(String fileName);
+    abstract public void buildSetCandies(String fileName)throws NoSourceException;
     
 }
