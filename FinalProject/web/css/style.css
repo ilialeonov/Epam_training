@@ -1,0 +1,246 @@
+body {
+    background-color: #708090;
+}
+.imgT {
+    position: relative;
+    display: block;
+    margin-top: 45px;
+     margin-right: auto;
+     margin-left: auto;
+     z-index: -4;
+}
+a {
+    color: white;
+}
+
+.login {
+    position: relative;
+    margin-left: 1170px;
+    bottom: 180px;
+    z-index: 4;
+}
+
+.logreg {
+    position: relative;
+    width: 100%;
+    bottom: 130px;
+}
+
+.logregCh {
+    position: relative;
+    margin-left: 100px;
+    display: inline-block;
+}
+
+.nextprev {
+    position: relative;
+    margin-left: 50px;
+    display: inline-block;
+}
+
+.register {
+    position: relative;
+    margin-left: 100px;
+    margin-top: 50px;
+    font-size: 20px;
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+}
+
+.field {
+    background-color: white;
+    position: relative;   
+    min-width: 1280px;
+    min-height: 800px;
+    max-width: 1280px;
+    z-index: 2;
+    font-size: 15px;
+    margin: auto;
+    bottom: 20px;
+}
+.underfield {
+    position: relative;
+    min-width: 1280px;
+    max-width: 1280px;
+    z-index: 2;
+    font-size: 15px;
+    margin: 0px auto;
+}
+.title {
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+    position: relative;
+    margin-left: 50px;
+    top: 20px;
+}
+.titleW {
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+    position: relative;
+    margin-left: 100px;
+    top: 650px;
+}
+.menu {
+    position: relative;
+    margin-left: 300px;
+    margin-top: -150px;
+    margin-bottom: 25px;
+    z-index: 4;
+}
+.menuch {
+    z-index: 4;
+    display: inline-block;
+    width: 150px;
+}
+
+
+
+
+
+.rightMenu {
+    position: absolute;
+    margin-left: 500px;
+    z-index: 2;
+    top: 20px;
+}
+
+.rightTitle {
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    display: inline-block;
+    position: relative;
+    height: 50px;
+    color: black;
+    width: 180px;
+    line-height: 50px;
+    padding: 0 20px;
+    
+}
+
+.rightTitle:before {
+  content: '';
+  background-color: #708090;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: skew(-20deg);
+  z-index: -1;
+}
+
+.lang {
+    display: inline-block;
+    margin-left: 25px;
+    margin-top: 10px;
+    
+}
+
+.button18 {
+  display: inline-block;
+  font-size: 14px;
+  color: rgb(205,216,228);
+  text-decoration: none;
+  padding: .2em .8em;
+  outline: none;
+  border-right: 1px solid rgba(13,20,27,.5);
+  border-top: 1px solid rgba(270,278,287,.01);
+  background-color: rgb(64,73,82);
+  background-image:
+   radial-gradient(1px 60% at 0% 50%, rgba(255,255,255,.3), transparent),
+   radial-gradient(1px 60% at 100% 50%, rgba(255,255,255,.3), transparent),
+   linear-gradient(rgb(64,73,82), rgb(72,81,90));
+}
+.button18:hover {
+  background-image:
+   radial-gradient(1px 60% at 0% 50%, rgba(255,255,255,.3), transparent),
+   radial-gradient(1px 60% at 100% 50%, rgba(255,255,255,.3), transparent),
+   linear-gradient(rgb(51,60,67), rgb(58,65,72));
+}
+.button18:focus {
+  color: rgb(245,247,250);
+  border-top: 1px solid rgb(67,111,136);
+  background-image:
+   linear-gradient(rgb(46,95,122), rgb(36,68,92));
+}
+.button18:focus:hover {
+  border-top: 1px solid rgb(49,87,107);
+  background-image:
+   linear-gradient(rgb(33,77,98), rgb(29,57,77));
+}
+
+
+.inputCl {
+    margin-bottom: 20px;
+    margin-top: 10px;
+    width: 25%;
+    padding: 16px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f1f1f1;
+}
+.inputMe {
+    margin-bottom: 20px;
+    margin-top: 10px;
+    width: 75%;
+    padding: 16px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f1f1f1;
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+    font-size:20px;
+}
+h1 {
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+}
+h2 {
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+}
+h3 {
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+}
+input[type="text"] {
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+    font-size:20px;
+}
+
+input[type="password"] {
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+    font-size:20px;
+}
+.person {
+    position: relative;
+    margin-left: 100px;
+/*    bottom:610px;*/
+}
+.personInf {
+    font-size: 16px;
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+    width: 1000px;
+}
+
+.mainRM {
+    
+}
+
+li {
+    font-size: 20px;
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+    margin-top: 25px;
+}
+.createData{
+    font-size: 20px;
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+    position: relative;
+    margin-left: 120px;
+    top: 600px;
+    
+}
+.informData{
+    font-size: 20px;
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+    position: relative;
+    margin-left: 120px;
+    
+}
+.createMenu {
+    position: relative;
+    bottom: 600px;
+}
