@@ -5,6 +5,7 @@
  */
 package by.epam.interpol.command;
 
+import by.epam.interpol.command.util.ActionCommand;
 import by.epam.interpol.command.util.ConfigurationManager;
 import by.epam.interpol.controller.SessionRequestContent;
 import by.epam.interpol.entity.Person;
@@ -16,7 +17,8 @@ import org.apache.logging.log4j.Logger;
 
 /**
  *
- * @author Администратор
+ * @author Leonov Ilia
+ * takes control at archive of found persons
  */
 public class ArchiveCommand implements ActionCommand{
     private static final Logger LOG = LogManager.getLogger(ArchiveCommand.class);
@@ -29,8 +31,14 @@ public class ArchiveCommand implements ActionCommand{
     private static final int FIRST_PAGE = 1;
     private static final int PAGE_SIZE = 5;
         
+    private static final String ARCHIVE_PAGE = "path.page.archive";
+    
     PersonLogic logic;
 
+    /**
+     *
+     * @param logic logic of control at persons
+     */
     public ArchiveCommand(PersonLogic logic) {
         this.logic = logic;
     }
@@ -67,7 +75,7 @@ public class ArchiveCommand implements ActionCommand{
         
         requestContent.setRequestAttribute(PAGE_NUMBER, pageNumberPar);
 
-        page = ConfigurationManager.getProperty("path.page.archive");    
+        page = ConfigurationManager.getProperty(ARCHIVE_PAGE);    
         return page;
     }
     

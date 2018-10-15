@@ -28,8 +28,9 @@ a {
 
 .logregCh {
     position: relative;
-    margin-left: 100px;
+    z-index: 4;
     display: inline-block;
+    margin-left: 100px;
 }
 
 .nextprev {
@@ -71,6 +72,17 @@ a {
     margin-left: 50px;
     top: 20px;
 }
+.title2 {
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    position: relative;
+    margin-left: 150px;
+    top: 20px;
+}
+.title3 {
+    position: relative;
+    margin-left: 150px;
+}
 .titleW {
     font-family: Geneva, Arial, Helvetica, sans-serif;
     position: relative;
@@ -83,11 +95,12 @@ a {
     margin-top: -150px;
     margin-bottom: 25px;
     z-index: 4;
+    
 }
 .menuch {
     z-index: 4;
     display: inline-block;
-    width: 150px;
+    margin-left: 30px;
 }
 
 
@@ -171,6 +184,15 @@ a {
     margin-bottom: 20px;
     margin-top: 10px;
     width: 25%;
+    padding: 16px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f1f1f1;
+}
+.inputClSmall {
+    margin-bottom: 20px;
+    margin-top: 10px;
+    width: 3%;
     padding: 16px 20px;
     border: none;
     border-radius: 4px;

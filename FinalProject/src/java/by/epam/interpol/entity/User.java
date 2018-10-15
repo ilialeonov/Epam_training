@@ -16,6 +16,7 @@ public class User {
     private String name;
     private String login;
     private String mail;
+    private double money;
     private boolean status;
     
     public User() {
@@ -61,13 +62,22 @@ public class User {
         this.status = status;
     }
 
+    public double getMoney() {
+        return money;
+    }
+
+    public void setMoney(double money) {
+        this.money = money;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
+        int hash = 7;
         hash = 67 * hash + this.id;
         hash = 67 * hash + Objects.hashCode(this.name);
         hash = 67 * hash + Objects.hashCode(this.login);
         hash = 67 * hash + Objects.hashCode(this.mail);
+        hash = 67 * hash + (int) this.money;
         hash = 67 * hash + (this.status ? 1 : 0);
         return hash;
     }
@@ -93,6 +103,9 @@ public class User {
         if (!Objects.equals(this.mail, other.mail)) {
             return false;
         }
+        if (this.money != other.money) {
+            return false;
+        }
         if (this.status != other.status) {
             return false;
         }
@@ -101,7 +114,8 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", name=" + name + ", login=" + login 
-                + ", mail=" + mail + ", status=" + status + '}';
+        return "User" + "id=" + id + ", name=" + name + ", login=" + login 
+                + ", mail=" + mail + ", money=" + money + ", status=" + status;
     }
+
 }

@@ -5,9 +5,8 @@
  */
 package by.epam.interpol.logic;
 
-import by.epam.interpol.dao.daoimpl.PersonDaoImpl;
-import by.epam.interpol.dao.daoimpl.TestimonyDaoImpl;
-import by.epam.interpol.entity.Person;
+import by.epam.interpol.daoimpl.PersonDaoImpl;
+import by.epam.interpol.daoimpl.TestimonyDaoImpl;
 import by.epam.interpol.entity.Testimony;
 import by.epam.interpol.exception.ProjectException;
 import by.epam.interpol.exception.TimeLimitExceededException;
@@ -49,8 +48,12 @@ public class TestimoniesLogic {
         }
         
         TestimonyDaoImpl testimonyDao = new TestimonyDaoImpl(connection);
-        Optional<Integer> idCreated = testimonyDao.create(testimony);
-        pool.putbackConnection(connection);
+        Optional<Integer> idCreated;
+        try {
+            idCreated = testimonyDao.create(testimony);
+        } finally {
+            pool.putbackConnection(connection);
+        }
         return idCreated;
     }
 
@@ -69,9 +72,12 @@ public class TestimoniesLogic {
         }
         
         PersonDaoImpl personDao = new PersonDaoImpl(connection);
-        Optional<Integer> idPerson 
-                = personDao.findIdByNamePanname(name, panname);
-        pool.putbackConnection(connection);
+        Optional<Integer> idPerson; 
+        try {
+            idPerson = personDao.findIdByNamePanname(name, panname);
+        } finally {
+            pool.putbackConnection(connection);
+        }
         
         Testimony testimony = new Testimony();
         
@@ -92,15 +98,18 @@ public class TestimoniesLogic {
             }
 
             TestimonyDaoImpl testimonyDao = new TestimonyDaoImpl(connection);
-            idCreated = testimonyDao.create(testimony);
-            pool.putbackConnection(connection);
+            try {
+                idCreated = testimonyDao.create(testimony);
+            } finally {
+                pool.putbackConnection(connection);
+            }
         }
         return idCreated;
     }
 
-    public List<Testimony> findForPage(Integer idUser, int pageSize, int offset, 
-            boolean isCriminal) throws ProjectException {
-        LOG.debug("entering find for page logic");
+    public List<Testimony> findUserTestimonies(Integer idUser, int pageSize, 
+            int offset, boolean isCriminal) throws ProjectException {
+        LOG.debug("entering find testimonies for user logic");
 
         ConnectionPool pool = ConnectionPool.getInstance();
         WrapperConnector connection = null;
@@ -112,15 +121,20 @@ public class TestimoniesLogic {
         }
         
         TestimonyDaoImpl testimonyDao = new TestimonyDaoImpl(connection);
-        List<Testimony> testimonyList 
-                = testimonyDao.findAmountOfEntities(pageSize, 
-                        offset, idUser, isCriminal);
-        pool.putbackConnection(connection);
+        List<Testimony> testimonyList;
+        try {
+            testimonyList = testimonyDao.findAmountOfEntities(pageSize, 
+                offset, idUser, isCriminal);
+        } finally {
+            pool.putbackConnection(connection);
+        }
         return testimonyList;
     }
 
-    public List<Testimony> findForPage(Integer idUser, int pageSize, int offset) throws ProjectException {
-        LOG.debug("entering find for page logic");
+    public List<Testimony> findAdminTestimonies(int pageSize, int offset, 
+            boolean isCriminal) throws ProjectException {
+        LOG.debug("entering find testimonies for admin logic");
+        LOG.debug("pageSize " + pageSize + " offset ");
 
         ConnectionPool pool = ConnectionPool.getInstance();
         WrapperConnector connection = null;
@@ -132,10 +146,86 @@ public class TestimoniesLogic {
         }
         
         TestimonyDaoImpl testimonyDao = new TestimonyDaoImpl(connection);
-        List<Testimony> testimonyList 
-                = testimonyDao.findAmountOfEntities(pageSize, offset, idUser);
-        pool.putbackConnection(connection);
+        List<Testimony> testimonyList;
+        try {
+            testimonyList 
+                    = testimonyDao.findAmountOfEntities(pageSize, offset, isCriminal);
+        } finally {
+            pool.putbackConnection(connection);
+        } 
         return testimonyList;
     }
     
+    public List<Testimony> findUserArchive(Integer idUser, int pageSize, int offset) 
+            throws ProjectException {
+        LOG.debug("entering find for page logic");
+
+        ConnectionPool pool = ConnectionPool.getInstance();
+        WrapperConnector connection = null;
+
+        try {
+            connection = pool.getConnection();
+        } catch (TimeLimitExceededException ex) {
+            throw new ProjectException("time limit for waiting exceeded", ex);
+        }
+        
+        TestimonyDaoImpl testimonyDao = new TestimonyDaoImpl(connection);
+        List<Testimony> testimonyList;
+        try {
+            testimonyList 
+                    = testimonyDao.findAmountOfEntities(pageSize, offset, idUser);
+        } finally {
+            pool.putbackConnection(connection);
+        }
+        return testimonyList;
+    }
+
+    public Optional<Testimony> assignPoints(int id, int points) 
+            throws ProjectException {
+        LOG.debug("entering assigning points logic");
+
+        Testimony testimony = new Testimony();
+        testimony.setId(id);
+        testimony.setPoints(points);
+        ConnectionPool pool = ConnectionPool.getInstance();
+        WrapperConnector connection = null;
+
+        try {
+            connection = pool.getConnection();
+        } catch (TimeLimitExceededException ex) {
+            throw new ProjectException("time limit for waiting exceeded", ex);
+        }
+        
+        TestimonyDaoImpl testimonyDao = new TestimonyDaoImpl(connection);
+        Optional<Testimony> optTestimony;
+        try {
+            optTestimony = testimonyDao.update(testimony);
+        } finally {
+            pool.putbackConnection(connection);
+        }
+        return optTestimony;
+    }
+
+    public List<Testimony> findAdminArchive(int pageSize, int offset) 
+            throws ProjectException {
+        LOG.debug("entering find for page logic");
+
+        ConnectionPool pool = ConnectionPool.getInstance();
+        WrapperConnector connection = null;
+
+        try {
+            connection = pool.getConnection();
+        } catch (TimeLimitExceededException ex) {
+            throw new ProjectException("time limit for waiting exceeded", ex);
+        }
+        
+        TestimonyDaoImpl testimonyDao = new TestimonyDaoImpl(connection);
+        List<Testimony> testimonyList;
+        try {
+            testimonyList = testimonyDao.findAmountOfEntities(pageSize, offset);
+        } finally {
+            pool.putbackConnection(connection);
+        }       
+        return testimonyList;
+    }
 }

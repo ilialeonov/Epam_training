@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package by.epam.interpol.dao.daoimpl;
+package by.epam.interpol.daoimpl;
 
 import by.epam.interpol.dao.AbstractPersonDao;
 import by.epam.interpol.entity.Person;
 import by.epam.interpol.exception.ProjectException;
 import by.epam.interpol.pool.WrapperConnector;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -36,17 +35,19 @@ import org.apache.tomcat.util.codec.binary.Base64;
 public class PersonDaoImpl extends AbstractPersonDao{
     private final static Logger LOG = LogManager.getLogger(PersonDaoImpl.class);
     
-    private final String ID = "id_person";
-    private final String NAME = "name";
-    private final String PANNAME = "panname";
-    private final String AGE = "age";
-    private final String BIRTH_PLACE = "birthP";
-    private final String LAST_PLACE = "lastP";
-    private final String PHOTO = "photo";
-    private final String AWARD = "award";
-    private final String INFORMATION = "information";
-    private final String IS_CRIMINAL = "isCriminal";
-    private final String FOUND = "found";
+    private static final String ID = "id_person";
+    private static final String NAME = "name";
+    private static final String PANNAME = "panname";
+    private static final String AGE = "age";
+    private static final String BIRTH_PLACE = "birthP";
+    private static final String LAST_PLACE = "lastP";
+    private static final String PHOTO = "photo";
+    private static final String AWARD = "award";
+    private static final String INFORMATION = "information";
+    private static final String IS_CRIMINAL = "isCriminal";
+    private static final String FOUND = "found";
+    private static final String UTF_8 = "UTF-8";
+    private static final String JPG = "jpg";
     
     private static final String SELECT_BY_ID = "SELECT id_person, name, panname, "
             + "age, t.last_seen_region , t.birth_region, t1.region AS lastP, "
@@ -86,12 +87,12 @@ public class PersonDaoImpl extends AbstractPersonDao{
     
     private static final String SELECT_BY_REGION = "SELECT id_person, name, \n" 
             +"panname, age, t.last_seen_region , t.birth_region, t1.region AS lastP, \n" 
-            +"t2.region AS birthP, photo, award, information, isCriminal\n" 
+            +"t2.region AS birthP, found, photo, award, information, isCriminal\n" 
             +"FROM interpol.person t JOIN interpol.region t1 ON t1.id_region = t.last_seen_region\n" 
             +"JOIN interpol.region t2 ON t2.id_region = t.birth_region  \n" 
-            +"WHERE t.birth_region = (SELECT `id_region` FROM interpol.region WHERE `region` = ?)\n" 
+            +"WHERE (t.birth_region = (SELECT `id_region` FROM interpol.region WHERE `region` = ?)\n" 
             +"OR\n" 
-            +"t.last_seen_region = (SELECT `id_region` FROM interpol.region WHERE `region` = ?)\n" 
+            +"t.last_seen_region = (SELECT `id_region` FROM interpol.region WHERE `region` = ?))\n" 
             +"AND `found` = b'0' ORDER BY panname LIMIT ? OFFSET ?";
     
     private static final String CREATE_PERSON = "INSERT INTO interpol.person "
@@ -108,6 +109,19 @@ public class PersonDaoImpl extends AbstractPersonDao{
             "`last_seen_region` = (SELECT `id_region` FROM interpol.region WHERE `region` = ?),\n" +
             " `award` = ?, `information` = ?, `found` = ?\n" +
             "WHERE `id_person` = ?";
+    
+    private static final String DELETE_PERSON = "DELETE\n" 
+            +"FROM interpol.person\n" 
+            +"WHERE id_person = ?;";
+    
+    private static final String DELETE_PERSON_BY_N_P = "DELETE\n" 
+            +"FROM interpol.person\n" 
+            +"WHERE id_person = ?;";
+    
+    
+    private static final String UPDATE_SET_FOUND_BY_ID = "UPDATE interpol.person\n" 
+            +"SET `found` = b'1'\n" 
+            +"WHERE `id_person` = ?";
     
     private static final String UPDATE_PERSON_NO_PHOTO = "UPDATE interpol.person\n" +
             "SET `name` = ?, `panname` = ?, `age` = ?, \n" +
@@ -150,7 +164,6 @@ public class PersonDaoImpl extends AbstractPersonDao{
             try { 
                 ImageIO.write(image, "jpg", os);
             } catch (IOException ex) {
-                LOG.error("exception has occured");
                 throw new ProjectException();
             }
             InputStream fis = new ByteArrayInputStream(os.toByteArray());
@@ -171,7 +184,6 @@ public class PersonDaoImpl extends AbstractPersonDao{
                 person.setId(autoId);
             }
         } catch (SQLException ex) {
-            LOG.error("exception:", ex);
             throw new ProjectException("Error trying to get access to get all users", ex);
         } 
         finally {
@@ -203,7 +215,6 @@ public class PersonDaoImpl extends AbstractPersonDao{
                 try {
                     image = ImageIO.read(photoInputStream);
                 } catch (IOException ex) {
-                    LOG.error("exception:", ex);
                     throw new ProjectException("Error trying to get access to "
                             + "find last", ex);
                 }
@@ -216,6 +227,7 @@ public class PersonDaoImpl extends AbstractPersonDao{
                 }
             }
         } catch (SQLException ex) {
+            LOG.error("exception:", ex);
             throw new ProjectException("Error trying to get access to get all users", ex);
         } 
         finally {
@@ -236,11 +248,11 @@ public class PersonDaoImpl extends AbstractPersonDao{
         Person person = null;
         PreparedStatement statement = null;
         try {
-            person = new Person();
             statement = connection.prepareStatement(SELECT_BY_ID);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()){
+                person = new Person();
                 person.setId(resultSet.getInt(ID));
                 person.setName(resultSet.getString(NAME));
                 person.setPanname(resultSet.getString(PANNAME));
@@ -268,6 +280,7 @@ public class PersonDaoImpl extends AbstractPersonDao{
                 person.setStatus(resultSet.getBoolean(FOUND));
             }
         } catch (SQLException ex) {
+            LOG.error("exception:", ex);
             throw new ProjectException("Error trying to get access to get person", ex);
         } finally {
             close(statement);
@@ -289,6 +302,7 @@ public class PersonDaoImpl extends AbstractPersonDao{
                 id = resultSet.getInt(ID);     
             }
         } catch (SQLException ex) {
+            LOG.error("exception:", ex);
             throw new ProjectException("Error trying to find person", ex);
         } finally {
             close(statement);
@@ -296,6 +310,7 @@ public class PersonDaoImpl extends AbstractPersonDao{
         return Optional.ofNullable(id);
     }
     
+    @Override
     public Optional<Person> findEntityByNamePanname(String name, String panname) 
             throws ProjectException {
         LOG.debug("trying to find person by name, panname ");
@@ -335,6 +350,7 @@ public class PersonDaoImpl extends AbstractPersonDao{
                 person.setStatus(resultSet.getBoolean(FOUND));
             }
         } catch (SQLException ex) {
+            LOG.error("exception:", ex);
             throw new ProjectException("Error trying to find person", ex);
         } finally {
             close(statement);
@@ -344,12 +360,53 @@ public class PersonDaoImpl extends AbstractPersonDao{
 
     @Override
     public boolean delete(int id) throws ProjectException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        LOG.debug("going to database to delete person");
+        
+        PreparedStatement statement = null;
+        boolean deleted = true;
+        try {
+            statement = connection.prepareStatement(DELETE_PERSON);
+            
+            statement.setInt(1, id);
+            
+            int result = statement.executeUpdate();
+            if (result != 1) {
+                deleted = false;
+            }
+        } catch (SQLException ex) {
+            LOG.error("exception:", ex);
+            throw new ProjectException("Error trying to get access to get all users", ex);
+        } 
+        finally {
+            close(statement);
+        }
+        return deleted;
     }
 
     @Override
-    public boolean delete(Person entity) throws ProjectException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean delete(Person person) throws ProjectException {
+        LOG.debug("going to database to delete person");
+        
+        PreparedStatement statement = null;
+        boolean deleted = true;
+        try {
+            statement = connection.prepareStatement(DELETE_PERSON_BY_N_P);
+            
+            statement.setString(1, person.getName());
+            statement.setString(2, person.getPanname());
+            
+            int result = statement.executeUpdate();
+            if (result < 1) {
+                deleted = false;
+            }
+        } catch (SQLException ex) {
+            LOG.error("exception:", ex);
+            throw new ProjectException("Error trying to get access to get all users", ex);
+        } 
+        finally {
+            close(statement);
+        }
+        return deleted;
     }
 
     @Override
@@ -367,9 +424,8 @@ public class PersonDaoImpl extends AbstractPersonDao{
             BufferedImage image = person.getPhoto(); 
             ByteArrayOutputStream os = new ByteArrayOutputStream();
             try { 
-                ImageIO.write(image, "jpg", os);
+                ImageIO.write(image, JPG, os);
             } catch (IOException ex) {
-                LOG.error("exception has occured");
                 throw new ProjectException();
             }
             InputStream fis = new ByteArrayInputStream(os.toByteArray());
@@ -426,6 +482,29 @@ public class PersonDaoImpl extends AbstractPersonDao{
         }
         return Optional.ofNullable(person);
     }
+    
+    public Optional<Person> updateSetFoundById(Person person) throws ProjectException {
+        LOG.debug("going to database to set the object is found");
+        
+        PreparedStatement statement = null;
+  
+        try {
+            statement = connection.prepareStatement(UPDATE_SET_FOUND_BY_ID);
+            
+            statement.setInt(1, person.getId());
+            int result = statement.executeUpdate();
+            if (result != 1) {
+                person = null;
+            }
+        } catch (SQLException ex) {
+            LOG.error("exception:", ex);
+            throw new ProjectException("Error trying to get access to get all users", ex);
+        } 
+        finally {
+            close(statement);
+        }
+        return Optional.ofNullable(person);
+    }
 
     public List<Person> findAmountOfEntities(int pageSize, int offset, boolean criminal) throws ProjectException {
         LOG.debug("trying to find personList for page");
@@ -468,6 +547,7 @@ public class PersonDaoImpl extends AbstractPersonDao{
                 personList.add(person);
             }
         } catch (SQLException ex) {
+            LOG.error("exception:", ex);
             throw new ProjectException("Error trying to find person", ex);
         } finally {
             close(statement);
@@ -515,6 +595,7 @@ public class PersonDaoImpl extends AbstractPersonDao{
                 personList.add(person);
             }
         } catch (SQLException ex) {
+            LOG.error("exception:", ex);
             throw new ProjectException("Error trying to find person", ex);
         } finally {
             close(statement);
@@ -562,6 +643,7 @@ public class PersonDaoImpl extends AbstractPersonDao{
                 personList.add(person);
             }
         } catch (SQLException ex) {
+            LOG.error("exception:", ex);
             throw new ProjectException("Error trying to find person", ex);
         } finally {
             close(statement);
@@ -573,10 +655,9 @@ public class PersonDaoImpl extends AbstractPersonDao{
         BufferedImage image = person.getPhoto();
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         try { 
-            ImageIO.write(image, "jpg", os);
+            ImageIO.write(image, JPG, os);
         } catch (IOException ex) {
-            LOG.error("exception has occured");
-            throw new ProjectException();
+            throw new ProjectException(ex);
         }
         InputStream is = new ByteArrayInputStream(os.toByteArray());
         
@@ -591,13 +672,15 @@ public class PersonDaoImpl extends AbstractPersonDao{
             }
             buffer.flush();
             byte[] encodeBase64 = Base64.encodeBase64(buffer.toByteArray());
-            String base64Encoded = new String(encodeBase64, "UTF-8");
+            String base64Encoded = new String(encodeBase64, UTF_8);
             person.setBase64image(base64Encoded);
         } catch (IOException ex) {
+            LOG.error("exception:", ex);
             throw new ProjectException("Couldn't find image", ex);
         }
         return person;
     }
+
 
 
 }

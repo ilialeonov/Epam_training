@@ -6,6 +6,7 @@
 <%@page session = "false" contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="ctg" uri="/WEB-INF/tld/custom.tld" %>
 <fmt:setLocale value="${requestScope.locale}" scope="request" />
 <fmt:setBundle basename="resources.pagecontent" var="rb"  />
 
@@ -88,7 +89,13 @@
                                     <fmt:message key = "create.birthReg" bundle="${rb}"/>:${item.birthPlace}<br>
                                     <fmt:message key = "create.lastSeenReg" bundle="${rb}"/>:${item.lastPlace}<br>
                                     <fmt:message key = "create.award" bundle="${rb}"/>:
-                                    <fmt:formatNumber value="${item.award}" type = "number"/> $<br>
+                                    <fmt:formatNumber type = "currency">
+                                        <ctg:convert>
+                                            ${item.award}
+                                        </ctg:convert>
+
+                                    </fmt:formatNumber>
+                                    <br>
                                 </div>
                             </div>
                         </li>

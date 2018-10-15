@@ -6,6 +6,7 @@
 <%@page session = "false" contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="ctg" uri="/WEB-INF/tld/custom.tld" %>
 <fmt:setLocale value="${requestScope.locale}" scope="request" />
 <fmt:setBundle basename="resources.pagecontent" var="rb"  />
 
@@ -24,7 +25,7 @@
         
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>
-            <fmt:message key = "archive.title" bundle="${rb}"/> 
+            <fmt:message key = "label.found" bundle="${rb}"/> 
         
         </title>
         <style>
@@ -33,6 +34,13 @@
                 right: 500px;
             }
         </style>
+        <script type="text/javascript">
+                    document.onkeydown = function (e) {
+                        if (e.keyCode === 116) {
+                          return false;
+                        }
+                      };
+        </script>
     </head>
     <body>
         <jsp:include page = "../jsp/header.jsp"/>
@@ -71,7 +79,13 @@
                                     <fmt:message key = "create.birthReg" bundle="${rb}"/>:${item.birthPlace}<br>
                                     <fmt:message key = "create.lastSeenReg" bundle="${rb}"/>:${item.lastPlace}<br>
                                     <fmt:message key = "create.award" bundle="${rb}"/>:
-                                    <fmt:formatNumber value="${item.award}" type = "number"/> $<br>
+                                    <fmt:formatNumber type = "currency">
+                                        <ctg:convert>
+                                            ${item.award}
+                                        </ctg:convert>
+
+                                    </fmt:formatNumber>
+                                    <br>
                                 </div>
                             </div>
                         </li>
@@ -85,8 +99,6 @@
                     <input type="hidden" name="command" value="archive" />
                     <input type="hidden" name="pageNumber" value="${pageNumber}" />
                     <input type="hidden" name="direction" value="previous" />
-                    <input type="hidden" name="person" value="${person}" />
-
                     <input class ="button18" type="submit" 
                            value="<fmt:message key = "label.previous" bundle="${rb}"/>"/>
                 </form>
@@ -99,7 +111,6 @@
                     <input type="hidden" name="command" value="archive" />
                     <input type="hidden" name="pageNumber" value="${pageNumber}" />
                     <input type="hidden" name="direction" value="next" />
-                    <input type="hidden" name="person" value="${person}" />
                     <input class ="button18" type="submit" 
                            value="<fmt:message key = "label.next" bundle="${rb}"/>"/>
                 </form>

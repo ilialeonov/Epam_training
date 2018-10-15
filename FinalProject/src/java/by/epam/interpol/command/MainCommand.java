@@ -5,6 +5,7 @@
  */
 package by.epam.interpol.command;
 
+import by.epam.interpol.command.util.ActionCommand;
 import by.epam.interpol.command.util.ConfigurationManager;
 import by.epam.interpol.controller.SessionRequestContent;
 import by.epam.interpol.entity.Person;
@@ -15,13 +16,23 @@ import org.apache.logging.log4j.Logger;
 
 /**
  *
- * @author Администратор
+ * @author Ilia Leonov
+ * points to go to database, get last added person and return to the main page
+ * with information about
  */
-class MainCommand implements ActionCommand {
-    private static final Logger LOG = LogManager.getLogger(LoginCommand.class);
+public class MainCommand implements ActionCommand {
+    private static final Logger LOG = LogManager.getLogger(MainCommand.class);
+    
+    private static final String PERSON = "person";
+    
+    private static final String MAIN_PAGE = "path.page.main";
     
     private PersonLogic logic;
 
+    /**
+     *
+     * @param logic  logic of control at persons
+     */
     public MainCommand(PersonLogic logic) {
         this.logic = logic;
     }
@@ -32,10 +43,8 @@ class MainCommand implements ActionCommand {
         
         String page = null;
         Person person = logic.findWantedOrMissed();
-        LOG.debug("Someone found");
-        page = ConfigurationManager.getProperty("path.page.main");
-        requestContent.setRequestAttribute("person", person);
-        LOG.debug("role is: " + requestContent.getRequestAttribute("role"));
+        page = ConfigurationManager.getProperty(MAIN_PAGE);
+        requestContent.setRequestAttribute(PERSON, person);
         return page;
     }
     

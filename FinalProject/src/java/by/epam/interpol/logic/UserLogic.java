@@ -6,7 +6,7 @@
 package by.epam.interpol.logic;
 
 import by.epam.interpol.controller.Controller;
-import by.epam.interpol.dao.daoimpl.UserDaoImpl;
+import by.epam.interpol.daoimpl.UserDaoImpl;
 import by.epam.interpol.entity.User;
 import by.epam.interpol.exception.ProjectException;
 import by.epam.interpol.exception.TimeLimitExceededException;
@@ -36,8 +36,12 @@ public class UserLogic {
         }
         
         UserDaoImpl userDao = new UserDaoImpl(connection);
-        Optional<Integer> id = userDao.findIdIfRegistered(login, password);
-        pool.putbackConnection(connection);
+        Optional<Integer> id;
+        try {
+            id = userDao.findIdIfRegistered(login, password);
+        } finally {
+            pool.putbackConnection(connection);
+        }
         return id;
     }
     
@@ -54,8 +58,12 @@ public class UserLogic {
         }
         
         UserDaoImpl userDao = new UserDaoImpl(connection);
-        Optional<User> user = userDao.findEntityById(id);
-        pool.putbackConnection(connection);
+        Optional<User> user;
+        try {
+            user = userDao.findEntityById(id);
+        } finally {
+            pool.putbackConnection(connection);
+        }
         return user;
     }
     
@@ -72,8 +80,12 @@ public class UserLogic {
         }
         
         UserDaoImpl userDao = new UserDaoImpl(connection);     
-        boolean isFree = userDao.isFreeLogin(login);
-        pool.putbackConnection(connection);
+        boolean isFree;
+        try {
+            isFree = userDao.isFreeLogin(login);
+        } finally {
+            pool.putbackConnection(connection);
+        }
         return isFree;     
     }
     
@@ -90,12 +102,17 @@ public class UserLogic {
         }
         
         UserDaoImpl userDao = new UserDaoImpl(connection);     
-        boolean isFree = userDao.isFreeMail(mail);
-        pool.putbackConnection(connection);
+        boolean isFree;
+        try {
+            isFree = userDao.isFreeMail(mail);
+        } finally {
+            pool.putbackConnection(connection);
+        }
         return isFree;     
     }
     
-    public Optional<Integer> registerUser(String name, String mail, String login, String password) throws ProjectException {
+    public Optional<Integer> registerUser(String name, String mail, 
+            String login, String password) throws ProjectException {
         LOG.debug("registring user");
         
         User user = new User();
@@ -114,8 +131,12 @@ public class UserLogic {
         }
         
         UserDaoImpl userDao = new UserDaoImpl(connection);     
-        Optional<Integer> optIdUser = userDao.create(user, password);      
-        pool.putbackConnection(connection);
+        Optional<Integer> optIdUser;
+        try {
+            optIdUser = userDao.create(user, password);
+        } finally {
+            pool.putbackConnection(connection);
+        }
         return optIdUser;
     }
 }

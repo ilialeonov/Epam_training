@@ -7,6 +7,7 @@
 <%@page session = "false" contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="ctg" uri="/WEB-INF/tld/custom.tld" %>
 <fmt:setLocale value="${requestScope.locale}" scope="request" />
 <fmt:setBundle basename="resources.pagecontent" var="rb"  />
 
@@ -15,13 +16,20 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="${pageContext.servletContext.contextPath}/css/style.css" rel="stylesheet" type="text/css">
-        <title>main</title>
+        <title><fmt:message key = "label.main" bundle="${rb}"/></title>
         <style>
             rMenu {
                 position: absolute;
                 right: 500px;
             }
         </style>
+        <script type="text/javascript">
+                    document.onkeydown = function (e) {
+                        if (e.keyCode === 116) {
+                          return false;
+                        }
+                      };
+        </script>
     </head>
     <body>
         <jsp:include page = "header.jsp"/>
@@ -53,7 +61,15 @@
             <h2><fmt:message key = "create.age" bundle="${rb}"/>: ${person.age} <fmt:message key = "create.years" bundle="${rb}"/></h2>
             <h2><fmt:message key = "create.birthReg" bundle="${rb}"/>: ${person.birthPlace} </h2>
             <h2><fmt:message key = "create.lastSeenReg" bundle="${rb}"/>: ${person.lastPlace} </h2>
-            <h2><fmt:message key = "create.award" bundle="${rb}"/>: <fmt:formatNumber value="${person.award}" type = "number"/> $</h2>
+            <h2><fmt:message key = "create.award" bundle="${rb}"/>: 
+                
+                <fmt:formatNumber type = "currency">
+                    <ctg:convert>
+                        ${person.award}
+                    </ctg:convert>
+                    
+                </fmt:formatNumber>
+                </h2>
             <h2><fmt:message key = "create.information" bundle="${rb}"/>: </h2>
             <p class="personInf">
                 ${person.information}

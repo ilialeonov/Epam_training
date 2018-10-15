@@ -5,26 +5,32 @@
  */
 package by.epam.interpol.command;
 
+import by.epam.interpol.command.util.ActionCommand;
 import by.epam.interpol.command.util.ConfigurationManager;
-import by.epam.interpol.command.util.Validator;
 import by.epam.interpol.controller.SessionRequestContent;
-import by.epam.interpol.entity.User;
 import by.epam.interpol.logic.UserLogic;
-import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
  *
- * @author Администратор
+ * @author Ilia Leonov
+ * points to logout
  */
 public class LogoutCommand implements ActionCommand {
-    private static final Logger LOG = LogManager.getLogger(LoginCommand.class);
+    private static final Logger LOG = LogManager.getLogger(LogoutCommand.class);
+    
+    private static final String MAIN_CONTR = "controller.main";
+    private static final String LOGIN_PAGE = "path.page.login";
     
     private static final String ROLE = "role";
     
     private UserLogic logic;
     
+    /**
+     *
+     * @param logic logic of control at user
+     */
     public LogoutCommand(UserLogic logic) {
         this.logic = logic;
     }
@@ -36,15 +42,14 @@ public class LogoutCommand implements ActionCommand {
         String page = null;
  
         if (requestContent.getRequestAttribute(ROLE) != null) {
-            LOG.debug("user is registered");
             requestContent.deactivateSession();
             requestContent.removeAttributes();
-            page = ConfigurationManager.getProperty("controller.main"); 
+            page = ConfigurationManager.getProperty(MAIN_CONTR); 
 
         } else {
             requestContent.setRequestAttribute("errorLoginPassMessage",
                     "message.logoutError");
-            page = ConfigurationManager.getProperty("path.page.login");
+            page = ConfigurationManager.getProperty(LOGIN_PAGE);
         }
         return page;
     }

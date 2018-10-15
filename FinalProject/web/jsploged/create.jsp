@@ -15,7 +15,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="${pageContext.servletContext.contextPath}/css/style.css" rel="stylesheet" type="text/css">
         <script src="js/script.js"></script>
-        <title>main</title>
+        <title><fmt:message key = "label.create" bundle="${rb}"/></title>
     </head>
     <body>
             <jsp:include page = "../jsp/header.jsp"/>
@@ -48,34 +48,40 @@
                   <input type="hidden" name="multimedia" value="" />
                   <input type="hidden" name ="person" value="${param.person}"/>
 
-                <fmt:message key = "create.photo" bundle="${rb}"/>:<br/>
-                  <input class = "button18" type="file" name="pic"><br/><br/>
+                <fmt:message key = "create.photo.enter" bundle="${rb}"/>:<br/>
+                <input class = "button18" type="file" name="pic" required><br/><br/>
                   
-                  <fmt:message key = "create.name" bundle="${rb}"/>:<br/>
-                  <input class ="inputCl" type="text" name="name" value="${param.name}"/>
+                  <fmt:message key = "create.name.enter" bundle="${rb}"/>:<br/>
+                  <input class ="inputCl" type="text" name="name" value="${param.name}"
+                         required pattern="[A-Z]([a-zA-Z]){1,10}"/>
                   <br/>
 
-                  <fmt:message key = "create.panname" bundle="${rb}"/>:<br/>
-                  <input class ="inputCl" type="text" name="panname" value="${param.panname}"/>
+                  <fmt:message key = "create.panname.enter" bundle="${rb}"/>:<br/>
+                  <input class ="inputCl" type="text" name="panname" value="${param.panname}"
+                         required pattern="[A-Z]([a-zA-Z]){1,10}"/>
                   <br/> 
 
-                  <fmt:message key = "create.age" bundle="${rb}"/>:<br/>
-                  <input class ="inputCl" type="text" name="age" value="${param.age}"/>
+                  <fmt:message key = "create.age.enter" bundle="${rb}"/>:<br/>
+                  <input class ="inputCl" type="text" name="age" value="${param.age}"
+                         required pattern="[1-9][0-9]"/>
                   <br/> 
 
-                  <fmt:message key = "create.birthReg" bundle="${rb}"/>:<br/>
-                  <input class ="inputCl" type="text" name="birthReg" value="${param.birthReg}"/>
+                  <fmt:message key = "create.birthReg.enter" bundle="${rb}"/>:<br/>
+                  <input class ="inputCl" type="text" name="birthReg" value="${param.birthReg}"
+                         required pattern="[A-Z]([a-zA-Z]){1,10}"/>
                   <br/> 
 
-                  <fmt:message key = "create.lastSeenReg" bundle="${rb}"/>:<br/>
-                  <input class ="inputCl" type="text" name="lastSeenReg" value="${param.lastSeenReg}"/>
+                  <fmt:message key = "create.lastSeenReg.enter" bundle="${rb}"/>:<br/>
+                  <input class ="inputCl" type="text" name="lastSeenReg" value="${param.lastSeenReg}"
+                         required pattern="[A-Z]([a-zA-Z]){1,10}"/>
                   <br/> 
 
-                  <fmt:message key = "create.award" bundle="${rb}"/>:<br/>
-                  <input class ="inputCl" type="text" name="award" value="${param.award}"/>
+                  <fmt:message key = "create.award.enter" bundle="${rb}"/>:<br/>
+                  <input class ="inputCl" type="text" name="award" value="${param.award}"
+                         required pattern="[1-9][0-9]{1,7}"/>
                   <br/> 
 
-                  <fmt:message key = "create.information" bundle="${rb}"/>:<br/>
+                  <fmt:message key = "create.information.enter" bundle="${rb}"/>:<br/>
                   <textarea class ="inputMe" rows="12" cols="120" name="information"/></textarea>
                   <br/> 
                   

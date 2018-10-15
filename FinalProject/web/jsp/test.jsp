@@ -26,7 +26,7 @@
         
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>
-            <fmt:message key = "label.region" bundle="${rb}"/>
+            <fmt:message key = "label.test" bundle="${rb}"/>
         </title>
         <style>
             rMenu {
@@ -56,9 +56,12 @@
             
             
                 <div style = "margin-left: 50px; padding-bottom: 5px;">
-                    <h2 style = "margin-left: 50px; padding-bottom: 5px;"><fmt:message key = "test.start" bundle="${test}"/>  </h2> 
-                    <c:if test="${testError} not empty">
-                    <h2 style = "margin-left: 50px; padding-bottom: 5px;"><fmt:message key = "${testError}" bundle="${test}"/>  </h2>
+                    <div class ="title">
+                    <h1><fmt:message key = "test.start" bundle="${test}"/>  </h1> 
+                    <br>
+                    </div>
+                    <c:if test="${not empty testError}"> 
+                    <h1 style = "margin-left: 50px; padding-bottom: 5px;"><fmt:message key = "${testError}" bundle="${test}"/>  </h1>
                     </c:if>
                 <form method="post" action="${pageContext.servletContext.contextPath}/controller">
                     <input type="hidden" name="command" value="testRes" />

@@ -23,10 +23,10 @@
               action="${pageContext.servletContext.contextPath}/controller" >
             <input type="hidden" name="command" value="login" />
             <fmt:message key = "label.Login" bundle="${rb}"/>:<br/>
-            <input type="text" name="login" value=""/>
+            <input type="text" name="login" value="" required pattern="\w{3,12}"/>
             <br/>
             <fmt:message key = "label.Password" bundle="${rb}"/>:<br/>
-            <input type="password" name="password" value=""/>
+            <input type="password" name="password" value="" required pattern="\w{4,}"/>
             <br/> 
             <input class ="button18" type="submit" 
                    value="<fmt:message key = "label.login" bundle="${rb}"/>"/>
@@ -64,6 +64,14 @@
             <input class ="button18" type="submit" 
                    value="<fmt:message key = "label.region" bundle="${rb}"/>"/>
         </form>
+        
+        <form class ="menuch" name="archiveForm" method="POST" 
+                action="${pageContext.servletContext.contextPath}/controller">
+              <input type="hidden" name="command" value="archive" />
+              <input class ="button18" type="submit" 
+                value="<fmt:message key = "label.found" bundle="${rb}"/>"/>
+        </form>
+        
         <form class ="menuch" name="testForm" method="POST" 
               action="${pageContext.servletContext.contextPath}/controller">
             <input type="hidden" name="command" value="redirect" />
@@ -71,10 +79,7 @@
             <input class ="button18" type="submit" 
                    value="<fmt:message key = "label.test" bundle="${rb}"/>"/>
         </form>
-        
-        
-        
-        <form class="logregCh" name="logoutForm" method="POST" 
+        <form class ="logregCh" name="logoutForm" method="POST" 
               action="${pageContext.servletContext.contextPath}/controller">
             <input type="hidden" name="command" value="logout" />
             <input class ="button18" type="submit" 
@@ -84,6 +89,7 @@
             <fmt:message key = "label.register" bundle="${rb}"/>
         </a>
         </div>
+        
         
     </body>
     

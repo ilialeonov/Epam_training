@@ -36,11 +36,13 @@
                 <input type="hidden" name="command" value="login" />
 
                 <fmt:message key = "label.Login" bundle="${rb}"/>:<br/>
-                <input class ="inputCl" type="text" name="login" value="${param.login}"/>
+                <input class ="inputCl" type="text" name="login" value="${param.login}" 
+                       required pattern="\w{3,12}"/>
                 <br/>
                 
                 <fmt:message key = "label.Password" bundle="${rb}"/>:<br/>
-                <input class ="inputCl" type="password" name="password" value=""/>
+                <input class ="inputCl" type="password" name="password" value=""
+                       required pattern="\w{4,}"/>
                 <br/> <br/> 
 
                 <input class ="button18" type="submit" 

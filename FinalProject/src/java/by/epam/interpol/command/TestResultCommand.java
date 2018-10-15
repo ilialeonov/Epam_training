@@ -5,13 +5,11 @@
  */
 package by.epam.interpol.command;
 
+import by.epam.interpol.command.util.ActionCommand;
 import by.epam.interpol.command.util.ConfigurationManager;
-import by.epam.interpol.command.util.Validator;
 import by.epam.interpol.controller.SessionRequestContent;
-import by.epam.interpol.entity.Person;
 import by.epam.interpol.exception.ProjectException;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.apache.logging.log4j.LogManager;
@@ -19,15 +17,18 @@ import org.apache.logging.log4j.Logger;
 
 /**
  *
- * @author Администратор
+ * @author Ilia Leonov
+ * shows test result
  */
-class TestResultCommand implements ActionCommand {
+public class TestResultCommand implements ActionCommand {
     private static final Logger LOG = LogManager.getLogger(TestResultCommand.class);
     
     private static final String TERM = "term";
     private static final int QUESTIONS_AMOUNT = 7;
     private static final int TOTAL_PARAMS_COUNT = 8;
     private static final double COEFFICIENT = 2.2;
+    private static final String TEST_PAGE = "path.page.test";
+    private static final String TEST_RESULT_PAGE = "path.page.testRes";
     
     public TestResultCommand() {
     }
@@ -41,8 +42,9 @@ class TestResultCommand implements ActionCommand {
         int sum = 0;
         Set<String> parameterKeys = parameters.keySet();
         if(parameterKeys.size()< TOTAL_PARAMS_COUNT) {
+            LOG.debug("test.errorOccured");
             requestContent.setRequestAttribute("testError", "test.errorOccured");
-            page = ConfigurationManager.getProperty("path.page.test"); 
+            page = ConfigurationManager.getProperty(TEST_PAGE); 
         } else {
             Iterator <String> parameterKeysIterator = parameterKeys.iterator();
             parameterKeysIterator.next();
@@ -53,7 +55,7 @@ class TestResultCommand implements ActionCommand {
             }
             int psychTerm = (int) ((sum - QUESTIONS_AMOUNT)*COEFFICIENT);
             requestContent.setRequestAttribute(TERM, psychTerm);
-            page = ConfigurationManager.getProperty("path.page.testRes"); 
+            page = ConfigurationManager.getProperty(TEST_RESULT_PAGE); 
         }
         return page;
     }    

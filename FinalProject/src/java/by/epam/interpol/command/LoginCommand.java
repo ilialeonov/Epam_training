@@ -5,6 +5,7 @@
  */
 package by.epam.interpol.command;
 
+import by.epam.interpol.command.util.ActionCommand;
 import by.epam.interpol.command.util.ConfigurationManager;
 import by.epam.interpol.command.util.Validator;
 import by.epam.interpol.logic.UserLogic;
@@ -18,7 +19,8 @@ import org.apache.logging.log4j.Logger;
 
 /**
  *
- * @author Администратор
+ * @author Ilia Leonov
+ * points to login user
  */
 public class LoginCommand implements ActionCommand{
     private static final Logger LOG = LogManager.getLogger(LoginCommand.class);
@@ -33,9 +35,15 @@ public class LoginCommand implements ActionCommand{
     private static final String USER = "user";
     private static final String ADMIN = "admin";
     
+    private static final String WELCOME_PAGE = "path.page.welcome";
+    private static final String LOGIN_PAGE = "path.page.login";
     
     private UserLogic logic;
 
+    /**
+     *
+     * @param logic logic of control at user
+     */
     public LoginCommand(UserLogic logic) {
         this.logic = logic;
     }
@@ -45,13 +53,12 @@ public class LoginCommand implements ActionCommand{
         LOG.debug("****IN LOGIN COMMAND******");
         
         String page = null;
-        String login = requestContent.getRequestParameter(LOGIN)
-                .replaceAll("</?script>", "");
+        String login = requestContent.getRequestParameter(LOGIN);
         String password = requestContent.getRequestParameter(PASSWORD);
         String encodedPassword = Base64.getEncoder().encodeToString(password.getBytes());
-        if (Validator.isLoginPasswordValide(login, password)) {
-            LOG.debug("login password pair is valid");
-
+        if (requestContent.getRequestAttribute(ROLE) != null) {
+            page = ConfigurationManager.getProperty(LOGIN_PAGE);
+        }else if (Validator.isLoginPasswordValide(login, password)) {
             //find id by login-password
             Optional<Integer> optId = logic.findId(login, encodedPassword);
             if (optId.isPresent()) {
@@ -70,26 +77,25 @@ public class LoginCommand implements ActionCommand{
                         requestContent.getRequestAttribute(LOCALE));
                 if (user.isAdmin()) {
                     requestContent.setSessionRequestAttribute(ROLE, ADMIN);
-                    requestContent.setRequestAttribute(ROLE, "admin");
+                    requestContent.setRequestAttribute(ROLE, ADMIN);
                 } else {
                     requestContent.setSessionRequestAttribute(ROLE, USER);
-                    requestContent.setRequestAttribute(ROLE, "user");
+                    requestContent.setRequestAttribute(ROLE, USER);
                 }
-                page = ConfigurationManager.getProperty("path.page.welcome");    
+                page = ConfigurationManager.getProperty(WELCOME_PAGE);    
             } else {
-                LOG.info("there is no such user");
                 requestContent.setRequestAttribute("errorOccured",
                     "login.errorOccured");
                 requestContent.setRequestAttribute("errorLoginPassMessage",
                     "message.loginerror");
-                page = ConfigurationManager.getProperty("path.page.login");
+                page = ConfigurationManager.getProperty(LOGIN_PAGE);
             }
         } else {
             requestContent.setRequestAttribute("errorOccured",
                     "login.errorOccured");
             requestContent.setRequestAttribute("errorLoginPassMessage",
                     "message.invalideData");
-            page = ConfigurationManager.getProperty("path.page.login");
+            page = ConfigurationManager.getProperty(LOGIN_PAGE);
         }
         return page;
     }

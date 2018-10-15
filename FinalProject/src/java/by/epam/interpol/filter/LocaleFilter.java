@@ -5,7 +5,6 @@
  */
 package by.epam.interpol.filter;
 
-import by.epam.interpol.controller.Controller;
 import java.io.IOException;
 import java.util.Locale;
 import javax.servlet.Filter;
@@ -25,7 +24,7 @@ import org.apache.logging.log4j.Logger;
  *
  * @author Администратор
  */
-@WebFilter ( urlPatterns = {"/jsp/*", "/controller", "/jsploged/*"} )
+
 public class LocaleFilter implements Filter{
     private static final Logger LOG = LogManager.getLogger(LocaleFilter.class);
     
@@ -44,7 +43,6 @@ public class LocaleFilter implements Filter{
             FilterChain chain) throws IOException, ServletException {
         LOG.debug("in locale filter");
         HttpServletRequest httpRequest = (HttpServletRequest) request;
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
         HttpSession session = httpRequest.getSession(false);
         
         LOG.debug(session);

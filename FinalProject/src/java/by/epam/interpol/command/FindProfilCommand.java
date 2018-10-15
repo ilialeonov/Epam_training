@@ -5,6 +5,7 @@
  */
 package by.epam.interpol.command;
 
+import by.epam.interpol.command.util.ActionCommand;
 import by.epam.interpol.command.util.ConfigurationManager;
 import by.epam.interpol.command.util.PersonDefiner;
 import by.epam.interpol.command.util.Validator;
@@ -18,22 +19,29 @@ import org.apache.logging.log4j.Logger;
 
 /**
  *
- * @author Администратор
+ * @author Ilia Leonov
+ * points to find profil by id or name-panname pair
  */
-class FindProfilCommand implements ActionCommand {
-private static final Logger LOG = LogManager.getLogger(FindCommand.class);
+public class FindProfilCommand implements ActionCommand {
+private static final Logger LOG = LogManager.getLogger(FindProfilCommand.class);
     
     private static final String PERSON = "person";
     private static final String NAME = "name";
     private static final String PANNAME = "panname";
     private static final String ID = "id";
+    
+    private static final String TESTIFY_PAGE = "path.page.testify";
+    private static final String CHOSE_PERSON_PAGE = "path.page.chosePerson";
 
     private PersonLogic logic;
     private PersonDefiner definer;
 
+    /**
+     *
+     * @param logic logic of control at testimonies
+     */
     public FindProfilCommand(PersonLogic logic) {
         this.logic = logic;
-        definer = PersonDefiner.getInstance();
     }
 
     @Override
@@ -41,13 +49,13 @@ private static final Logger LOG = LogManager.getLogger(FindCommand.class);
     LOG.debug("****IN FINDPROFIL COMMAND******");
         
         String page = null;
+        definer = PersonDefiner.getInstance();
         
         boolean searchById = definer.defineIfsearchByID(requestContent);
         boolean isCriminal = definer.defineIfPersonIsWanted(requestContent);
  
         if (searchById) {
-            String idString = requestContent.getRequestParameter(ID)
-                .replaceAll("</?script>", "");
+            String idString = requestContent.getRequestParameter(ID);
             
             if(Validator.idIsValid(idString)) {
                 //create new criminal
@@ -58,29 +66,32 @@ private static final Logger LOG = LogManager.getLogger(FindCommand.class);
                 if (optPerson.isPresent()) {
                     if (optPerson.get().isIsCriminal() == isCriminal) {
                         requestContent.setRequestAttribute(PERSON, optPerson.get());
-                        page = ConfigurationManager.getProperty("path.page.testify");    
+                        page = ConfigurationManager.getProperty(TESTIFY_PAGE);    
                     } else {
-                        LOG.info("couldn't find searched by id");
                         requestContent.setRequestAttribute("errorOccured",
                             "editBy.errorOccured");
                         requestContent.setRequestAttribute("errorEditByMessage",
                         "message.invalidePerson");
-                        page = ConfigurationManager.getProperty("path.page.chosePerson");
+                        page = ConfigurationManager.getProperty(CHOSE_PERSON_PAGE);
                     }
+                } else {
+                    requestContent.setRequestAttribute("errorOccured",
+                            "editBy.errorOccured");
+                    requestContent.setRequestAttribute("errorEditByMessage",
+                            "message.invalideData");
+                    page = ConfigurationManager.getProperty(CHOSE_PERSON_PAGE);
                 }
             } else {
                 requestContent.setRequestAttribute("errorOccured",
                         "editBy.errorOccured");
                 requestContent.setRequestAttribute("errorEditByMessage",
                         "message.invalideData");
-                page = ConfigurationManager.getProperty("path.page.chosePerson");
+                page = ConfigurationManager.getProperty(CHOSE_PERSON_PAGE);
             }
         } else {
             
-            String name = requestContent.getRequestParameter(NAME)
-                .replaceAll("</?script>", "");
-            String panname = requestContent.getRequestParameter(PANNAME)
-                    .replaceAll("</?script>", "");
+            String name = requestContent.getRequestParameter(NAME);
+            String panname = requestContent.getRequestParameter(PANNAME);
             
             if(Validator.namePannameAreValid(name, panname)) {
                 //create new criminal
@@ -88,14 +99,13 @@ private static final Logger LOG = LogManager.getLogger(FindCommand.class);
                 Optional<Person> optPerson = logic.findEntityByNamePanname(name, panname);
                 if (optPerson.isPresent() && optPerson.get().isIsCriminal() == isCriminal) {
                     requestContent.setRequestAttribute(PERSON, optPerson.get());                    
-                    page = ConfigurationManager.getProperty("path.page.testify");    
+                    page = ConfigurationManager.getProperty(TESTIFY_PAGE);    
                 } else {
-                    LOG.info("couldn't find searched by id");
                     requestContent.setRequestAttribute("errorOccured",
                         "editBy.errorOccured");
                     requestContent.setRequestAttribute("errorEditByMessage",
                     "message.invalidePerson");
-                    page = ConfigurationManager.getProperty("path.page.chosePerson");
+                    page = ConfigurationManager.getProperty(CHOSE_PERSON_PAGE);
 
                 }
             } else {
@@ -103,7 +113,7 @@ private static final Logger LOG = LogManager.getLogger(FindCommand.class);
                         "editBy.errorOccured");
                 requestContent.setRequestAttribute("errorEditByMessage",
                         "message.invalideData");
-                page = ConfigurationManager.getProperty("path.page.chosePerson");
+                page = ConfigurationManager.getProperty(CHOSE_PERSON_PAGE);
             }
         }
         return page;   

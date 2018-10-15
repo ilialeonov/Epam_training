@@ -1,27 +1,35 @@
 package by.epam.interpol.controller;
 
-import by.epam.interpol.command.ActionCommand;
+import by.epam.interpol.command.util.ActionCommand;
 import by.epam.interpol.command.util.ActionFactory;
+import by.epam.interpol.command.util.ConfigurationManager;
 import by.epam.interpol.exception.ProjectException;
 import java.io.IOException;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
-
-@WebServlet("/controller")
-@MultipartConfig(fileSizeThreshold = 128*128,maxFileSize = 1024*1024*10,maxRequestSize = 1024*1024*50)
+/**
+ *
+ * @author IIlia Leonov
+ * servlet parsing HEAD request and definin get or post void to call
+ * and calls the void
+ */
 public class Controller extends HttpServlet {
     private static final Logger LOG = LogManager.getLogger(Controller.class);
     
-    private static final String ERROR_PAGE = "";//todo
+    private static final String ERROR_PAGE = "path.page.error";
     
+    /**
+     *
+     * @param request request from user
+     * @param response response to user
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
@@ -37,10 +45,17 @@ public class Controller extends HttpServlet {
             requestContent.insertAttributes(request); 
             request.getRequestDispatcher(page).forward(request, response);
         } catch (ProjectException ex) {
-            response.sendRedirect(ERROR_PAGE);
+            response.sendRedirect(ConfigurationManager.getProperty(ERROR_PAGE));
         }      
     }
         
+    /**
+     *
+     * @param req request from user
+     * @param resp response to user
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
             throws ServletException, IOException {

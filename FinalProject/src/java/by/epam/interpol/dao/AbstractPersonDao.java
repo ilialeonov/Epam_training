@@ -12,19 +12,42 @@ import java.util.Optional;
 
 /**
  *
- * @author Администратор
+ * @author Ilia Leonov
+ * 
  */
 public abstract class AbstractPersonDao extends AbstractDao<Person>{
 
+    /**
+     *
+     * @param connection
+     */
     public AbstractPersonDao(WrapperConnector connection) {
         super(connection);
     }
     
+    /**
+     *
+     * @return searched person
+     * @throws ProjectException
+     */
     public abstract Person findLast() throws ProjectException;
     
+    /**
+     *
+     * @param name person's name
+     * @param panname person's panname
+     * @return person or null if not found wrapped in Optional class
+     * @throws ProjectException
+     */
     public abstract Optional<Person> findEntityByNamePanname(
             String name, String panname) throws ProjectException;
     
+    /**
+     *
+     * @param person person to update
+     * @return person or null if not found wrapped in Oprtional class
+     * @throws ProjectException
+     */
     public abstract Optional<Person> updateNoPhoto(Person person) 
             throws ProjectException;
     

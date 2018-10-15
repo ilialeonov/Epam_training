@@ -15,7 +15,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="${pageContext.servletContext.contextPath}/css/style.css" rel="stylesheet" type="text/css">
         <script src="js/script.js"></script>
-        <title>chose</title>
+        <title><fmt:message key = "label.chose" bundle="${rb}"/></title>
     </head>
     <body>
             <jsp:include page = "../jsp/header.jsp"/>
@@ -44,8 +44,9 @@
                 </c:choose>
                   <input type="hidden" name="person" value="${param.person}" />
                   <input type="hidden" name="command" value="findProfil" />
-                  <fmt:message key = "create.id" bundle="${rb}"/>:<br/>
-                  <input class ="inputCl" type="text" name="id" value="${param.id}"/>
+                  <fmt:message key = "create.id.enter" bundle="${rb}"/>:<br/>
+                  <input class ="inputCl" type="text" name="id" value="${param.id}"
+                         required pattern="[1-9][0-9]{0,7}"/>
                   <br/>
                   <input class ="button18" type="submit"
                          value = "<fmt:message key = "edit.label.find" bundle="${rb}"/>"/>
@@ -57,12 +58,14 @@
                   <input type="hidden" name="person" value="${param.person}" />
                   <input type="hidden" name="command" value="findProfil" />
                   
-                  <fmt:message key = "create.name" bundle="${rb}"/>:<br/>
-                  <input class ="inputCl" type="text" name="name" value="${param.name}"/>
+                  <fmt:message key = "create.name.enter" bundle="${rb}"/>:<br/>
+                  <input class ="inputCl" type="text" name="name" value="${param.name}"
+                         required pattern="[A-Z]([a-zA-Z]){1,10}"/>
                   <br/>
 
-                  <fmt:message key = "create.panname" bundle="${rb}"/>:<br/>
-                  <input class ="inputCl" type="text" name="panname" value="${param.panname}"/>
+                  <fmt:message key = "create.panname.enter" bundle="${rb}"/>:<br/>
+                  <input class ="inputCl" type="text" name="panname" value="${param.panname}"
+                         required pattern="[A-Z]([a-zA-Z]){1,10}"/>
                   <br/> 
 
                   <input class ="button18" type="submit"

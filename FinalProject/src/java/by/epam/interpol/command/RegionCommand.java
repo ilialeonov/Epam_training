@@ -5,9 +5,8 @@
  */
 package by.epam.interpol.command;
 
-import by.epam.interpol.command.ActionCommand;
+import by.epam.interpol.command.util.ActionCommand;
 import by.epam.interpol.command.util.ConfigurationManager;
-import by.epam.interpol.command.util.PersonDefiner;
 import by.epam.interpol.command.util.Validator;
 import by.epam.interpol.controller.SessionRequestContent;
 import by.epam.interpol.entity.Person;
@@ -19,10 +18,10 @@ import org.apache.logging.log4j.Logger;
 
 /**
  *
- * @author Администратор
+ * @author Ilia Leonov
  */
 public class RegionCommand implements ActionCommand {
-    private static final Logger LOG = LogManager.getLogger(CreateCommand.class);
+    private static final Logger LOG = LogManager.getLogger(RegionCommand.class);
     
     private static final String PAGE_NUMBER = "pageNumber";
     private static final String PERSON_LIST = "list";
@@ -33,9 +32,15 @@ public class RegionCommand implements ActionCommand {
     private static final int FIRST_PAGE = 1;
     private static final int PAGE_SIZE = 5;
     
+    private static final String REGION_PAGE = "path.page.region";
+    private static final String CHOSE_REGION_PAGE = "path.page.choseRegion";
     
     private PersonLogic logic;
 
+    /**
+     *
+     * @param logic logic of control at persons
+     */
     public RegionCommand(PersonLogic logic) {
         this.logic = logic;
     }
@@ -44,7 +49,7 @@ public class RegionCommand implements ActionCommand {
     public String execute(SessionRequestContent requestContent) throws ProjectException {
         LOG.debug("****IN REGION COMMAND******");
         
-        String page = null;
+        String page;
         int pageNumberPar;
         String region = requestContent.getRequestParameter(REGION);
         if (Validator.isRegionValid(region)) {
@@ -73,13 +78,13 @@ public class RegionCommand implements ActionCommand {
             requestContent.setRequestAttribute(PAGE_NUMBER, pageNumberPar);
             requestContent.setRequestAttribute(REGION, region);
 
-            page = ConfigurationManager.getProperty("path.page.region"); 
+            page = ConfigurationManager.getProperty(REGION_PAGE); 
         } else {
             requestContent.setRequestAttribute("errorOccured",
                     "region.errorOccured");
             requestContent.setRequestAttribute("errorChoseRegionMessage",
                     "message.invalideData");
-            page = ConfigurationManager.getProperty("path.page.choseRegion"); 
+            page = ConfigurationManager.getProperty(CHOSE_REGION_PAGE); 
         }
         return page;
     }

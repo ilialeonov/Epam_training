@@ -45,23 +45,28 @@
                         <input  type="hidden" name="command" value="register" />
 
                         <fmt:message key = "label.name" bundle="${rb}"/>:<br/>
-                        <input class ="inputCl" type="text" name="name" value="${param.name}"/>
+                        <input class ="inputCl" type="text" name="name" value="${param.name}"
+                               required pattern="[A-Z]([a-zA-Z]){1,10}"/>
                         <br/>
 
                         <fmt:message key = "label.mail" bundle="${rb}"/>:<br/>
-                        <input class ="inputCl" type="text" name="mail" value="${param.mail}"/>
+                        <input class ="inputCl" type="text" name="mail" value="${param.mail}"
+                               required pattern="(\\w{5,})@(\\w+\\.)([a-z]{2,6})"/>
                         <br/>
 
                         <fmt:message key = "label.Login" bundle="${rb}"/>:<br/>
-                        <input class ="inputCl" type="text" name="login" value="${param.login}"/>
+                        <input class ="inputCl" type="text" name="login" value="${param.login}"
+                               required pattern="\w{3,12}"/>
                         <br/>
 
                         <fmt:message key = "label.Password" bundle="${rb}"/>:<br/>
-                        <input class ="inputCl" type="password" name="password" value=""/>
+                        <input class ="inputCl" type="password" name="password" value=""
+                               required pattern="\w{4,12}"/>
                         <br/> 
 
                         <fmt:message key = "label.RepeatPassword" bundle="${rb}"/>:<br/>
-                        <input class ="inputCl" type="password" name="passwordRepeat" value=""/> <br/>
+                        <input class ="inputCl" type="password" name="passwordRepeat" value=""
+                               required pattern="\w{4,12}"/> <br/>
                         <input class ="button18" type="submit" 
                                value="<fmt:message key = "label.register" bundle="${rb}"/>"/>
                     </form>

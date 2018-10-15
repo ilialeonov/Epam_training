@@ -6,6 +6,7 @@
 <%@page session = "false" contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="ctg" uri="/WEB-INF/tld/custom.tld" %>
 <fmt:setLocale value="${requestScope.locale}" scope="request" />
 <fmt:setBundle basename="resources.pagecontent" var="rb"  />
 
@@ -40,8 +41,16 @@
                 right: 500px;
             }
         </style>
+        <script type="text/javascript">
+                    document.onkeydown = function (e) {
+                        if (e.keyCode === 116) {
+                          return false;
+                        }
+                      };
+        </script>
     </head>
     <body>
+        
         <jsp:include page = "../jsp/header.jsp"/>
         <div class="field">
             <div class="inline">
@@ -81,7 +90,11 @@
                 
                 <ul>
                     <c:forEach items="${list}" var="item">
+                        
+                        
+                        
                         <li>
+                            <h2>${item.person.name} ${item.person.panname}</h2>
                             <div style ="overflow:auto;">
                                 <img class ="image" width="300px" alt="img" 
                                     src="data:image/jpeg;base64,${item.person.base64image}"/>
@@ -93,7 +106,11 @@
                                     <fmt:message key = "create.birthReg" bundle="${rb}"/>:${item.person.birthPlace}<br>
                                     <fmt:message key = "create.lastSeenReg" bundle="${rb}"/>:${item.person.lastPlace}<br>
                                     <fmt:message key = "create.award" bundle="${rb}"/>:
-                                    <fmt:formatNumber value="${item.person.award}" type = "number"/> $<br>
+                                    <fmt:formatNumber type = "currency" >
+                                        <ctg:convert>
+                                            ${item.person.award}
+                                        </ctg:convert>
+                                    </fmt:formatNumber><br>
                                     
                                 </div>
                             </div>
@@ -104,12 +121,25 @@
                                     <div style="width:900px;">${item.testimony}</div>
                                 </div>
                         </li>
+                        <c:choose >
+                            
+                            <c:when test = "${item.isWatched}">
+                        
                         <li>
                            <div style = "left: 50px; bottom: 100px; padding: 3px;">
                                <h3><fmt:message key = "testify.points" bundle="${rb}"/>:</h3>
                                     ${item.points}
                                 </div> 
                         </li>
+                            </c:when>
+                            <c:otherwise>
+                                <div style = "left: 50px; bottom: 100px; padding: 3px;">
+                                    <h2><fmt:message key = "testify.notWatched" bundle="${rb}"/></h2>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
+                        
+                        
                     </c:forEach>
                 </ul>
             </div>

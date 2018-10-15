@@ -5,18 +5,20 @@
  */
 package by.epam.interpol.dao;
 
-import by.epam.interpol.entity.Person;
 import by.epam.interpol.entity.Testimony;
-import by.epam.interpol.exception.ProjectException;
 import by.epam.interpol.pool.WrapperConnector;
-import java.util.Optional;
 
 /**
  *
- * @author Администратор
+ * @author Ilia Leonov
+ * abstract class to control testimony operations
  */
 public abstract class AbstractTestimonyDao extends AbstractDao<Testimony>{
 
+    /**
+     *
+     * @param connection connection to database
+     */
     public AbstractTestimonyDao(WrapperConnector connection) {
         super(connection);
     }

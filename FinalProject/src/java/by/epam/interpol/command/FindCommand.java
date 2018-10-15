@@ -5,6 +5,7 @@
  */
 package by.epam.interpol.command;
 
+import by.epam.interpol.command.util.ActionCommand;
 import by.epam.interpol.command.util.ConfigurationManager;
 import by.epam.interpol.command.util.PersonDefiner;
 import by.epam.interpol.command.util.Validator;
@@ -18,9 +19,10 @@ import org.apache.logging.log4j.Logger;
 
 /**
  *
- * @author Администратор
+ * @author Ilia Leonov
+ * points to find person by id or name-panname
  */
-class FindCommand implements ActionCommand {
+public class FindCommand implements ActionCommand {
     private static final Logger LOG = LogManager.getLogger(FindCommand.class);
     
     private static final String PERSON = "personToEdit";
@@ -28,12 +30,18 @@ class FindCommand implements ActionCommand {
     private static final String PANNAME = "panname";
     private static final String ID = "id";
 
+    private static final String EDIT_PAGE = "path.page.edit";
+    private static final String EDIT_BY_PAGE = "path.page.editBy";
+    
     private PersonLogic logic;
     private PersonDefiner definer;
 
+    /**
+     *
+     * @param logic logic of control at testimonies
+     */
     public FindCommand(PersonLogic logic) {
         this.logic = logic;
-        definer = PersonDefiner.getInstance();
     }
 
     @Override
@@ -41,63 +49,65 @@ class FindCommand implements ActionCommand {
     LOG.debug("****IN FIND COMMAND******");
         
         String page = null;
+        definer = PersonDefiner.getInstance();
         
         boolean searchById = definer.defineIfsearchByID(requestContent);
         boolean isCriminal = definer.defineIfPersonIsWanted(requestContent);
  
         if (searchById) {
-            String idString = requestContent.getRequestParameter(ID)
-                .replaceAll("</?script>", "");
+            String idString = requestContent.getRequestParameter(ID);
             
             if(Validator.idIsValid(idString)) {
                 //create new criminal
                 int id = Integer.parseInt(idString);
                 
                 Optional<Person> optPerson = logic.findEntityById(id);
-                
                 if (optPerson.isPresent()) {
                     if (optPerson.get().isIsCriminal() == isCriminal) {
                         requestContent.setRequestAttribute(PERSON, optPerson.get());
-                        page = ConfigurationManager.getProperty("path.page.edit");    
+                        page = ConfigurationManager.getProperty(EDIT_PAGE);    
                     } else {
-                        LOG.info("couldn't find searched by id");
                         requestContent.setRequestAttribute("errorOccured",
                             "editBy.errorOccured");
                         requestContent.setRequestAttribute("errorEditByMessage",
                         "message.invalidePerson");
-                        page = ConfigurationManager.getProperty("path.page.editBy");
+                        page = ConfigurationManager.getProperty(EDIT_BY_PAGE);
                     }
+                } else {
+                    requestContent.setRequestAttribute("errorOccured",
+                            "editBy.errorOccured");
+                    requestContent.setRequestAttribute("errorEditByMessage",
+                            "message.invalideData");
+                    page = ConfigurationManager.getProperty(EDIT_BY_PAGE);
                 }
             } else {
                 requestContent.setRequestAttribute("errorOccured",
                         "editBy.errorOccured");
                 requestContent.setRequestAttribute("errorEditByMessage",
                         "message.invalideData");
-                page = ConfigurationManager.getProperty("path.page.editBy");
+                page = ConfigurationManager.getProperty(EDIT_BY_PAGE);
             }
         } else {
             
-            String name = requestContent.getRequestParameter(NAME)
-                .replaceAll("</?script>", "");
-            String panname = requestContent.getRequestParameter(PANNAME)
-                    .replaceAll("</?script>", "");
+            String name = requestContent.getRequestParameter(NAME);
+            String panname = requestContent.getRequestParameter(PANNAME);
             
             if(Validator.namePannameAreValid(name, panname)) {
                 //create new criminal
                 
-                Optional<Person> optPerson = logic.findEntityByNamePanname(name, panname);
-                LOG.debug("name: " +name +" panname " + panname);
-                LOG.debug(optPerson.isPresent());
-                if (optPerson.isPresent() && optPerson.get().isIsCriminal() == isCriminal) {
+                Optional<Person> optPerson = logic.findEntityByNamePanname(name, 
+                        panname);
+                
+                if (optPerson.isPresent() && optPerson.get().isIsCriminal() 
+                        == isCriminal) {
                     requestContent.setRequestAttribute(PERSON, optPerson.get());                    
-                    page = ConfigurationManager.getProperty("path.page.edit");    
+                    page = ConfigurationManager.getProperty(EDIT_PAGE);    
                 } else {
-                    LOG.info("couldn't find searched by id");
                     requestContent.setRequestAttribute("errorOccured",
                         "editBy.errorOccured");
                     requestContent.setRequestAttribute("errorEditByMessage",
                     "message.invalidePerson");
-                    page = ConfigurationManager.getProperty("path.page.editBy");
+                    page = ConfigurationManager.getProperty(EDIT_BY_PAGE);
 
                 }
             } else {
@@ -105,7 +115,7 @@ class FindCommand implements ActionCommand {
                         "editBy.errorOccured");
                 requestContent.setRequestAttribute("errorEditByMessage",
                         "message.invalideData");
-                page = ConfigurationManager.getProperty("path.page.editBy");
+                page = ConfigurationManager.getProperty(EDIT_BY_PAGE);
             }
         }
         return page;

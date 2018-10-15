@@ -15,7 +15,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="${pageContext.servletContext.contextPath}/css/style.css" rel="stylesheet" type="text/css">
         <script src="js/script.js"></script>
-        <title>main</title>
+        <title><fmt:message key = "label.welcome" bundle="${rb}"/></title>
     </head>
     <body>
         <jsp:include page = "../jsp/header.jsp"/>

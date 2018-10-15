@@ -5,25 +5,24 @@
  */
 package by.epam.interpol.command;
 
+import by.epam.interpol.command.util.ActionCommand;
 import by.epam.interpol.command.util.ConfigurationManager;
 import by.epam.interpol.command.util.PersonDefiner;
-import by.epam.interpol.command.util.Validator;
 import by.epam.interpol.controller.SessionRequestContent;
 import by.epam.interpol.entity.Person;
 import by.epam.interpol.exception.ProjectException;
 import by.epam.interpol.logic.PersonLogic;
-import java.io.InputStream;
 import java.util.List;
-import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
  *
- * @author Администратор
+ * @author Ilia Leonov
+ * shows several persons at page 
  */
-class ShowCommand implements ActionCommand {
-    private static final Logger LOG = LogManager.getLogger(CreateCommand.class);
+public class ShowCommand implements ActionCommand {
+    private static final Logger LOG = LogManager.getLogger(ShowCommand.class);
     
     private static final String PERSON = "person";
     private static final String PAGE_NUMBER = "pageNumber";
@@ -33,21 +32,25 @@ class ShowCommand implements ActionCommand {
     private static final String PREVIOUS = "previous";
     private static final int FIRST_PAGE = 1;
     private static final int PAGE_SIZE = 5;
-    
+    private static final String SHOW_PAGE = "path.page.show";
     
     private PersonLogic logic;
     private PersonDefiner definer;
 
+    /**
+     *
+     * @param logic logic of control at persons
+     */
     public ShowCommand(PersonLogic logic) {
         this.logic = logic;
-        definer = PersonDefiner.getInstance();
     }
 
     @Override
     public String execute(SessionRequestContent requestContent) throws ProjectException {
         LOG.debug("****IN SHOW COMMAND******");
         
-        String page = null;
+        String page;
+        definer = PersonDefiner.getInstance();
         int pageNumberPar;
         
         boolean isCriminal = definer.defineIfPersonIsWanted(requestContent);
@@ -77,7 +80,7 @@ class ShowCommand implements ActionCommand {
         requestContent.setRequestAttribute(PERSON, 
                 requestContent.getRequestParameter(PERSON));
 
-        page = ConfigurationManager.getProperty("path.page.show");    
+        page = ConfigurationManager.getProperty(SHOW_PAGE);    
         return page;
     }
     

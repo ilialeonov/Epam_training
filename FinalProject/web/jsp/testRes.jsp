@@ -26,7 +26,7 @@
         
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>
-            <fmt:message key = "label.region" bundle="${rb}"/>
+            <fmt:message key = "label.testRes" bundle="${rb}"/>
         </title>
         <style>
             rMenu {

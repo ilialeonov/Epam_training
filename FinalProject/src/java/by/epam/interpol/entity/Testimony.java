@@ -18,6 +18,7 @@ public class Testimony {
     private int userId;
     private int personId;
     private int points;
+    private boolean watched;
     private String testimony;
     private Person person;
 
@@ -56,6 +57,14 @@ public class Testimony {
         this.points = points;
     }
 
+    public boolean getIsWatched() {
+        return watched;
+    }
+
+    public void setWatched(boolean watched) {
+        this.watched = watched;
+    }
+
     public String getTestimony() {
         return testimony;
     }
@@ -75,12 +84,13 @@ public class Testimony {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 19 * hash + this.id;
-        hash = 19 * hash + this.userId;
-        hash = 19 * hash + this.personId;
-        hash = 19 * hash + this.points;
-        hash = 19 * hash + Objects.hashCode(this.testimony);
-        hash = 19 * hash + Objects.hashCode(this.person);
+        hash = 47 * hash + this.id;
+        hash = 47 * hash + this.userId;
+        hash = 47 * hash + this.personId;
+        hash = 47 * hash + this.points;
+        hash = 47 * hash + (this.watched ? 1 : 0);
+        hash = 47 * hash + Objects.hashCode(this.testimony);
+        hash = 47 * hash + Objects.hashCode(this.person);
         return hash;
     }
 
@@ -105,6 +115,9 @@ public class Testimony {
         if (this.points != other.points) {
             return false;
         }
+        if (this.watched != other.watched) {
+            return false;
+        }
         if (!Objects.equals(this.testimony, other.testimony)) {
             return false;
         }
@@ -116,9 +129,10 @@ public class Testimony {
 
     @Override
     public String toString() {
-        return "Testimony" + "id=" + id + ", userId=" + userId + ", personId=" 
-                + personId + ", points=" + points + ", testimony=" + testimony 
-                + ", person=" + person ;
+        return "Testimony{" + "id=" + id + ", userId=" + userId + ", personId=" 
+                + personId + ", points=" + points + ", watched=" + watched 
+                + ", testimony=" + testimony + ", person=" + person + '}';
     }
 
+    
 }

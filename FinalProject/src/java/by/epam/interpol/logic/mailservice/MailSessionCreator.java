@@ -18,7 +18,7 @@ import org.apache.logging.log4j.Logger;
  *
  * @author Администратор
  */
-public class SessionCreator {
+public class MailSessionCreator {
     private final static Logger LOG = LogManager.getLogger(MailLogic.class);
     
     private String smtpHost;
@@ -35,7 +35,7 @@ public class SessionCreator {
             throw new RuntimeException();
         }
     }
-    public SessionCreator() {
+    public MailSessionCreator() {
         smtpHost = configProperties.getString("mail.smtp.host");
         smtpPort = configProperties.getString("mail.smtp.port");
         userName = configProperties.getString("mail.user.name");

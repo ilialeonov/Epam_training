@@ -5,20 +5,14 @@
  */
 package by.epam.interpol.controller;
 
-import by.epam.interpol.controller.Controller;
 import by.epam.interpol.exception.ProjectException;
-import com.oreilly.servlet.MultipartRequest;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-import java.util.logging.Level;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -29,10 +23,12 @@ import org.apache.logging.log4j.Logger;
 
 /**
  *
- * @author Администратор
+ * @author Ilia Leonov
+ * accums information about requestParams, requestAttributes session information
+ * from request and sets to request after actions with. It's a wrapper for request
  */
 public class SessionRequestContent {
-    private static final Logger LOG = LogManager.getLogger(Controller.class);
+    private static final Logger LOG = LogManager.getLogger(SessionRequestContent.class);
     
     private static final String PICTURE = "pic";
     
@@ -43,12 +39,20 @@ public class SessionRequestContent {
     private InputStream imageInputStream;
     private BufferedImage image;
 
+    /**
+     *Creates objects to save attrs, params
+     */
     public SessionRequestContent() {
         requestAttributes = new HashMap<String, Object>();
         requestParameters = new HashMap<String, String[]>();
         sessionAttributes = new HashMap<String, Object>();
     }
 
+    /**
+     *
+     * @param request request from user
+     * @throws ProjectException
+     */
     public void extractValues(HttpServletRequest request) throws ProjectException {
      
         LOG.debug("Extracting from request to request content");
@@ -86,9 +90,6 @@ public class SessionRequestContent {
                 throw new ProjectException("Server error has occured", ex);
             }
         } 
-        
-        
-
         //setting sessionAttributes
         HttpSession session = request.getSession(false);
         if(session != null) {
@@ -104,7 +105,12 @@ public class SessionRequestContent {
     }
     
     // adds attributes to request 
-    public void insertAttributes(HttpServletRequest request) {
+
+    /**
+     *
+     * @param request request from req/res pair for user
+     */
+        public void insertAttributes(HttpServletRequest request) {
 
         // adds attributes to request
         requestAttributes.forEach((k,v) -> {
@@ -127,16 +133,28 @@ public class SessionRequestContent {
         }
     }
     
+    /**
+     * activates session 
+     */
     public void activateSession(){
         sessionIsActive = true;
     }
     
 //    invalidates session and restarts sessionAttributes
-    public void deactivateSession(){
+
+    /**
+     * deactivates session
+     */
+        public void deactivateSession(){
         sessionIsActive = false;
         sessionAttributes = new HashMap<String, Object>();
     }
     
+    /**
+     *
+     * @param name key to the attribute
+     * @return Object in Map by this key
+     */
     public Object getRequestAttribute(String name) {
         requestAttributes.forEach((k,v) -> {
             LOG.debug(k + " : " + v);
@@ -144,22 +162,45 @@ public class SessionRequestContent {
         return requestAttributes.get(name);
     }
     
+    /**
+     *
+     * @return image when it's setted
+     */
     public BufferedImage getRequestImage() {
         return image;
     }
     
+    /**
+     *
+     * @param name key to attribute
+     * @param attribute attribute setted by key
+     */
     public void setRequestAttribute(String name, Object attribute) {
         requestAttributes.put(name, attribute);
     }
 
+    /**
+     *
+     * @return if session is active
+     */
     public boolean isSessionIsActive() {
         return sessionIsActive;
     }
 
+    /**
+     *
+     * @param sessionIsActive sets true to activate session
+     * and false to deactivate
+     */
     public void setSessionIsActive(boolean sessionIsActive) {
         this.sessionIsActive = sessionIsActive;
     }
     
+    /**
+     *
+     * @param name key to attribute
+     * @return Object value by this key
+     */
     public Object getSessionRequestAttribute(String name) {
         Object attribute = null;
         if (sessionIsActive) {
@@ -168,10 +209,20 @@ public class SessionRequestContent {
         return attribute;
     }
     
+    /**
+     *
+     * @param name key to parameter
+     * @return parameters by this key
+     */
     public String[] getRequestParameters(String name) {
         return requestParameters.get(name);
     }
     
+    /**
+     *
+     * @param name key to parameter
+     * @return parameter value by this key
+     */
     public String getRequestParameter(String name) {
         String param = null;
         if(requestParameters.containsKey(name)) {
@@ -180,24 +231,44 @@ public class SessionRequestContent {
         return param;
     }
     
+    /**
+     *
+     * @param name key to session attribute
+     * @param attribute Object value setted by this key
+     */
     public void setSessionRequestAttribute(String name, Object attribute) {
         if (sessionIsActive) {
             sessionAttributes.put(name, attribute);
         }
     }
     
+    /**
+     *
+     * @return Map of all pairs key-value attributes
+     */
     public HashMap<String, Object> getRequestAttributes() {
         return requestAttributes;
     }
 
+    /**
+     *
+     * @return map of all pairs key-value parameters
+     */
     public Map<String, String[]> getRequestParameters() {
         return requestParameters;
     }
 
+    /**
+     *
+     * @return map of all pairs key-value of session attributes
+     */
     public HashMap<String, Object> getSessionAttributes() {
         return sessionAttributes;
     }
 
+    /**
+     * remove all attributes
+     */
     public void removeAttributes() {
         requestAttributes.forEach((k,v) -> {
             requestAttributes.put(k, null);

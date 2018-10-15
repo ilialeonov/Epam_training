@@ -10,9 +10,7 @@ package by.epam.interpol.logic;
  * @author Администратор
  */
 
-import by.epam.interpol.dao.daoimpl.UserDaoImpl;
-import by.epam.interpol.logic.mailservice.SessionCreator;
-import java.util.Properties;
+import by.epam.interpol.logic.mailservice.MailSessionCreator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -27,7 +25,7 @@ public class MailLogic {
     private final static Logger LOG = LogManager.getLogger(MailLogic.class);
     
     private static final Session MAIL_SESSION 
-            = (new SessionCreator()).createSession();
+            = (new MailSessionCreator()).createSession();
   
     private MimeMessage message;
     private String sendToEmail;

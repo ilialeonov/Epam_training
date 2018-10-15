@@ -90,7 +90,7 @@
                         action="${pageContext.servletContext.contextPath}/controller">
                       <input type="hidden" name="command" value="testimonyArchive" />
                       <input class ="button18" type="submit" 
-                             value="<fmt:message key = "label.archive" bundle="${rb}"/>"/>
+                             value="<fmt:message key = "label.archiveMessage" bundle="${rb}"/>"/>
                   </form>
                 </li>
                 <li>
@@ -110,15 +110,15 @@
             
                 <form class ="lang" name="changeLangForm" method="POST" 
                         action="${pageContext.servletContext.contextPath}/controller">
-                      <input type="hidden" name="command" value="changeLang" />
-                      <input type="hidden" name="lang" value="rus" />
+                      <input type="hidden" name="command" value="changeLanguage" />
+                      <input type="hidden" name="chosenLocale" value="ru_RU" />
                       <input class ="button18" type="submit" 
                              value="<fmt:message key = "label.changeLangRu" bundle="${rb}"/>"/>
                 </form>
                 <form class ="lang" name="changeLangForm" method="POST" 
                         action="${pageContext.servletContext.contextPath}/controller">
-                      <input type="hidden" name="command" value="changeLang" />
-                      <input type="hidden" name="lang" value="eng" />
+                      <input type="hidden" name="command" value="changeLanguage" />
+                      <input type="hidden" name="chosenLocale" value="en_EN" />
                       <input class ="button18" type="submit" 
                              value="<fmt:message key = "label.changeLangEng" bundle="${rb}"/>"/>
                 </form>

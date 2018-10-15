@@ -5,11 +5,10 @@
  */
 package by.epam.interpol.command;
 
+import by.epam.interpol.command.util.ActionCommand;
 import by.epam.interpol.command.util.ConfigurationManager;
 import by.epam.interpol.command.util.Validator;
-import by.epam.interpol.controller.Controller;
 import by.epam.interpol.controller.SessionRequestContent;
-import by.epam.interpol.entity.User;
 import by.epam.interpol.exception.ProjectException;
 import by.epam.interpol.logic.MailLogic;
 import by.epam.interpol.logic.UserLogic;
@@ -20,7 +19,8 @@ import org.apache.logging.log4j.Logger;
 
 /**
  *
- * @author Администратор
+ * @author Ilia Leonov
+ * registers user
  */
 public class RegisterCommand implements ActionCommand {
     private static final Logger LOG = LogManager.getLogger(RegisterCommand.class);
@@ -31,10 +31,23 @@ public class RegisterCommand implements ActionCommand {
     private static final String PASSWORD = "password";
     private static final String PASSWORD_REPEAT = "passwordRepeat";
     
+    private static final String ID = "id";
     private static final String LOCALE = "locale";
+    private static final String ROLE = "role";
+    private static final String USER = "user";
+    private static final String REGISTRATION = "registration";
+    private static final String REG_MESSAGE = "you are registered";
+    
+    
+    private static final String REGISTER_PAGE = "path.page.register";
+    private static final String MAIN_CONTR = "controller.main";
     
     private UserLogic logic;
 
+    /**
+     *
+     * @param logic logic of control at user
+     */
     public RegisterCommand(UserLogic logic) {
         this.logic = logic;
     }
@@ -43,13 +56,10 @@ public class RegisterCommand implements ActionCommand {
     public String execute(SessionRequestContent requestContent) throws ProjectException {
         LOG.debug("*****IN REGISTER COMMAND*****");
         
-        String page = null;
-        String name = requestContent.getRequestParameter(NAME)
-                .replaceAll("</?script>", "");
-        String mail = requestContent.getRequestParameter(MAIL)
-                .replaceAll("</?script>", "");
-        String login = requestContent.getRequestParameter(LOGIN)
-                .replaceAll("</?script>", "");
+        String page;
+        String name = requestContent.getRequestParameter(NAME);
+        String mail = requestContent.getRequestParameter(MAIL);
+        String login = requestContent.getRequestParameter(LOGIN);
         String password = requestContent.getRequestParameter(PASSWORD);
         String passwordRepeat = requestContent.getRequestParameter(PASSWORD_REPEAT);
         String encodedPassword = Base64.getEncoder().encodeToString(password.getBytes());
@@ -69,28 +79,27 @@ public class RegisterCommand implements ActionCommand {
                 Optional<Integer> optId = logic.registerUser(name, mail, login, encodedPassword);
                 if (optId.isPresent()) {
                     requestContent.activateSession();
-                    requestContent.setSessionRequestAttribute("login", login);
+                    requestContent.setSessionRequestAttribute(LOGIN, login);
 
                     int id = optId.get();
-                    requestContent.setSessionRequestAttribute("id", id);
+                    requestContent.setSessionRequestAttribute(ID, id);
 
                     //setting user attributes to session
                     requestContent.setSessionRequestAttribute(NAME, name);
                     requestContent.setSessionRequestAttribute(MAIL, mail);
                     requestContent.setSessionRequestAttribute(LOCALE, 
-                            requestContent.getRequestAttribute("locale"));
-                    requestContent.setSessionRequestAttribute("role", "user");
+                            requestContent.getRequestAttribute(LOCALE));
+                    requestContent.setSessionRequestAttribute(ROLE, USER);
 
-                    page = ConfigurationManager.getProperty("controller.main");
-                    LOG.debug("mailLogic");
-                    MailLogic mailLogic = new MailLogic(mail, "registration", "you are registered");
+                    page = ConfigurationManager.getProperty(MAIN_CONTR);
+                    MailLogic mailLogic = new MailLogic(mail, REGISTRATION, REG_MESSAGE);
                     mailLogic.send();
                 } else {
                     requestContent.setRequestAttribute("errorOccured",
                         "register.errorOccured");
                     requestContent.setRequestAttribute("errorRegisterMessage",
                         "message.registererror");
-                    page = ConfigurationManager.getProperty("path.page.register");
+                    page = ConfigurationManager.getProperty(REGISTER_PAGE);
                 }
             } else {
                 LOG.debug("Some of both is taken");
@@ -98,14 +107,14 @@ public class RegisterCommand implements ActionCommand {
                         "register.errorOccured");
                 requestContent.setRequestAttribute("errorRegisterMessage",
                         "message.loginMailError");
-                page = ConfigurationManager.getProperty("path.page.register");
+                page = ConfigurationManager.getProperty(REGISTER_PAGE);
             }
         } else {
             requestContent.setRequestAttribute("errorOccured",
                     "register.errorOccured");
             requestContent.setRequestAttribute("errorRegisterMessage",
                     "message.invalideData");
-            page = ConfigurationManager.getProperty("path.page.register");
+            page = ConfigurationManager.getProperty(REGISTER_PAGE);
         }
         return page;
     } 

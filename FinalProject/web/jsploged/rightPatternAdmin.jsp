@@ -90,7 +90,9 @@
                 <li>
                     <form class ="" name="infoWForm" method="GET" 
                         action="${pageContext.servletContext.contextPath}/controller">
-                      <input type="hidden" name="command" value="infoWanted" />
+                      <input type="hidden" name="command" value="info" />
+                      <input type ="hidden" name ="person" value ="isCriminal">
+                      
                       <input class ="button18" type="submit" 
                              value="<fmt:message key = "label.wanted" bundle="${rb}"/>"/>
                   </form>
@@ -98,7 +100,8 @@
                 <li>
                     <form class ="" name="infoMForm" method="GET" 
                         action="${pageContext.servletContext.contextPath}/controller">
-                      <input type="hidden" name="command" value="infoMissed" />
+                      <input type="hidden" name="command" value="info" />
+                      <input type ="hidden" name ="person" value ="isMissed">
                       <input class ="button18" type="submit" 
                              value="<fmt:message key = "label.missed" bundle="${rb}"/>"/>
                   </form>
@@ -110,11 +113,11 @@
             </div>   
                 <ul>
                     <li>
-                        <form class ="" name="archiveForm" method="POST" 
+                        <form class ="" name="archiveMessageForm" method="POST" 
                             action="${pageContext.servletContext.contextPath}/controller">
-                          <input type="hidden" name="command" value="archive" />
+                          <input type="hidden" name="command" value="testimonyAdminArchive" />
                           <input class ="button18" type="submit" 
-                                 value="<fmt:message key = "label.archive" bundle="${rb}"/>"/>
+                                 value="<fmt:message key = "label.archiveMessage" bundle="${rb}"/>"/>
                       </form>
                     </li>
                 </ul>

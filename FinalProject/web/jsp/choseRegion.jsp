@@ -15,7 +15,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="${pageContext.servletContext.contextPath}/css/style.css" rel="stylesheet" type="text/css">
-        <title><fmt:message key = "label.RegisterTitle" bundle="${rb}"/></title>
+        <title><fmt:message key = "label.regionCh" bundle="${rb}"/></title>
         <style>
             .yet {
                 position: relative;
@@ -59,7 +59,8 @@
                 <div class="title"><h2><fmt:message key = "region.choseRegion" bundle="${rb}"/></h2></div> <br/>
                   <input type="hidden" name="command" value="region" />
                   <fmt:message key = "region.region" bundle="${rb}"/>:<br/>
-                  <input class ="inputCl" type="text" name="region" value="${param.region}"/>
+                  <input class ="inputCl" type="text" name="region" value="${param.region}"
+                         required pattern="[A-Z]([a-zA-Z]){1,10}"/>
                   <br/>
                   <input class ="button18" type="submit"
                          value = "<fmt:message key = "edit.label.find" bundle="${rb}"/>"/>

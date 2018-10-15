@@ -5,11 +5,11 @@
  */
 package by.epam.interpol.command;
 
+import by.epam.interpol.command.util.ActionCommand;
 import by.epam.interpol.command.util.ConfigurationManager;
 import by.epam.interpol.command.util.PersonDefiner;
 import by.epam.interpol.command.util.Validator;
 import by.epam.interpol.controller.SessionRequestContent;
-import by.epam.interpol.entity.Person;
 import by.epam.interpol.exception.ProjectException;
 import by.epam.interpol.logic.TestimoniesLogic;
 import java.util.Optional;
@@ -18,23 +18,32 @@ import org.apache.logging.log4j.Logger;
 
 /**
  *
- * @author Администратор
+ * @author Ilia Leonov
+ * points to testify by id or by name-panname
  */
-class TestifyCommand implements ActionCommand {
-    private static final Logger LOG = LogManager.getLogger(FindCommand.class);
+public class TestifyCommand implements ActionCommand {
+    private static final Logger LOG = LogManager.getLogger(TestifyCommand.class);
     
     private static final String NAME = "name";
     private static final String PANNAME = "panname";
     private static final String PERSON = "person";
     private static final String ID = "id";
     private static final String TESTIMONY = "testimony";
+    private static final String MAIN_PAGE = "path.page.main";
+    private static final String TESTIFY_PAGE = "path.page.testify";
+    private static final String TESTIM_CRIME_CONTR = "controller.testimoniesCrim";
+    private static final String TESTIM_WANT_CONTR = "controller.testimoniesWant";
+    private static final String TESTIFY_ERR_CONTR = "controller.testifyError";
     
     private TestimoniesLogic logic;
     private PersonDefiner definer;
 
+    /**
+     *
+     * @param logic logic of control at testimonies
+     */
     public TestifyCommand(TestimoniesLogic logic) {
         this.logic = logic;
-        definer = PersonDefiner.getInstance();
     }
 
     @Override
@@ -43,6 +52,7 @@ class TestifyCommand implements ActionCommand {
     LOG.debug("****IN TESTIFY COMMAND******");
         
         String page = null;
+        definer = PersonDefiner.getInstance();
         
         boolean searchById = definer.defineIfsearchByID(requestContent);
 
@@ -50,8 +60,7 @@ class TestifyCommand implements ActionCommand {
             String idPersonString = requestContent.getRequestParameter(ID);
             Integer idUser = (Integer) 
                     requestContent.getSessionRequestAttribute(ID);
-            String testimony = requestContent.getRequestParameter(TESTIMONY)
-                .replaceAll("</?script>", "");
+            String testimony = requestContent.getRequestParameter(TESTIMONY);
             
             if(Validator.testimonyIsValid(testimony)) {
                 //create new criminal
@@ -62,18 +71,14 @@ class TestifyCommand implements ActionCommand {
                 
                 if (optInt.isPresent()) {
                     if (definer.defineIfPersonIsWanted(requestContent)) {
-                    page = ConfigurationManager.getProperty(
-                            "controller.testimoniesCrim");    
+                        page = ConfigurationManager.getProperty(TESTIM_CRIME_CONTR);    
                     } else {
-                        page = ConfigurationManager.getProperty(
-                                "controller.testimoniesWant");
+                        page = ConfigurationManager.getProperty(TESTIM_WANT_CONTR);
                     }
                 } else {
-                    LOG.info("couldn't testify");
-                    page = ConfigurationManager.getProperty("path.page.main");
+                    page = ConfigurationManager.getProperty(MAIN_PAGE);
                 }
             } else {
-                LOG.info("couldn't testify");
                 requestContent.setRequestAttribute("errorOccured",
                     "testify.errorOccured");
                 requestContent.setRequestAttribute("errorTestifyMessage",
@@ -83,7 +88,7 @@ class TestifyCommand implements ActionCommand {
                 requestContent.setRequestAttribute(PERSON, 
                         requestContent.getRequestParameter(PERSON));
                 
-                page = ConfigurationManager.getProperty("controller.testifyError");
+                page = ConfigurationManager.getProperty(TESTIFY_ERR_CONTR);
             }
         } else {
             String name = requestContent.getRequestParameter(NAME)
@@ -92,8 +97,7 @@ class TestifyCommand implements ActionCommand {
                     .replaceAll("</?script>", "");
             Integer idUser = (Integer) 
                     requestContent.getSessionRequestAttribute(ID);
-            String testimony = requestContent.getRequestParameter(TESTIMONY)
-                .replaceAll("</?script>", "");
+            String testimony = requestContent.getRequestParameter(TESTIMONY);
             
             if(Validator.testimonyIsValid(testimony)) {
 
@@ -102,19 +106,17 @@ class TestifyCommand implements ActionCommand {
                 if (optInt != null) {
                     if (optInt.isPresent()) {                   
                         if (definer.defineIfPersonIsWanted(requestContent)) {
-                            page = ConfigurationManager.getProperty(
-                                "controller.testimoniesCrim");    
+                            page = ConfigurationManager.getProperty(TESTIM_CRIME_CONTR);    
                         } else {
-                            page = ConfigurationManager.getProperty(
-                                    "controller.testimoniesWant");
+                            page = ConfigurationManager.getProperty(TESTIM_WANT_CONTR);
                         }  
                     } else {
                         LOG.info("couldn't find searched by id");
-                        page = ConfigurationManager.getProperty("path.page.main");
+                        page = ConfigurationManager.getProperty(MAIN_PAGE);
                     }
                 } else {
                     LOG.info("couldn't find searched by id");
-                    page = ConfigurationManager.getProperty("path.page.main");
+                    page = ConfigurationManager.getProperty(MAIN_PAGE);
                 }
             } else {
                 requestContent.setRequestAttribute("errorOccured",
@@ -128,7 +130,7 @@ class TestifyCommand implements ActionCommand {
                         requestContent.getRequestParameter(PANNAME));
                 requestContent.setRequestAttribute(PERSON, 
                         requestContent.getRequestParameter(PERSON));
-                page = ConfigurationManager.getProperty("path.page.testify");
+                page = ConfigurationManager.getProperty(TESTIFY_PAGE);
             }
         }
         return page;

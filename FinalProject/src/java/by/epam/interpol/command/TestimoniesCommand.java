@@ -5,25 +5,24 @@
  */
 package by.epam.interpol.command;
 
+import by.epam.interpol.command.util.ActionCommand;
 import by.epam.interpol.command.util.ConfigurationManager;
 import by.epam.interpol.command.util.PersonDefiner;
-import by.epam.interpol.command.util.Validator;
 import by.epam.interpol.controller.SessionRequestContent;
-import by.epam.interpol.entity.Person;
 import by.epam.interpol.entity.Testimony;
 import by.epam.interpol.exception.ProjectException;
 import by.epam.interpol.logic.TestimoniesLogic;
 import java.util.List;
-import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
  *
- * @author Администратор
+ * @author Ilia Leonov
+ * points to show testimonies to user
  */
 public class TestimoniesCommand implements ActionCommand{
-    private static final Logger LOG = LogManager.getLogger(FindCommand.class);
+    private static final Logger LOG = LogManager.getLogger(TestimoniesCommand.class);
     
     private static final String ID = "id";
     private static final String PERSON = "person";
@@ -32,15 +31,19 @@ public class TestimoniesCommand implements ActionCommand{
     private static final String DIRECTION = "direction";
     private static final String NEXT = "next";
     private static final String PREVIOUS = "previous";
+    private static final String TESTIMONIES_PAGE = "path.page.testimonies";
     private static final int FIRST_PAGE = 1;
     private static final int PAGE_SIZE = 5;
     
     private TestimoniesLogic logic;
     private PersonDefiner definer;
     
-    TestimoniesCommand(TestimoniesLogic logic) {
+    /**
+     *
+     * @param logic logic of control at testimonies
+     */
+    public TestimoniesCommand(TestimoniesLogic logic) {
         this.logic = logic;
-        definer = PersonDefiner.getInstance();
     }
 
     @Override
@@ -52,6 +55,7 @@ public class TestimoniesCommand implements ActionCommand{
         
         String page = null;
         int pageNumberPar;
+        definer = PersonDefiner.getInstance();
         
         boolean isCriminal = definer.defineIfPersonIsWanted(requestContent);
         String direction = requestContent.getRequestParameter(DIRECTION);
@@ -73,7 +77,7 @@ public class TestimoniesCommand implements ActionCommand{
         int offset = (pageNumberPar - FIRST_PAGE)*PAGE_SIZE;
         
 //        finds several persons for page
-        List<Testimony> showList = logic.findForPage(idUser, 
+        List<Testimony> showList = logic.findUserTestimonies(idUser, 
                 PAGE_SIZE, offset, isCriminal);
         
         requestContent.setRequestAttribute(PERSON_LIST, showList);
@@ -82,7 +86,7 @@ public class TestimoniesCommand implements ActionCommand{
         requestContent.setRequestAttribute(PERSON, 
                 requestContent.getRequestParameter(PERSON));
 
-        page = ConfigurationManager.getProperty("path.page.testimonies");    
+        page = ConfigurationManager.getProperty(TESTIMONIES_PAGE);    
         return page;
     }
 }

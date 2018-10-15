@@ -11,12 +11,14 @@ import org.apache.logging.log4j.Logger;
 
 /**
  *
- * @author Администратор
+ * @author Ilia Leonov
+ * defines page by key in bundle 
  */
 public class ConfigurationManager {
     private final static Logger LOG = LogManager.getLogger(ConfigurationManager.class);
 
-    private final static ResourceBundle resourceBundle = ResourceBundle.getBundle("resources\\config");
+    private final static ResourceBundle resourceBundle 
+            = ResourceBundle.getBundle("resources\\config");
     static {
         if (resourceBundle == null) {
             throw new RuntimeException();
@@ -24,6 +26,12 @@ public class ConfigurationManager {
     }
     private ConfigurationManager() { 
     }
+
+    /**
+     *
+     * @param key is a key in bundle
+     * @return value in bundle by key
+     */
     public static String getProperty(String key) {
         return resourceBundle.getString(key);
     }

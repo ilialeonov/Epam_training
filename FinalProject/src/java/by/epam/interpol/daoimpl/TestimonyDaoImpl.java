@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package by.epam.interpol.dao.daoimpl;
+package by.epam.interpol.daoimpl;
 
 import by.epam.interpol.dao.AbstractTestimonyDao;
 import by.epam.interpol.entity.Person;
@@ -21,7 +21,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import javax.imageio.ImageIO;
 import org.apache.logging.log4j.LogManager;
@@ -43,34 +45,72 @@ public class TestimonyDaoImpl extends AbstractTestimonyDao{
     private final String BIRTH_PLACE = "birthP";
     private final String LAST_PLACE = "lastP";
     private final String PHOTO = "photo";
+    private final String WATCHED = "watched";
     private final String AWARD = "award";
     private final String POINTS = "points";
     private final String TESTIMONY = "testimony";
-
+    private final String SUM = "sum";
+    private final String USER_ID = "user_id";
     
     private static final String CREATE_TESTIMONY = "INSERT INTO " 
-            +"interpol.person_testimony (`user_id`, `person_id`, `testimony`)\n" 
-            +"VALUE (?, ?, ?)";
+            +"interpol.person_testimony (`user_id`, `person_id`, `testimony`, `watched`)\n" 
+            +"VALUE (?, ?, ?, b'0')";
+    
+    private static final String UPDATE_TESTIMONY = "UPDATE interpol.person_testimony\n" 
+            +"SET `points` = ?, `watched` = b'1' WHERE\n" 
+            +"id = ?";
 
-    private static final String SELECT_WITH_OFFSET = "SELECT person_id, name, "
+    private static final String SELECT_USER_WITH_OFFSET = "SELECT person_id, name, "
             + "panname, age, t2.region AS birthP, t3.region AS lastP,\n" 
-            +" photo, award, testimony, found, points \n"
+            +" photo, award, testimony, found, points, watched \n"
             + "FROM interpol.person_testimony t LEFT JOIN interpol.person t1 ON \n" 
             +"t.person_id = t1.id_person JOIN interpol.region t2 ON\n" 
             +"t2.id_region = t1.birth_region JOIN interpol.region t3 ON\n" 
             +"t3.id_region = t1.last_seen_region\n" 
-            +"WHERE user_id = ? AND isCriminal = ? AND found = b'0' "
+            +"WHERE user_id = ? AND isCriminal = ? AND found = b'0' AND watched = b'0' "
+            + "ORDER BY id DESC LIMIT ? OFFSET ?";
+    
+    private static final String SELECT_ADMIN_WITH_OFFSET = "SELECT "
+            + "id, person_id, name, "
+            + "panname, age, t2.region AS birthP, t3.region AS lastP,\n" 
+            +" photo, award, testimony, found, points, watched \n"
+            + "FROM interpol.person_testimony t LEFT JOIN interpol.person t1 ON \n" 
+            +"t.person_id = t1.id_person JOIN interpol.region t2 ON\n" 
+            +"t2.id_region = t1.birth_region JOIN interpol.region t3 ON\n" 
+            +"t3.id_region = t1.last_seen_region\n" 
+            +"WHERE isCriminal = ? AND found = b'0' AND watched = b'0' "
+            + "ORDER BY id DESC LIMIT ? OFFSET ?";
+    
+    private static final String SELECT_ADMIN_ARCHIVE = "SELECT "
+            + "id, person_id, name, "
+            + "panname, age, t2.region AS birthP, t3.region AS lastP,\n" 
+            +" photo, award, testimony, found, points, watched \n"
+            + "FROM interpol.person_testimony t LEFT JOIN interpol.person t1 ON \n" 
+            +"t.person_id = t1.id_person JOIN interpol.region t2 ON\n" 
+            +"t2.id_region = t1.birth_region JOIN interpol.region t3 ON\n" 
+            +"t3.id_region = t1.last_seen_region\n" 
+            +"WHERE watched = b'1' "
             + "ORDER BY id DESC LIMIT ? OFFSET ?";
 
     private static final String SELECT_ARCHIVE_WITH_OFFSET = "SELECT person_id, name, "
             + "panname, age, t2.region AS birthP, t3.region AS lastP,\n" 
-            +" photo, award, testimony, found, points \n"
+            +" photo, award, testimony, found, points, watched \n"
             + "FROM interpol.person_testimony t LEFT JOIN interpol.person t1 ON \n" 
             +"t.person_id = t1.id_person JOIN interpol.region t2 ON\n" 
             +"t2.id_region = t1.birth_region JOIN interpol.region t3 ON\n" 
             +"t3.id_region = t1.last_seen_region\n" 
-            +"WHERE user_id = ? AND found = b'1' "
+            +"WHERE user_id = ? AND watched = b'1' "
             + "ORDER BY id DESC LIMIT ? OFFSET ?";
+    
+    private static final String SELECT_SUM_POINTS = "SELECT SUM(points) AS sum\n" 
+            +"FROM interpol.person_testimony \n" 
+            +"GROUP BY person_id HAVING person_id = ?;";
+    
+    private static final String SELECT_EACH_USER_SUM_POINTS = "SELECT SUM(points) AS sum, user_id\n" 
+            +"FROM interpol.person_testimony \n" 
+            +"GROUP BY user_id, person_id HAVING person_id = ?;";
+    
+    
     
     public TestimonyDaoImpl(WrapperConnector connection) {
         super(connection);
@@ -98,11 +138,9 @@ public class TestimonyDaoImpl extends AbstractTestimonyDao{
                 ResultSet rs = statement.getGeneratedKeys();
                 rs.next();
                 autoId = rs.getInt(1);
-                LOG.debug("autoID " + autoId);
                 testimony.setId(autoId);
             }
         } catch (SQLException ex) {
-            LOG.error("exception:", ex);
             throw new ProjectException("Error trying to add testimony", ex);
         } 
         finally {
@@ -120,7 +158,7 @@ public class TestimonyDaoImpl extends AbstractTestimonyDao{
         PreparedStatement statement = null;
         try {
             testimonyList = new ArrayList<>();
-            statement = connection.prepareStatement(SELECT_WITH_OFFSET);
+            statement = connection.prepareStatement(SELECT_USER_WITH_OFFSET);
             statement.setInt(1, userId);
             statement.setBoolean(2, isCriminal);
             statement.setInt(3, pageSize);
@@ -142,7 +180,6 @@ public class TestimonyDaoImpl extends AbstractTestimonyDao{
                     try {
                         image = ImageIO.read(photoInputStream);
                     } catch (IOException ex) {
-                        LOG.error("exception:", ex);
                         throw new ProjectException("Error trying to get access to "
                                 + "find by id", ex);
                     }
@@ -153,6 +190,7 @@ public class TestimonyDaoImpl extends AbstractTestimonyDao{
                 }
                 person.setAward(resultSet.getInt(AWARD));
                 testimony.setPerson(person);
+                testimony.setWatched(resultSet.getBoolean(WATCHED));
                 testimony.setPoints(resultSet.getInt(POINTS));
                 testimony.setTestimony(resultSet.getString(TESTIMONY));
                 testimonyList.add(testimony);
@@ -165,7 +203,8 @@ public class TestimonyDaoImpl extends AbstractTestimonyDao{
         return testimonyList;
     } 
     
-    public List<Testimony> findAmountOfEntities(int pageSize, int offset, Integer idUser) throws ProjectException {
+    public List<Testimony> findAmountOfEntities(int pageSize, int offset, 
+            Integer idUser) throws ProjectException {
         LOG.debug("trying to find personList for page");
         
         List<Testimony> testimonyList = null;
@@ -205,6 +244,7 @@ public class TestimonyDaoImpl extends AbstractTestimonyDao{
                 person.setAward(resultSet.getInt(AWARD));
                 testimony.setPerson(person);
                 testimony.setPoints(resultSet.getInt(POINTS));
+                testimony.setWatched(resultSet.getBoolean(WATCHED));
                 testimony.setTestimony(resultSet.getString(TESTIMONY));
                 testimonyList.add(testimony);
             }
@@ -216,6 +256,152 @@ public class TestimonyDaoImpl extends AbstractTestimonyDao{
         return testimonyList;
     }
     
+    public List<Testimony> findAmountOfEntities(int pageSize, int offset, 
+            boolean isCriminal) throws ProjectException {
+        LOG.debug("trying to find personList for page");
+        
+        List<Testimony> testimonyList = null;
+        PreparedStatement statement = null;
+        try {
+            testimonyList = new ArrayList<>();
+            statement = connection.prepareStatement(SELECT_ADMIN_WITH_OFFSET);
+            statement.setBoolean(1, isCriminal);
+            statement.setInt(2, pageSize);
+            statement.setInt(3, offset);
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()){
+                Testimony testimony = new Testimony();
+                Person person = new Person();
+                
+                person.setId(resultSet.getInt(IDPerson));
+                person.setName(resultSet.getString(NAME));
+                person.setPanname(resultSet.getString(PANNAME));
+                person.setAge(resultSet.getInt(AGE));
+                person.setBirthPlace(resultSet.getString(BIRTH_PLACE));
+                person.setLastPlace(resultSet.getString(LAST_PLACE));
+                InputStream photoInputStream = resultSet.getBinaryStream(PHOTO);
+                if (photoInputStream != null) {
+                    BufferedImage image;
+                    try {
+                        image = ImageIO.read(photoInputStream);
+                    } catch (IOException ex) {
+                        throw new ProjectException("Error trying to get access to "
+                                + "find by id", ex);
+                    }
+                    person.setPhoto(image);
+                    if(image != null) {
+                        person = setEncodedImage(person);
+                    }
+                }
+                person.setAward(resultSet.getInt(AWARD));
+                testimony.setPerson(person);
+                testimony.setId(resultSet.getInt(ID));
+                testimony.setPoints(resultSet.getInt(POINTS));
+                testimony.setWatched(resultSet.getBoolean(WATCHED));
+                testimony.setTestimony(resultSet.getString(TESTIMONY));
+                testimonyList.add(testimony);
+            }
+        } catch (SQLException ex) {
+            throw new ProjectException("Error trying to find person", ex);
+        } finally {
+            close(statement);
+        }
+        return testimonyList;
+    }
+    
+    public List<Testimony> findAmountOfEntities(int pageSize, int offset) 
+            throws ProjectException {
+        LOG.debug("trying to find personList for page");
+        
+        List<Testimony> testimonyList = null;
+        PreparedStatement statement = null;
+        try {
+            testimonyList = new ArrayList<>();
+            statement = connection.prepareStatement(SELECT_ADMIN_ARCHIVE);
+            statement.setInt(1, pageSize);
+            statement.setInt(2, offset);
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()){
+                Testimony testimony = new Testimony();
+                Person person = new Person();
+                
+                person.setId(resultSet.getInt(IDPerson));
+                person.setName(resultSet.getString(NAME));
+                person.setPanname(resultSet.getString(PANNAME));
+                person.setAge(resultSet.getInt(AGE));
+                person.setBirthPlace(resultSet.getString(BIRTH_PLACE));
+                person.setLastPlace(resultSet.getString(LAST_PLACE));
+                InputStream photoInputStream = resultSet.getBinaryStream(PHOTO);
+                if (photoInputStream != null) {
+                    BufferedImage image;
+                    try {
+                        image = ImageIO.read(photoInputStream);
+                    } catch (IOException ex) {
+                        throw new ProjectException("Error trying to get access to "
+                                + "find by id", ex);
+                    }
+                    person.setPhoto(image);
+                    if(image != null) {
+                        person = setEncodedImage(person);
+                    }
+                }
+                person.setAward(resultSet.getInt(AWARD));
+                testimony.setPerson(person);
+                testimony.setId(resultSet.getInt(ID));
+                testimony.setPoints(resultSet.getInt(POINTS));
+                testimony.setWatched(resultSet.getBoolean(WATCHED));
+                testimony.setTestimony(resultSet.getString(TESTIMONY));
+                testimonyList.add(testimony);
+            }
+        } catch (SQLException ex) {
+            throw new ProjectException("Error trying to find person", ex);
+        } finally {
+            close(statement);
+        }
+        return testimonyList;
+    }
+    
+    public int findSumPoints(int id) throws ProjectException {
+        LOG.debug("trying to find sum of points by id");
+        
+        PreparedStatement statement = null;
+        int sum = 0;
+        try {
+            statement = connection.prepareStatement(SELECT_SUM_POINTS);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()){
+                sum = resultSet.getInt(SUM);
+            }
+        } catch (SQLException ex) {
+            throw new ProjectException("Error trying to find person", ex);
+        } finally {
+            close(statement);
+        }
+        return sum;
+    }
+    
+    public Map findEachUserSumPoints(int id) throws ProjectException {
+        LOG.debug("trying to find each user sum of points by id");
+        
+        PreparedStatement statement = null;
+        Map <Integer, Integer> pointsMap = new HashMap<>();
+        try {
+            statement = connection.prepareStatement(SELECT_EACH_USER_SUM_POINTS);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()){
+                pointsMap.put(resultSet.getInt(USER_ID), 
+                        resultSet.getInt(SUM));
+            }
+        } catch (SQLException ex) {
+            throw new ProjectException("Error trying to find person", ex);
+        } finally {
+            close(statement);
+        }
+        return pointsMap;
+    }
+        
     @Override
     public List<Testimony> findAll() throws ProjectException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -237,8 +423,28 @@ public class TestimonyDaoImpl extends AbstractTestimonyDao{
     }
 
     @Override
-    public Optional<Testimony> update(Testimony entity) throws ProjectException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Optional<Testimony> update(Testimony testimony) throws ProjectException {
+        LOG.debug("going to database to update testimony");
+        
+        PreparedStatement statement = null;
+        
+        try {
+            statement = connection.prepareStatement(UPDATE_TESTIMONY);
+            
+            statement.setInt(1, testimony.getPoints());
+            statement.setInt(2, testimony.getId());
+            
+            int result = statement.executeUpdate();
+            if (result != 1) {
+                testimony = null;
+            }
+        } catch (SQLException ex) {
+            throw new ProjectException("Error trying to add testimony", ex);
+        } 
+        finally {
+            close(statement);
+        }
+        return Optional.ofNullable(testimony);
     }
 
     private Person setEncodedImage(Person person) throws ProjectException {
@@ -270,5 +476,7 @@ public class TestimonyDaoImpl extends AbstractTestimonyDao{
         }
         return person;
     }
+
+
 
 }

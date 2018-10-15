@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package by.epam.interpol.dao.daoimpl;
+package by.epam.interpol.daoimpl;
 
 import by.epam.interpol.dao.AbstractUserDao;
 import by.epam.interpol.entity.User;
@@ -29,6 +29,7 @@ public class UserDaoImpl extends AbstractUserDao<User>{
     private final String NAME = "name";
     private final String LOGIN = "login";
     private final String MAIL = "mail";
+    private final String MONEY = "money";
     private final String STATUS = "is_admin";
     
     private static final String SELECT_ALL = "SELECT * FROM interpol.user;";
@@ -39,10 +40,13 @@ public class UserDaoImpl extends AbstractUserDao<User>{
     private static final String DELETE_BY_ID = "DELETE FROM interpol.user " 
             + "WHERE `id_user` = ?";
     private static final String CREATE_USER = "INSERT INTO interpol.user"
-            + "(`name`, `login`, `password`, `mail`, `is_admin`)\n" 
-            + "VALUES(?, ?, md5(?), ?, ?)";
+            + "(`name`, `login`, `password`, `mail`, `money`, `is_admin`)\n" 
+            + "VALUES(?, ?, md5(?), ?, 0, ?)";
     private static final String UPDATE_USER = "UPDATE interpol.user\n"
             + "SET `name` = ?, `login` = ?, `password` = md5(?), `mail` = ?\n" 
+            + "WHERE `id_user` = ?";
+    private static final String UPDATE_MONEY = "UPDATE interpol.user\n"
+            + "SET `money` = `money` + ?\n" 
             + "WHERE `id_user` = ?";
     private static final String SELECT_LOGIN = "SELECT `*` FROM interpol.user " 
             + "WHERE `login` = ?";
@@ -135,13 +139,11 @@ public class UserDaoImpl extends AbstractUserDao<User>{
             statement = connection.prepareStatement(SELECT_BY_LOGIN);
             statement.setString(1, login);
             statement.setString(2, password);
-            LOG.debug("somth here");
             LOG.debug(password);
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()){
                 id = resultSet.getInt(ID);
             }  
-            LOG.debug("but not here");
         } catch (SQLException ex) {
             throw new ProjectException("Error trying to LOGIN", ex);
         } finally {
@@ -168,6 +170,7 @@ public class UserDaoImpl extends AbstractUserDao<User>{
                 user.setName(resultSet.getString(NAME));
                 user.setLogin(resultSet.getString(LOGIN));
                 user.setMail(resultSet.getString(MAIL));
+                user.setMoney(resultSet.getDouble(MONEY));
                 user.setAdmin(resultSet.getBoolean(STATUS));
             }
         } catch (SQLException ex) {
@@ -254,11 +257,11 @@ public class UserDaoImpl extends AbstractUserDao<User>{
         try {
 
             statement = connection.prepareStatement(UPDATE_USER);
-            statement.setString(1, user.getName()+"_upd");
-            statement.setString(2, user.getLogin()+"_upd");
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getLogin());
             // IN case we have this login in base yet...
             statement.setString(3, newPass);
-            statement.setString(4, user.getMail()+"_upd");
+            statement.setString(4, user.getMail());
             statement.setInt(5, user.getId());
             
             statement.executeUpdate();
@@ -269,4 +272,26 @@ public class UserDaoImpl extends AbstractUserDao<User>{
         }
         return Optional.ofNullable(user);
     }
+
+    public Optional<User> updateMoney(User user) throws ProjectException {
+        LOG.debug("trying to update user");
+
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(UPDATE_MONEY);
+            statement.setDouble(1, user.getMoney());
+            statement.setInt(2, user.getId());
+
+           int result = statement.executeUpdate();
+           if (result != 1) {
+               user = null;
+           }
+        } catch (SQLException ex) {
+            throw new ProjectException("Error trying to get access to update user", ex);
+        } finally {
+            close(statement);
+        }
+        return Optional.ofNullable(user);
+    }
+
 }
