@@ -12,10 +12,13 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.logging.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ *
+ * @author Ilia Leonov
+ */
 public class ConnectionPool {
     private final static Logger LOG = LogManager.getLogger(ConnectionPool.class);
     
@@ -59,6 +62,10 @@ public class ConnectionPool {
         idleConnections = new LinkedBlockingQueue(maxNumberOfIdleConnections);
     }
     
+    /**
+     *
+     * @return instance of singletone pool
+     */
     public static ConnectionPool getInstance(){
         LOG.debug("getting pool");
         if (instance == null){
@@ -71,10 +78,18 @@ public class ConnectionPool {
         return instance;
     }
     
+    /**
+     *
+     * @return timeout
+     */
     public int getTimeOut() {
         return timeOut;
     }
 
+    /**
+     *
+     * @param timeOut timeout of attempt to get connection
+     */
     public void setTimeOut(int timeOut) {
         closeAllConnections();
         this.timeOut = timeOut;
@@ -82,10 +97,18 @@ public class ConnectionPool {
         idleConnections = new LinkedBlockingQueue(maxNumberOfIdleConnections);
     }
 
+    /**
+     *
+     * @return max number of active connections
+     */
     public int getMaxNumberOfActiveConnections() {
         return maxNumberOfActiveConnections;
     }
 
+    /**
+     *
+     * @param maxNumberOfActiveConnections max number of active connections
+     */
     public void setMaxNumberOfActiveConnections(int maxNumberOfActiveConnections) {
         closeAllConnections();
         this.maxNumberOfActiveConnections = maxNumberOfActiveConnections;
@@ -93,18 +116,35 @@ public class ConnectionPool {
         idleConnections = new LinkedBlockingQueue(maxNumberOfIdleConnections);
     }
 
+    /**
+     *
+     * @return max number of idle connections
+     */
     public int getMaxNumberOfIdleConnections() {
         return maxNumberOfIdleConnections;
     }
 
+    /**
+     *
+     * @param maxNumberOfIdleConnections max number of idle connections
+     */
     public void setMaxNumberOfIdleConnections(int maxNumberOfIdleConnections) {
         this.maxNumberOfIdleConnections = maxNumberOfIdleConnections;
     }
     
+    /**
+     *
+     * @return number of created connections
+     */
     public int getNumberOfCreatedConnections(){
         return counter;
     }
     
+    /**
+     *
+     * @return connection to DB
+     * @throws TimeLimitExceededException
+     */
     public WrapperConnector getConnection() throws TimeLimitExceededException { 
         WrapperConnector connection = null;
         try {
@@ -122,6 +162,10 @@ public class ConnectionPool {
         return connection;
     }
 
+    /**
+     *
+     * @param connection connection to DB
+     */
     public void putbackConnection(WrapperConnector connection){
         activeConnections.remove(connection);
         if(idleConnections.size() < maxNumberOfIdleConnections) {
@@ -134,6 +178,9 @@ public class ConnectionPool {
         }   
     }
     
+    /**
+     *
+     */
     public synchronized void closeAllConnections() {
         counter = 0;
         for (int i = 0; i < activeConnections.size(); i++){
@@ -170,6 +217,9 @@ public class ConnectionPool {
         return connection;
     }
     
+    /**
+     *
+     */
     public void dissolvePool() {
         closeAllConnections();
         ConnectionManager.deregisterDrivers();

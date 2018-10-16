@@ -7,7 +7,7 @@ package by.epam.interpol.exception;
 
 /**
  *
- * @author Администратор
+ * @author Ilia Leonov
  */
 public class TimeLimitExceededException extends Exception{
 

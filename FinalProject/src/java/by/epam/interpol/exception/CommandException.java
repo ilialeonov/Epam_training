@@ -7,7 +7,8 @@ package by.epam.interpol.exception;
 
 /**
  *
- * @author Администратор
+ * @author Ilia Leonov
+ * exception in command
  */
 public class CommandException extends Exception{
 

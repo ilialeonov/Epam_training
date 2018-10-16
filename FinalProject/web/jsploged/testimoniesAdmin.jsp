@@ -134,7 +134,7 @@
                   <fmt:message key = "testify.pointsAssigned" bundle="${rb}"/>*:<br/>
                   </div>
                   <input class ="inputClSmall" type="text" name="points" value=""
-                         required pattern="([1-9][0-9])|(0)"/>
+                         required pattern="([1-9][0-9])|([0-9])"/>
                   <br/> 
 
                   <input class ="button18" type="submit"

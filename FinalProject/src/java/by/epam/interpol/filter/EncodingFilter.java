@@ -14,16 +14,35 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
+
+/**
+ *
+ * @author Ilia Leonov
+ * filter for formating coding language
+ */
 @WebFilter(urlPatterns = { "/controller/*" },
         initParams = {
         @WebInitParam(name = "encoding", value = "UTF-8", description = "Encoding Param") })
 public class EncodingFilter implements Filter {
     private String code;
     
+    /**
+     *
+     * @param fConfig config of filter
+     * @throws ServletException
+     */
     public void init(FilterConfig fConfig) throws ServletException {
         code = fConfig.getInitParameter("encoding");
     }
     
+    /**
+     *
+     * @param request request form user
+     * @param response response for user
+     * @param chain chain of filters
+     * @throws IOException
+     * @throws ServletException
+     */
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {    
         String codeRequest = request.getCharacterEncoding();
@@ -34,6 +53,9 @@ public class EncodingFilter implements Filter {
         chain.doFilter(request, response);
     }
     
+    /**
+     *
+     */
     public void destroy() {
         code = null;
     }

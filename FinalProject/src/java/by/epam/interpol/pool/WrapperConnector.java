@@ -13,11 +13,21 @@ import java.sql.Statement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ *
+ * @author Администратор
+ */
 public class WrapperConnector {
     private final static Logger LOG = LogManager.getLogger(WrapperConnector.class);
        
     private Connection connection;
     
+    /**
+     *
+     * @param url url
+     * @param user user to db
+     * @param password password to db
+     */
     public WrapperConnector(String url, String user, String password) {
         try {
             connection = DriverManager.getConnection(url, user, password);
@@ -26,6 +36,10 @@ public class WrapperConnector {
         }
     }
     
+    /**
+     *
+     * @param isAuto set if autocommit
+     */
     public void setAutocommit(boolean isAuto) {
         try {
             connection.setAutoCommit(isAuto);
@@ -34,6 +48,9 @@ public class WrapperConnector {
         }
     }
     
+    /**
+     * commits operations
+     */
     public void commit(){
         try {
             connection.commit();
@@ -42,6 +59,9 @@ public class WrapperConnector {
         }
     }
     
+    /**
+     * rolls back operations
+     */
     public void rollBack(){
         try {
             connection.rollback();
@@ -50,6 +70,10 @@ public class WrapperConnector {
         }
     }
     
+    /**
+     *
+     * @return if operations are auto commited
+     */
     public boolean getAutocommit() {
         try {
             return connection.getAutoCommit();
@@ -59,6 +83,12 @@ public class WrapperConnector {
         return false;
     }
 
+    /**
+     *
+     * @param sql sql query to db
+     * @return prepared Statement for DB
+     * @throws SQLException
+     */
     public PreparedStatement prepareStatement(String sql) throws SQLException{
         if (connection != null) {
             PreparedStatement pStatement = connection.prepareStatement(sql);
@@ -69,6 +99,11 @@ public class WrapperConnector {
         throw new SQLException();
     }
         
+    /**
+     *
+     * @return statement
+     * @throws SQLException
+     */
     public Statement getStatement() throws SQLException {
         if (connection != null) {
             Statement statement = connection.createStatement();
@@ -79,6 +114,10 @@ public class WrapperConnector {
         throw new SQLException("connection or statement is null");
     }
     
+    /**
+     *
+     * @param pStatement statement to db
+     */
     public void closePreparedStatement(PreparedStatement pStatement) {
         if (pStatement != null) {
             try {
@@ -89,6 +128,10 @@ public class WrapperConnector {
         }
     }
     
+    /**
+     *
+     * @param statement statement to db
+     */
     public void closeStatement(Statement statement) {
         if (statement != null) {
             try {
@@ -99,6 +142,9 @@ public class WrapperConnector {
         }
     }
     
+    /**
+     *
+     */
     public void closeConnection() {
         if (connection != null) {
             try {
@@ -109,11 +155,18 @@ public class WrapperConnector {
         }
     }
 
-    public PreparedStatement prepareStatement(String CREATE_USER, 
+    /**
+     *
+     * @param sql sql query
+     * @param RETURN_GENERATED_KEYS points to return generated keys
+     * @return preparedStatement
+     * @throws SQLException
+     */
+    public PreparedStatement prepareStatement(String sql, 
             int RETURN_GENERATED_KEYS) throws SQLException {
         if (connection != null) {    
             PreparedStatement stmt = 
-                    connection.prepareStatement(CREATE_USER, RETURN_GENERATED_KEYS);
+                    connection.prepareStatement(sql, RETURN_GENERATED_KEYS);
             if (stmt != null) {
                 return stmt;
             }

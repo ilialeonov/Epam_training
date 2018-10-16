@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 /**
  *
- * @author Администратор
+ * @author Ilia Leonov
  */
 public class MailSessionCreator {
     private final static Logger LOG = LogManager.getLogger(MailLogic.class);
@@ -35,6 +35,10 @@ public class MailSessionCreator {
             throw new RuntimeException();
         }
     }
+
+    /**
+     *
+     */
     public MailSessionCreator() {
         smtpHost = configProperties.getString("mail.smtp.host");
         smtpPort = configProperties.getString("mail.smtp.port");
@@ -53,6 +57,10 @@ public class MailSessionCreator {
         sessionProperties.setProperty("mail.smtp.quitwait", "false");
     }
 
+    /**
+     *
+     * @return session by default properties
+     */
     public Session createSession() {
         LOG.debug("creating session");
         LOG.debug(userName);

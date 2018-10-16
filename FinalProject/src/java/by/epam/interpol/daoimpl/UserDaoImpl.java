@@ -53,6 +53,10 @@ public class UserDaoImpl extends AbstractUserDao<User>{
     private static final String SELECT_MAIL = "SELECT `*` FROM interpol.user " 
             + "WHERE `mail` = ?";
     
+    /**
+     *
+     * @param connection connection to DB
+     */
     public UserDaoImpl(WrapperConnector connection) {
         super(connection);
     }  
@@ -273,6 +277,12 @@ public class UserDaoImpl extends AbstractUserDao<User>{
         return Optional.ofNullable(user);
     }
 
+    /**
+     *
+     * @param user user
+     * @return user or null wrapped in Optional class
+     * @throws ProjectException
+     */
     public Optional<User> updateMoney(User user) throws ProjectException {
         LOG.debug("trying to update user");
 

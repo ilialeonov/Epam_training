@@ -11,7 +11,6 @@ import by.epam.interpol.entity.Testimony;
 import by.epam.interpol.exception.ProjectException;
 import by.epam.interpol.pool.WrapperConnector;
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -32,7 +31,8 @@ import org.apache.tomcat.util.codec.binary.Base64;
 
 /**
  *
- * @author Администратор
+ * @author Ilia Leonov
+ * operations with db in testimonies
  */
 public class TestimonyDaoImpl extends AbstractTestimonyDao{
     private final static Logger LOG = LogManager.getLogger(TestimonyDaoImpl.class);
@@ -110,8 +110,10 @@ public class TestimonyDaoImpl extends AbstractTestimonyDao{
             +"FROM interpol.person_testimony \n" 
             +"GROUP BY user_id, person_id HAVING person_id = ?;";
     
-    
-    
+    /**
+     *
+     * @param connection connection to DB
+     */
     public TestimonyDaoImpl(WrapperConnector connection) {
         super(connection);
     }
@@ -149,6 +151,15 @@ public class TestimonyDaoImpl extends AbstractTestimonyDao{
         return Optional.ofNullable(autoId);
     }
  
+    /**
+     *
+     * @param pageSize amount of elements on page
+     * @param offset offset to watch elements in DB
+     * @param userId user's id
+     * @param isCriminal person's status
+     * @return List of testimony elements
+     * @throws ProjectException
+     */
     public List<Testimony> findAmountOfEntities(int pageSize, int offset, int userId, 
             boolean isCriminal) throws ProjectException {
         
@@ -203,6 +214,14 @@ public class TestimonyDaoImpl extends AbstractTestimonyDao{
         return testimonyList;
     } 
     
+    /**
+     *
+     * @param pageSize amount of elements on page
+     * @param offset offset to watch elements in DB
+     * @param idUser user's id
+     * @return List of testimony elements
+     * @throws ProjectException
+     */
     public List<Testimony> findAmountOfEntities(int pageSize, int offset, 
             Integer idUser) throws ProjectException {
         LOG.debug("trying to find personList for page");
@@ -256,6 +275,14 @@ public class TestimonyDaoImpl extends AbstractTestimonyDao{
         return testimonyList;
     }
     
+    /**
+     *
+     * @param pageSize amount of elements on page
+     * @param offset offset to watch elements in DB
+     * @param isCriminal person's status
+     * @return List of testimony elements
+     * @throws ProjectException
+     */
     public List<Testimony> findAmountOfEntities(int pageSize, int offset, 
             boolean isCriminal) throws ProjectException {
         LOG.debug("trying to find personList for page");
@@ -309,6 +336,13 @@ public class TestimonyDaoImpl extends AbstractTestimonyDao{
         return testimonyList;
     }
     
+    /**
+     *
+     * @param pageSize amount of elements on page
+     * @param offset offset watching in DB
+     * @return List of testimonies
+     * @throws ProjectException
+     */
     public List<Testimony> findAmountOfEntities(int pageSize, int offset) 
             throws ProjectException {
         LOG.debug("trying to find personList for page");
@@ -361,6 +395,12 @@ public class TestimonyDaoImpl extends AbstractTestimonyDao{
         return testimonyList;
     }
     
+    /**
+     *
+     * @param id person's id
+     * @return sum of all points by this id
+     * @throws ProjectException
+     */
     public int findSumPoints(int id) throws ProjectException {
         LOG.debug("trying to find sum of points by id");
         
@@ -381,6 +421,12 @@ public class TestimonyDaoImpl extends AbstractTestimonyDao{
         return sum;
     }
     
+    /**
+     *
+     * @param id person's id
+     * @return Map of each user who testified by this id
+     * @throws ProjectException
+     */
     public Map findEachUserSumPoints(int id) throws ProjectException {
         LOG.debug("trying to find each user sum of points by id");
         
@@ -404,22 +450,22 @@ public class TestimonyDaoImpl extends AbstractTestimonyDao{
         
     @Override
     public List<Testimony> findAll() throws ProjectException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public Optional<Testimony> findEntityById(int id) throws ProjectException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public boolean delete(int id) throws ProjectException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public boolean delete(Testimony entity) throws ProjectException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override

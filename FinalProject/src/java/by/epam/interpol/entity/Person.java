@@ -5,14 +5,13 @@
  */
 package by.epam.interpol.entity;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.InputStream;
 import java.util.Objects;
 
 /**
  *
- * @author Администратор
+ * @author Ilia Leonov
+ * entity person
  */
 public class Person {
     
@@ -29,101 +28,200 @@ public class Person {
     private boolean isCriminal;
     private String Base64image;
     
+    /**
+     *
+     */
     public Person() {
     }
 
+    /**
+     *
+     * @return person's id
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id person's id
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return person's name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @param name person's name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     *
+     * @return person's panname
+     */
     public String getPanname() {
         return panname;
     }
 
+    /**
+     *
+     * @param panname person's panname
+     */
     public void setPanname(String panname) {
         this.panname = panname;
     }
 
+    /**
+     *
+     * @return person's age
+     */
     public int getAge() {
         return age;
     }
 
+    /**
+     *
+     * @param age person's age
+     */
     public void setAge(int age) {
         this.age = age;
     }
 
+    /**
+     *
+     * @return person's birthplace
+     */
     public String getBirthPlace() {
         return birthPlace;
     }
 
+    /**
+     *
+     * @param birthPlace person's birthplace
+     */
     public void setBirthPlace(String birthPlace) {
         this.birthPlace = birthPlace;
     }
 
+    /**
+     *
+     * @return person's last seen place
+     */
     public String getLastPlace() {
         return lastPlace;
     }
 
+    /**
+     *
+     * @param lastPlace person's last seen place
+     */
     public void setLastPlace(String lastPlace) {
         this.lastPlace = lastPlace;
     }
 
+    /**
+     *
+     * @return person's status
+     */
     public boolean getStatus() {
         return status;
     }
 
+    /**
+     *
+     * @param status person's status
+     */
     public void setStatus(boolean status) {
         this.status = status;
     }
 
+    /**
+     *
+     * @return person's photo
+     */
     public BufferedImage getPhoto() {
         return photo;
     }
 
+    /**
+     *
+     * @param photo person's photo
+     */
     public void setPhoto(BufferedImage photo) {
         this.photo = photo;
     }
 
+    /**
+     *
+     * @return person's award
+     */
     public int getAward() {
         return award;
     }
 
+    /**
+     *
+     * @param award person's award
+     */
     public void setAward(int award) {
         this.award = award;
     }
 
+    /**
+     *
+     * @return person's information
+     */
     public String getInformation() {
         return information;
     }
 
+    /**
+     *
+     * @param information person's information
+     */
     public void setInformation(String information) {
         this.information = information;
     }
 
+    /**
+     *
+     * @return if person's Criminal
+     */
     public boolean isIsCriminal() {
         return isCriminal;
     }
 
+    /**
+     *
+     * @param isCriminal sets person's isCrimimnal
+     */
     public void setIsCriminal(boolean isCriminal) {
         this.isCriminal = isCriminal;
     }
 
+    /**
+     *
+     * @return person's image
+     */
     public String getBase64image() {
         return Base64image;
     }
 
+    /**
+     *
+     * @param Base64image person's image
+     */
     public void setBase64image(String Base64image) {
         this.Base64image = Base64image;
     }

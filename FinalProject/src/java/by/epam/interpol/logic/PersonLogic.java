@@ -24,14 +24,32 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 /**
  *
- * @author Администратор
+ * @author Ilia Leonov
+ * logic of person
  */
 public class PersonLogic {
     private static final Logger LOG = LogManager.getLogger(PersonLogic.class);
     
+    /**
+     *
+     */
     public PersonLogic() {
     }
 
+    /**
+     *
+     * @param name person's name
+     * @param panname person's panname
+     * @param age person's age
+     * @param photo person's photo
+     * @param birthPlace person's birthPlace
+     * @param lastPlace person's lastPlace
+     * @param award award for person
+     * @param information person's information
+     * @param isCriminal person's status
+     * @return person's id or null if not found wrapped in Optional class
+     * @throws ProjectException
+     */
     public Optional<Integer> createPerson(String name, String panname, int age, 
             BufferedImage photo, String birthPlace, String lastPlace, int award, 
             String information, boolean isCriminal) throws ProjectException {
@@ -68,6 +86,11 @@ public class PersonLogic {
         return idCreated;
     }
 
+    /**
+     *
+     * @return some person
+     * @throws ProjectException
+     */
     public Person findWantedOrMissed() throws ProjectException {
         LOG.debug("entering find any criminal logic");
 
@@ -90,6 +113,12 @@ public class PersonLogic {
         return person;
     }
     
+    /**
+     *
+     * @param id person's id
+     * @return person or null wrapped in Optional class
+     * @throws ProjectException
+     */
     public Optional<Person> findEntityById(int id) throws ProjectException {
         LOG.debug("entering find by id logic");
 
@@ -112,6 +141,12 @@ public class PersonLogic {
         return person;
     }  
     
+    /**
+     *
+     * @param id person's id
+     * @return person or null if not found wrapped in Optional class
+     * @throws ProjectException
+     */
     public Optional<Person> setFound(int id) throws ProjectException {
         LOG.debug("entering find by id logic");
 
@@ -143,6 +178,13 @@ public class PersonLogic {
         return optPerson;
     }
     
+    /**
+     *
+     * @param name person's name
+     * @param panname person's panname
+     * @return person or null if not found wrapped in Optional class
+     * @throws ProjectException
+     */
     public Optional<Person> setFound(String name, String panname) 
             throws ProjectException {
         LOG.debug("entering find by id logic");
@@ -175,6 +217,13 @@ public class PersonLogic {
         return optPerson;
     }
 
+    /**
+     *
+     * @param name person's name
+     * @param panname person's panname
+     * @return person or null if not found wrapped in Optional class
+     * @throws ProjectException
+     */
     public Optional<Person> findEntityByNamePanname(String name, String panname) throws ProjectException {
         LOG.debug("entering find by name panname logic");
 
@@ -197,6 +246,20 @@ public class PersonLogic {
         return person;
     }
 
+    /**
+     *
+     * @param id person's id
+     * @param name person's name
+     * @param panname person's panname
+     * @param ageParsed person's age
+     * @param photo person's photo
+     * @param birthPlace person's birthPlace
+     * @param lastPlace person's last seen place
+     * @param awardParsed person's award garanted
+     * @param information person's information at the moment
+     * @return person or null if not found wrapped in Optional class
+     * @throws ProjectException
+     */
     public Optional<Person> editPerson(int id, String name, String panname, int ageParsed, 
             BufferedImage photo, String birthPlace, String lastPlace, 
             int awardParsed, String information) throws ProjectException {
@@ -233,6 +296,18 @@ public class PersonLogic {
         return optPerson;
     }
     
+    /**
+     * @param id person's id
+     * @param name person's name
+     * @param panname person's panname
+     * @param ageParsed person's age
+     * @param birthPlace person's birthPlace
+     * @param lastPlace person's last seen place
+     * @param awardParsed person's award garanted
+     * @param information person's information at the moment
+     * @return person or null if not found wrapped in Optional class
+     * @throws ProjectException
+     */
     public Optional<Person> editPersonNoPhoto(int id, String name, String panname, int ageParsed, 
             String birthPlace, String lastPlace, 
             int awardParsed, String information) throws ProjectException {
@@ -268,6 +343,14 @@ public class PersonLogic {
         return optPerson;
     }
 
+    /**
+     *
+     * @param pageSize amount of  elements on page
+     * @param offset offset to watch elements in DB
+     * @param isCriminal person's status
+     * @return list of persons
+     * @throws ProjectException
+     */
     public List<Person> findForPage(int pageSize, int offset, boolean isCriminal) 
             throws ProjectException {
         LOG.debug("entering find for page logic");
@@ -291,6 +374,13 @@ public class PersonLogic {
         return personList;
     }
     
+    /**
+     *
+     * @param pageSize amount of  elements on page
+     * @param offset offset to watch elements in DB
+     * @return list of persons
+     * @throws ProjectException
+     */
     public List<Person> findForPage(int pageSize, int offset) 
             throws ProjectException {
         LOG.debug("entering find for page logic");
@@ -314,6 +404,14 @@ public class PersonLogic {
         return personList;
     }
 
+    /**
+     *
+     * @param pageSize amount of  elements on page
+     * @param offset offset to watch elements in DB
+     * @param region chosen region
+     * @return list of persons
+     * @throws ProjectException
+     */
     public List<Person> findByRegion(int pageSize, int offset, String region) throws ProjectException {
         LOG.debug("entering find by region logic");
 
@@ -336,6 +434,12 @@ public class PersonLogic {
         return personList;
     }
 
+    /**
+     *
+     * @param id person's id
+     * @return true if deleted and false if not
+     * @throws ProjectException
+     */
     public boolean delete(int id) throws ProjectException {
         LOG.debug("entering delete logic");
 
@@ -359,6 +463,13 @@ public class PersonLogic {
         
     }
     
+    /**
+     *
+     * @param name person's name
+     * @param panname person's panname
+     * @return true if deleted and false if not
+     * @throws ProjectException
+     */
     public boolean delete(String name, String panname) throws ProjectException {
         LOG.debug("entering delete logic");
 

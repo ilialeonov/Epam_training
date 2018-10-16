@@ -13,16 +13,16 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
  *
- * @author Администратор
+ * @author Ilia Leonov
+ * filter that sends information from session to request 
+ * at the pages where session is not allowed
  */
 
 public class LocaleFilter implements Filter{
@@ -31,6 +31,11 @@ public class LocaleFilter implements Filter{
     private static final String LOCALE = "locale";
     private static final String ROLE = "role";
     
+    /**
+     *
+     * @param filterConfig filter configuration
+     * @throws ServletException
+     */
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
@@ -38,6 +43,15 @@ public class LocaleFilter implements Filter{
 //    sets locale attribute to request, registered users can change their locale 
 //    thence for registered users who have session we use their locale
     
+    /**
+     *
+     * @param request user's request
+     * @param response user's response
+     * @param chain chain of filters
+     * @throws IOException
+     * @throws ServletException
+     */
+        
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, 
             FilterChain chain) throws IOException, ServletException {
@@ -46,25 +60,23 @@ public class LocaleFilter implements Filter{
         HttpSession session = httpRequest.getSession(false);
         
         LOG.debug(session);
-        if(session == null) {            
-            LOG.debug("SESSION = NULL");            
+        if(session == null) {                     
             if (request.getAttribute(LOCALE) == null) {
                 Locale locale = request.getLocale();
                 request.setAttribute(LOCALE, locale);
             }
-            LOG.debug("user locale is " + request.getAttribute(LOCALE));
         } else {
             Locale locale = (Locale) session.getAttribute(LOCALE);
             request.setAttribute(LOCALE, locale);
             String role = (String) session.getAttribute(ROLE);
             request.setAttribute(ROLE, role);
-            LOG.debug("WE HAVE SESSION NOW");
-            LOG.debug("user locale is " + session.getAttribute(LOCALE));
-            LOG.debug("user role is " + session.getAttribute(ROLE));
         }
         chain.doFilter(request, response);
     }
 
+    /**
+     *
+     */
     @Override
     public void destroy() {
     }

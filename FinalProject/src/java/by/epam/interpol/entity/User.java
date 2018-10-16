@@ -9,7 +9,8 @@ import java.util.Objects;
 
 /**
  *
- * @author Администратор
+ * @author Ilia Leonov
+ * User entity
  */
 public class User {
     private int id;
@@ -19,53 +20,104 @@ public class User {
     private double money;
     private boolean status;
     
+    /**
+     *
+     */
     public User() {
     }
 
+    /**
+     *
+     * @return user's id
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id user's id
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return user's name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @param name user's name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     *
+     * @return user's login
+     */
     public String getLogin() {
         return login;
     }
 
+    /**
+     *
+     * @param login user's login
+     */
     public void setLogin(String login) {
         this.login = login;
     }
 
+    /**
+     *
+     * @return user's mail
+     */
     public String getMail() {
         return mail;
     }
 
+    /**
+     *
+     * @param mail user's mail
+     */
     public void setMail(String mail) {
         this.mail = mail;
     }
 
+    /**
+     *
+     * @return if user's admin
+     */
     public boolean isAdmin() {
         return status;
     }
 
+    /**
+     *
+     * @param status user's admin
+     */
     public void setAdmin(boolean status) {
         this.status = status;
     }
 
+    /**
+     *
+     * @return user's money
+     */
     public double getMoney() {
         return money;
     }
 
+    /**
+     *
+     * @param money user's money
+     */
     public void setMoney(double money) {
         this.money = money;
     }

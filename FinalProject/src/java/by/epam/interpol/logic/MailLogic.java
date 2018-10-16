@@ -21,18 +21,30 @@ import javax.mail.internet.MimeMessage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ *
+ * @author Ilia Leonov
+ * class to send mail to registered user
+ */
 public class MailLogic {
     private final static Logger LOG = LogManager.getLogger(MailLogic.class);
     
     private static final Session MAIL_SESSION 
             = (new MailSessionCreator()).createSession();
+    
+    private static final String FROM = "ilialeonov1991@gmail.com";
   
     private MimeMessage message;
     private String sendToEmail;
     private String mailSubject;
     private String mailText;
     
-    
+    /**
+     *
+     * @param sendToEmail mail sends to
+     * @param mailSubject subject-recipient
+     * @param mailText mail text
+     */
     public MailLogic(String sendToEmail,
             String mailSubject, String mailText) {
         this.sendToEmail = sendToEmail;
@@ -46,8 +58,12 @@ public class MailLogic {
         message = new MimeMessage(MAIL_SESSION);
         try {
             message.setSubject(mailSubject);
+            LOG.debug(mailSubject);
             message.setContent(mailText, "text/html");
+            LOG.debug(mailText);
+            message.setFrom(FROM);
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(sendToEmail));
+            LOG.debug(sendToEmail);
         } catch (AddressException e) {
             LOG.error("AddressException:Couldn't have sent at this address: " + sendToEmail);
         } catch (MessagingException e) {
@@ -55,6 +71,9 @@ public class MailLogic {
         }
     }
     
+    /**
+     *
+     */
     public void send() {
         init();
         try {

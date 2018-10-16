@@ -8,21 +8,18 @@ package by.epam.interpol.tag.custom;
 import by.epam.interpol.filter.LocaleFilter;
 import java.io.IOException;
 import java.util.Locale;
-import java.util.regex.Pattern;
 import javax.servlet.ServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyContent;
 import javax.servlet.jsp.tagext.BodyTagSupport;
-import javax.servlet.jsp.tagext.TagSupport;
-import org.apache.jasper.runtime.BodyContentImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
  *
- * @author Администратор
+ * @author Ilia Leonov
  */
 @SuppressWarnings("serial")
 public class ConversionTag extends BodyTagSupport {
@@ -34,6 +31,11 @@ public class ConversionTag extends BodyTagSupport {
     
     Double number;
 
+    /**
+     *
+     * @return constant int that points what to do afteer
+     * @throws JspException
+     */
     @Override
     public int doAfterBody() throws JspException {
 

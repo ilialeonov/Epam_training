@@ -22,7 +22,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
 import javax.imageio.ImageIO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,7 +29,8 @@ import org.apache.tomcat.util.codec.binary.Base64;
 
 /**
  *
- * @author Администратор
+ * @author Ilia Leonov
+ * operations with database person
  */
 public class PersonDaoImpl extends AbstractPersonDao{
     private final static Logger LOG = LogManager.getLogger(PersonDaoImpl.class);
@@ -139,8 +139,10 @@ public class PersonDaoImpl extends AbstractPersonDao{
             + "JOIN interpol.region t2 ON t2.id_region = t.birth_region\n" 
             + "WHERE `found` = b'0' ORDER BY id_person DESC LIMIT 1";
     
-    
-    
+    /**
+     *
+     * @param connection connection to DB
+     */
     public PersonDaoImpl(WrapperConnector connection) {
         super(connection);
     }
@@ -288,6 +290,13 @@ public class PersonDaoImpl extends AbstractPersonDao{
         return Optional.ofNullable(person);
     }
     
+    /**
+     *
+     * @param name person's name
+     * @param panname person's panname
+     * @return person's id  or null if not found wrapped in Optional class
+     * @throws ProjectException
+     */
     public Optional<Integer> findIdByNamePanname(String name, String panname) 
             throws ProjectException {
         LOG.debug("trying to find person by name, panname ");
@@ -483,6 +492,12 @@ public class PersonDaoImpl extends AbstractPersonDao{
         return Optional.ofNullable(person);
     }
     
+    /**
+     *
+     * @param person some person
+     * @return person or null wrapped in optional class
+     * @throws ProjectException
+     */
     public Optional<Person> updateSetFoundById(Person person) throws ProjectException {
         LOG.debug("going to database to set the object is found");
         
@@ -506,6 +521,14 @@ public class PersonDaoImpl extends AbstractPersonDao{
         return Optional.ofNullable(person);
     }
 
+    /**
+     *
+     * @param pageSize size of elements on page
+     * @param offset offset to watch elements from db
+     * @param criminal status of person
+     * @return List of persons
+     * @throws ProjectException
+     */
     public List<Person> findAmountOfEntities(int pageSize, int offset, boolean criminal) throws ProjectException {
         LOG.debug("trying to find personList for page");
         
@@ -555,6 +578,14 @@ public class PersonDaoImpl extends AbstractPersonDao{
         return personList;
     }
 
+    /**
+     *
+     * @param pageSize size of elements on page
+     * @param offset offset to watch elements from db
+     * @param region chosen region
+     * @return List of persons
+     * @throws ProjectException
+     */
     public List<Person> findByRegion(int pageSize, int offset, String region) throws ProjectException {
         LOG.debug("trying to find personList by region");
         
@@ -602,7 +633,14 @@ public class PersonDaoImpl extends AbstractPersonDao{
         }
         return personList;
     }
-    
+
+    /**
+     *
+     * @param pageSize size of elements on page
+     * @param offset offset to watch elements from db
+     * @return List of persons
+     * @throws ProjectException
+     */
     public List<Person> findAmountOfEntities(int pageSize, int offset) throws ProjectException {
         LOG.debug("trying to find personList for page");
         

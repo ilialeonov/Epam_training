@@ -51,7 +51,7 @@
 
                         <fmt:message key = "label.mail" bundle="${rb}"/>:<br/>
                         <input class ="inputCl" type="text" name="mail" value="${param.mail}"
-                               required pattern="(\\w{5,})@(\\w+\\.)([a-z]{2,6})"/>
+                               required pattern="(\w{5,})@(\w+\.)([a-z]{2,6})"/>
                         <br/>
 
                         <fmt:message key = "label.Login" bundle="${rb}"/>:<br/>

@@ -19,15 +19,26 @@ import org.apache.logging.log4j.Logger;
 
 /**
  *
- * @author Администратор
+ * @author Ilia Leonov
  */
 public class TestimoniesLogic {
     private static final Logger LOG = LogManager.getLogger(TestimoniesLogic.class);
     
+    /**
+     *
+     */
     public TestimoniesLogic() {
         
     }
 
+    /**
+     *
+     * @param idPerson person's id
+     * @param idUser iser's id
+     * @param information information about person by person's id
+     * @return person's id or null if not found wrapped in Optional class
+     * @throws ProjectException
+     */
     public Optional<Integer> testifyById(int idPerson, 
             int idUser, String information) throws ProjectException {
         
@@ -57,6 +68,15 @@ public class TestimoniesLogic {
         return idCreated;
     }
 
+    /**
+     *
+     * @param name person's name
+     * @param panname person's panname
+     * @param idUser user's id
+     * @param information information about person by person's id
+     * @return person's id or null if not found wrapped in Optional class
+     * @throws ProjectException
+     */
     public Optional<Integer> testifyByNamePanname(String name, String panname, 
             Integer idUser, String information) throws ProjectException {
         
@@ -107,6 +127,15 @@ public class TestimoniesLogic {
         return idCreated;
     }
 
+    /**
+     *
+     * @param idUser user's id
+     * @param pageSize amount of elements at the page
+     * @param offset offset to watch elements in DB
+     * @param isCriminal person's status
+     * @return List of testimonies for user's persons he testified
+     * @throws ProjectException
+     */
     public List<Testimony> findUserTestimonies(Integer idUser, int pageSize, 
             int offset, boolean isCriminal) throws ProjectException {
         LOG.debug("entering find testimonies for user logic");
@@ -131,6 +160,14 @@ public class TestimoniesLogic {
         return testimonyList;
     }
 
+    /**
+     *
+     * @param pageSize amount of elements on page
+     * @param offset offset to watch testimonies in DB
+     * @param isCriminal person's status
+     * @return List of testimonies for admin 
+     * @throws ProjectException
+     */
     public List<Testimony> findAdminTestimonies(int pageSize, int offset, 
             boolean isCriminal) throws ProjectException {
         LOG.debug("entering find testimonies for admin logic");
@@ -156,6 +193,14 @@ public class TestimoniesLogic {
         return testimonyList;
     }
     
+    /**
+     *
+     * @param idUser user's id
+     * @param pageSize amount of elements on the page
+     * @param offset offset to watch elements in DB
+     * @return lisr of user's testimonies in archive 
+     * @throws ProjectException
+     */
     public List<Testimony> findUserArchive(Integer idUser, int pageSize, int offset) 
             throws ProjectException {
         LOG.debug("entering find for page logic");
@@ -180,6 +225,13 @@ public class TestimoniesLogic {
         return testimonyList;
     }
 
+    /**
+     *
+     * @param id testimonies id
+     * @param points points assigned for the testimony
+     * @return testimony or null if not found wrapped in Optional class
+     * @throws ProjectException
+     */
     public Optional<Testimony> assignPoints(int id, int points) 
             throws ProjectException {
         LOG.debug("entering assigning points logic");
@@ -206,6 +258,13 @@ public class TestimoniesLogic {
         return optTestimony;
     }
 
+    /**
+     *
+     * @param pageSize amount of elements at the page
+     * @param offset offset to watch elements in DB
+     * @return list of testimonies
+     * @throws ProjectException
+     */
     public List<Testimony> findAdminArchive(int pageSize, int offset) 
             throws ProjectException {
         LOG.debug("entering find for page logic");

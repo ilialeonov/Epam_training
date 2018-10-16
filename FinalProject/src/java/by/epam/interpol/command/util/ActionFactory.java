@@ -10,7 +10,7 @@ import org.apache.logging.log4j.Logger;
  * @author Ilia Leonov
  */
 public class ActionFactory {
-    private static final Logger LOG = LogManager.getLogger(Controller.class);
+    private static final Logger LOG = LogManager.getLogger(ActionFactory.class);
     
     /**
      *

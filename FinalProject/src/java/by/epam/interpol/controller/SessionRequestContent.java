@@ -120,8 +120,6 @@ public class SessionRequestContent {
         // adds attributes to session 
         if(sessionIsActive) {
             HttpSession session = request.getSession(true);
-            LOG.debug("*****SESSIONREQUESTCONTENT*****");
-            LOG.debug("sessionIsActive " + sessionIsActive);
             sessionAttributes.forEach((k,v) -> {
                 session.setAttribute(k, v);
             });

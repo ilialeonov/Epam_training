@@ -18,12 +18,12 @@ import org.apache.logging.log4j.Logger;
  * validates any information entered by user with given rules
  */
 public class Validator {
-    private static final Logger LOG = LogManager.getLogger(RegisterCommand.class);
+    private static final Logger LOG = LogManager.getLogger(Validator.class);
     
     private static final String LOGIN_STRING_PATTERN = "\\w{3,12}";
     private static final String NAME_STRING_PATTERN = "[A-Z]([a-zA-Z]){1,10}";
     private static final String AGE_PATTERN = "[1-9][0-9]";
-    private static final String POINTS_PATTERN = "([1-9][0-9])|(0)";
+    private static final String POINTS_PATTERN = "([1-9][0-9])|([0-9])";
     private static final String AWARD_PATTERN = "[1-9][0-9]{1,7}";
     private static final String PASSWORD_STRING_PATTERN = "\\w{4,}";
     private static final String ID_PATTERN = "[1-9][0-9]{0,7}";

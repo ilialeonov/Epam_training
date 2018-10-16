@@ -10,7 +10,8 @@ import java.util.Objects;
 
 /**
  *
- * @author Администратор
+ * @author Ilia Leonov
+ * testimony entity
  */
 public class Testimony {
     
@@ -22,61 +23,120 @@ public class Testimony {
     private String testimony;
     private Person person;
 
+    /**
+     *
+     */
     public Testimony() {
     }
 
+    /**
+     *
+     * @return testimonies id
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id testimonies id
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return testimonies userId
+     */
     public int getUserId() {
         return userId;
     }
 
+    /**
+     *
+     * @param userId testimonies userId
+     */
     public void setUserId(int userId) {
         this.userId = userId;
     }
 
+    /**
+     *
+     * @return testimonies person id
+     */
     public int getPersonId() {
         return personId;
     }
 
+    /**
+     *
+     * @param personId testimonies person id
+     */
     public void setPersonId(int personId) {
         this.personId = personId;
     }
 
+    /**
+     *
+     * @return testimonies points
+     */
     public int getPoints() {
         return points;
     }
 
+    /**
+     *
+     * @param points testimonies points
+     */
     public void setPoints(int points) {
         this.points = points;
     }
 
+    /**
+     *
+     * @return if testimonies watched
+     */
     public boolean getIsWatched() {
         return watched;
     }
 
+    /**
+     *
+     * @param watched testimonies watched
+     */
     public void setWatched(boolean watched) {
         this.watched = watched;
     }
 
+    /**
+     *
+     * @return testimonies testimony
+     */
     public String getTestimony() {
         return testimony;
     }
 
+    /**
+     *
+     * @param testimony testimonies testimony
+     */
     public void setTestimony(String testimony) {
         this.testimony = testimony;
     }
 
+    /**
+     *
+     * @return testimonies person
+     */
     public Person getPerson() {
         return person;
     }
 
+    /**
+     *
+     * @param person testimonies person
+     */
     public void setPerson(Person person) {
         this.person = person;
     }
