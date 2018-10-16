@@ -40,7 +40,7 @@ public class ConnectionPool {
     private static int maxNumberOfIdleConnections = 
             ConnectionManager.maxNumberOfIdleConnections;
     
-    private static ConnectionPool instance;
+    private static volatile ConnectionPool instance;
     private  BlockingQueue<WrapperConnector> activeConnections;
     private  BlockingQueue<WrapperConnector> idleConnections;
     private static int counter = 0;
@@ -69,11 +69,15 @@ public class ConnectionPool {
     public static ConnectionPool getInstance(){
         LOG.debug("getting pool");
         if (instance == null){
-            lock.lock();
-            if (instance == null) {
-                instance = new ConnectionPool();
-            }
-            lock.unlock();
+            try {
+                lock.lock();
+            
+                if (instance == null) {
+                    instance = new ConnectionPool();
+                }
+            } finally {
+                lock.unlock();
+            }           
         }
         return instance;
     }
